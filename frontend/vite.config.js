@@ -3,10 +3,17 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  server: {
-    host: true,
-    port: 5173,
-    strictPort: true
-  },
-  plugins: [react()],
+    server: {
+        host: '0.0.0.0',     // Cho phép truy cập từ ngoài container
+        port: 5173,
+        strictPort: true,
+        watch: {
+            usePolling: true, //Cần thiết trong Docker để Vite theo dõi file
+        },
+        hmr: {
+            host: 'localhost', // Nếu không chạy Docker trên localhost (VD: WSL2), hãy đổi thành IP máy thật
+            port: 5173,
+        }
+    },
+    plugins: [react()],
 })
