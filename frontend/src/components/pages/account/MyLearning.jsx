@@ -1,29 +1,29 @@
 import React from 'react';
 import Layout from '../../common/Layout';
-import { Link } from 'react-router-dom';
+import CourseEnrolled from '../../common/CourseEnrolled';
 import UserSidebar from '../../common/UserSidebar';
-import CourseEdit from '../../common/CourseEdit';
 
-const MyCourses = () => {
+const MyLearning = () => {
     return (
         <Layout>
             <section className='section-4'>
                 <div className='container'>
                     <div className='row'>
-                        <div className='col-md-12 mt-5 mb-3'>
-                            <div className='d-flex justify-content-between'>
-                                <h2 className='h4 mb-0 pb-0'>My Courses</h2>
-                                <Link to="/account/my-courses/create" className='btn btn-primary'>Create</Link>
-                            </div>
+                        <div className='d-flex justify-content-between  mt-5 mb-3'>
+                            <h2 className='h4 mb-0 pb-0'>My Learning</h2>
+                            {/* <a href="#" className='btn btn-primary'>Create</a> */}
                         </div>
                         <div className='col-lg-3 account-sidebar'>
                             <UserSidebar />
                         </div>
                         <div className='col-lg-9'>
                             <div className='row gy-4'>
-                                <CourseEdit />
-                                <CourseEdit />
-                                <CourseEdit />
+                                <CourseEnrolled />
+                                <CourseEnrolled />
+                                <CourseEnrolled />
+                                <CourseEnrolled />
+                                <CourseEnrolled />
+                                <CourseEnrolled />
                             </div>
                         </div>
                     </div>
@@ -33,4 +33,4 @@ const MyCourses = () => {
     )
 }
 
-export default MyCourses
+export default MyLearning
