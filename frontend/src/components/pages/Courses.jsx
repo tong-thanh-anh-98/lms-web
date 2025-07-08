@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import Layout from '../common/Layout';
 import Course from '../common/Course';
+import { useTranslation } from 'react-i18next';
 
 const Courses = () => {
+    const { t } = useTranslation();
     const [rating, setRating] = useState(4.0);
 
     return (
@@ -10,23 +12,23 @@ const Courses = () => {
             <div className='container pb-5 pt-3'>
                 <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
-                        <li className="breadcrumb-item"><a href="#">Home</a></li>
-                        <li className="breadcrumb-item active" aria-current="page">Courses</li>
+                        <li className="breadcrumb-item"><a href="#">{t('courses.home')}</a></li>
+                        <li className="breadcrumb-item active" aria-current="page">{t('courses.courses')}</li>
                     </ol>
                 </nav>
                 <div className='row'>
                     <div className='col-lg-3'>
                         <div className='sidebar mb-5 card border-0'>
                             <div className='card-body shadow'>
-                                <input type="text" className='form-control' placeholder='Search by keyword' />
+                                <input type="text" className='form-control' placeholder={t('courses.search_placeholder')} />
                                 <div className='pt-3'>
-                                    <h3 className='h5 mb-2'>Category</h3>
+                                    <h3>{t('courses.category')}</h3>
                                     <ul>
                                         <li>
                                             <div className="form-check">
                                                 <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
                                                 <label className="form-check-label" htmlFor="flexCheckDefault">
-                                                    Web Development
+                                                    <label>{t('courses.web_development')}</label>
                                                 </label>
                                             </div>
                                         </li>
@@ -34,7 +36,7 @@ const Courses = () => {
                                             <div className="form-check">
                                                 <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault2" />
                                                 <label className="form-check-label" htmlFor="flexCheckDefault2">
-                                                    Mobile Development
+                                                    {t('courses.mobile_development')}
                                                 </label>
                                             </div>
                                         </li>
@@ -42,7 +44,7 @@ const Courses = () => {
                                             <div className="form-check">
                                                 <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault3" />
                                                 <label className="form-check-label" htmlFor="flexCheckDefault3">
-                                                    Digital Marketing
+                                                    {t('courses.digital_marketing')}
                                                 </label>
                                             </div>
                                         </li>
@@ -50,7 +52,7 @@ const Courses = () => {
                                             <div className="form-check">
                                                 <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault4" />
                                                 <label className="form-check-label" htmlFor="flexCheckDefault4">
-                                                    Graphic Design
+                                                    {t('courses.graphic_design')}
                                                 </label>
                                             </div>
                                         </li>
@@ -58,20 +60,20 @@ const Courses = () => {
                                             <div className="form-check">
                                                 <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault5" />
                                                 <label className="form-check-label" htmlFor="flexCheckDefault5">
-                                                    Software Design
+                                                   {t('courses.software_design')}
                                                 </label>
                                             </div>
                                         </li>
                                     </ul>
                                 </div>
                                 <div className='mb-3'>
-                                    <h3 className='h5  mb-2'>Level</h3>
+                                    <h3 className='h5  mb-2'>{t('courses.level')}</h3>
                                     <ul>
                                         <li>
                                             <div className="form-check">
                                                 <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault11" />
                                                 <label className="form-check-label" htmlFor="flexCheckDefault11">
-                                                    Beginner
+                                                    {t('courses.beginner')}
                                                 </label>
                                             </div>
                                         </li>
@@ -79,7 +81,7 @@ const Courses = () => {
                                             <div className="form-check">
                                                 <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault12" />
                                                 <label className="form-check-label" htmlFor="flexCheckDefault12">
-                                                    Intermediate
+                                                    {t('courses.intermediate')}
                                                 </label>
                                             </div>
                                         </li>
@@ -87,20 +89,20 @@ const Courses = () => {
                                             <div className="form-check">
                                                 <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault13" />
                                                 <label className="form-check-label" htmlFor="flexCheckDefault13">
-                                                    Advance
+                                                    {t('courses.advance')}
                                                 </label>
                                             </div>
                                         </li>
                                     </ul>
                                 </div>
                                 <div className='mb-3'>
-                                    <h3 className='h5 mb-2'>Language</h3>
+                                    <h3 className='h5 mb-2'>{t('courses.language')}</h3>
                                     <ul>
                                         <li>
                                             <div className="form-check">
                                                 <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault31" />
                                                 <label className="form-check-label" htmlFor="flexCheckDefault31">
-                                                    English
+                                                    {t('courses.english')}
                                                 </label>
                                             </div>
                                         </li>
@@ -108,7 +110,7 @@ const Courses = () => {
                                             <div className="form-check">
                                                 <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault32" />
                                                 <label className="form-check-label" htmlFor="flexCheckDefault32">
-                                                    Hindi
+                                                    {t('courses.hindi')}
                                                 </label>
                                             </div>
                                         </li>
@@ -116,7 +118,7 @@ const Courses = () => {
                                             <div className="form-check">
                                                 <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault33" />
                                                 <label className="form-check-label" htmlFor="flexCheckDefault33">
-                                                    Spanish
+                                                    {t('courses.spanish')}
                                                 </label>
                                             </div>
                                         </li>
@@ -124,7 +126,7 @@ const Courses = () => {
                                             <div className="form-check">
                                                 <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault33" />
                                                 <label className="form-check-label" htmlFor="flexCheckDefault33">
-                                                    German
+                                                    {t('courses.german')}
                                                 </label>
                                             </div>
                                         </li>
@@ -132,13 +134,13 @@ const Courses = () => {
                                             <div className="form-check">
                                                 <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault34" />
                                                 <label className="form-check-label" htmlFor="flexCheckDefault34">
-                                                    Italian
+                                                    {t('courses.italian')}
                                                 </label>
                                             </div>
                                         </li>
                                     </ul>
                                 </div>
-                                <a href="" className='clear-filter'>Clear All Filters</a>
+                                <a href="" className='clear-filter'>{t('courses.clear_filters')}</a>
                             </div>
                         </div>
                     </div>
@@ -150,8 +152,8 @@ const Courses = () => {
                                 </div>
                                 <div>
                                     <select name="" id="" className='form-select'>
-                                        <option value="0">Newset First</option>
-                                        <option value="1">Oldest First</option>
+                                        <option value="0">{t('courses.newest_first')}</option>
+                                        <option value="1">{t('courses.oldest_first')}</option>
                                     </select>
                                 </div>
                             </div>

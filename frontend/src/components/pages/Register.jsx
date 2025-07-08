@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import Layout from '../common/Layout';
 import { Link, useNavigate } from 'react-router-dom';
@@ -6,6 +7,7 @@ import { apiUrl } from '../common/Config';
 import { toast } from 'react-toastify';
 
 const Register = () => {
+    const { t, i18n} = useTranslation();
     const {
         register,
         handleSubmit,
@@ -23,7 +25,8 @@ const Register = () => {
                 method: 'POST',
                 headers: {
                     'accept': 'application/json',
-                    'content-Type': 'application/json'
+                    'content-Type': 'application/json',
+                    'accept-language': i18n.language
                 },
                 body: JSON.stringify(data)
             });
@@ -55,15 +58,15 @@ const Register = () => {
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className='card border-0 shadow register'>
                             <div className='card-body p-4'>
-                                <h3 className='border-bottom pb-3 mb-3'>Register</h3>
+                                <h3 className='border-bottom pb-3 mb-3'>{t('title.register')}</h3>
 
                                 <div className='mb-3'>
-                                    <label className='form-label' htmlFor="name">Name</label>
+                                    <label className='form-label' htmlFor="name">{t('label.name')}</label>
                                     <input
-                                        {...register("name", { required: "The name field is required." })}
+                                        {...register("name", { required: t('required.name') })}
                                         type="text"
                                         className={`form-control ${errors.name && 'is-invalid'}`}
-                                        placeholder='Name'
+                                        placeholder={t('placeholder.name')}
                                     />
                                     {
                                         errors.name && <p className='invalid-feedback'>{errors.name?.message}</p>
@@ -72,18 +75,18 @@ const Register = () => {
 
 
                                 <div className='mb-3'>
-                                    <label className='form-label' htmlFor="email">Email</label>
+                                    <label className='form-label' htmlFor="email">{t('label.email')}</label>
                                     <input
                                         {...register("email", {
-                                            required: "The email field is required.",
+                                            required: t('required.email'),
                                             pattern: {
                                                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                                message: "Invalid email address"
+                                                message: t('message.email_invalid')
                                             }
                                         })}
                                         type="text"
                                         className={`form-control ${errors.email && 'is-invalid'}`}
-                                        placeholder='Email'
+                                        placeholder={t('placeholder.email')}
                                     />
                                     {
                                         errors.email && <p className='invalid-feedback'>{errors.email?.message}</p>
@@ -92,12 +95,12 @@ const Register = () => {
                                 </div>
 
                                 <div className='mb-3'>
-                                    <label className='form-label' htmlFor="password">Password</label>
+                                    <label className='form-label' htmlFor="password">{t('label.password')}</label>
                                     <input
-                                        {...register("password", { required: "The password field is required." })}
+                                        {...register("password", { required: t('required.password') })}
                                         type="password"
                                         className={`form-control ${errors.password && 'is-invalid'}`}
-                                        placeholder='Password'
+                                        placeholder={t('placeholder.password')}
                                     />
                                     {
                                         errors.password && <p className='invalid-feedback'>{errors.password?.message}</p>
@@ -105,14 +108,13 @@ const Register = () => {
                                 </div>
 
                                 <div>
-                                    {/* <button className='btn btn-primary w-100'>Register</button> */}
                                     <button disabled={disable} type="submit" className="btn btn-primary w-100">
-                                        {disable ? 'Loading...' : 'Register'}
+                                        {disable ? t('button.loading') : t('button.register')}
                                     </button>
                                 </div>
 
                                 <div className='d-flex justify-content-center py-3'>
-                                    Already have account? &nbsp;<Link className='text-secondary' to={`/account/login`}> Login</Link>
+                                    {t('message.have_account')} &nbsp;<Link className='text-secondary' to={`/account/login`}> {t('link.login')}</Link>
                                 </div>
                             </div>
                         </div>

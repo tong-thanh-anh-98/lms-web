@@ -1,6 +1,9 @@
-import React from 'react'
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const CourseEnrolled = () => {
+    const { t } = useTranslation();
+
     return (
         <div className="col-md-4">
             <div className='card border-0'>
@@ -47,7 +50,7 @@ const CourseEnrolled = () => {
                 <div className="card-footer bg-white">
                     <div className="d-flex py-2 justify-content-between align-items-center">
                         <div className="add-to-cart">
-                            <a href="/detail" className="btn btn-primary" >Watch Now</a>
+                            <a href="/detail" className="btn btn-primary" >{t('button.watch_now')}</a>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,150 @@
+{
+  "header": {
+    "brand": "Smart Learning",
+    "all_courses": "Tất cả khóa học",
+    "language": "Ngôn ngữ",
+    "en": "Tiếng Anh",
+    "vi": "Tiếng Việt",
+    "my_account": "Tài khoản"
+  },
+
+  "section_header": {
+    "title": "Học mọi lúc, mọi nơi",
+    "description": "Tham gia hệ thống quản lý học tập và khám phá hàng loạt khóa học để nâng cao kỹ năng và đạt được mục tiêu của bạn.",
+    "button": "Khám phá khóa học",
+    "image_alt": "Học viên đang học"
+  },
+
+  "sidebar": {
+    "dashboard": "Bảng điều khiển",
+    "my_learning": "Khóa học của tôi",
+    "my_courses": "Khóa học đã tạo",
+    "change_password": "Đổi mật khẩu",
+    "logout": "Đăng xuất"
+  },
+
+  "footer": {
+    "brand": "LMS",
+    "description": "Tham gia hệ thống quản lý học tập của chúng tôi và khám phá nhiều khóa học để nâng cao kỹ năng và đạt được mục tiêu của bạn.",
+    "popular_categories": "Danh mục phổ biến",
+    "quick_links": "Liên kết nhanh",
+
+    "categories": {
+      "digital_marketing": "Tiếp thị số",
+      "web_development": "Phát triển Web",
+      "machine_learning": "Máy học",
+      "web_design": "Thiết kế Web",
+      "logo_design": "Thiết kế Logo",
+      "graphic_design": "Thiết kế Đồ họa"
+    },
+
+    "links": {
+      "login": "Đăng nhập",
+      "register": "Đăng ký",
+      "my_account": "Tài khoản của tôi",
+      "courses": "Khóa học"
+    },
+
+    "copyright": "Bảo lưu mọi quyền"
+  },
+
+  "dashboard": {
+    "title": "Bảng điều khiển",
+    "account": "Tài khoản",
+    "sales": "Doanh số",
+    "enrolled_users": "Người dùng đã ghi danh",
+    "active_courses": "Khóa học đang hoạt động",
+    "view_courses": "Xem khóa học"
+  },
+
+  "my_courses": {
+    "title": "Khóa học của tôi"
+  },
+
+  "my_learning": {
+    "title": "Khóa học đã ghi danh"
+  },
+
+  "watch": {
+    "unsupported_browser": "Trình duyệt của bạn không hỗ trợ thẻ video.",
+    "lesson_title": "Giới thiệu",
+    "lesson_description": "Trong chương này, chúng ta sẽ học về các kiến thức cơ bản của HTML.",
+    "course_title": "Khóa học Web Development cơ bản",
+    "progress": "Hoàn thành {{percent}}%",
+    "section_1": "Kiến thức cơ bản Web",
+    "section_2": "HTML",
+    "intro": "Giới thiệu",
+    "what_is_html": "HTML là gì",
+    "html_elements": "Các phần tử HTML"
+  },
+
+  "courses": {
+    "home": "Trang chủ",
+    "courses": "Khóa học",
+    "search_placeholder": "Tìm kiếm theo từ khóa",
+    "category": "Danh mục",
+    "level": "Trình độ",
+    "language": "Ngôn ngữ",
+    "clear_filters": "Xóa tất cả bộ lọc",
+    "beginner": "Người mới bắt đầu",
+    "intermediate": "Trung cấp",
+    "advance": "Nâng cao",
+    "newest_first": "Mới nhất trước",
+    "oldest_first": "Cũ nhất trước",
+    "web_development": "Lập trình Web",
+    "mobile_development": "Lập trình Di động",
+    "digital_marketing": "Tiếp thị số",
+    "graphic_design": "Thiết kế đồ họa",
+    "software_design": "Thiết kế phần mềm",
+    "english": "Tiếng Anh",
+    "hindi": "Tiếng Hindi",
+    "spanish": "Tiếng Tây Ban Nha",
+    "german": "Tiếng Đức",
+    "italian": "Tiếng Ý"
+  },
+
+  "button": {
+    "create": "Tạo mới",
+    "edit": "Chỉnh sửa",
+    "mark_complete": "Đánh dấu đã hoàn thành",
+    "register": "Đăng ký",
+    "login": "Đăng nhập",
+    "loading": "Đang xử lý...",
+    "read_more": "Xem thêm",
+    "watch_now": "Xem ngay"
+  },
+
+  "title": {
+    "login": "Đăng nhập",
+    "register": "Đăng ký"
+  },
+
+  "label": {
+    "name": "Tên",
+    "email": "Email",
+    "password": "Mật khẩu"
+  },
+
+  "placeholder": {
+    "name": "Nhập tên",
+    "email": "Nhập email",
+    "password": "Nhập mật khẩu"
+  },
+
+  "required": {
+    "name": "Trường tên là bắt buộc.",
+    "email": "Trường email là bắt buộc.",
+    "password": "Trường mật khẩu là bắt buộc."
+  },
+
+  "message": {
+    "email_invalid": "Địa chỉ email không hợp lệ",
+    "have_account": "Bạn đã có tài khoản?",
+    "logout": "Bạn đã đăng xuất khỏi tài khoản của mình."
+  },
+
+  "link": {
+    "register": "Đăng ký tại đây",
+    "login": "Đăng nhập"
+  }
+}

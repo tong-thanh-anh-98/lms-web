@@ -25,7 +25,7 @@ class AccountController extends Controller
 
             return response()->json([
                 'status'        => 201,
-                'message'       => 'User has successfully registered.',
+                'message'       => __('message.register_success'),
                 'data'      => $user
             ], 201);
         } catch (\Throwable $e) {
@@ -35,7 +35,7 @@ class AccountController extends Controller
 
             return response()->json([
                 'status'    => 500,
-                'message'   => 'Server error.',
+                'message'   => __('message.error')
             ], 500);
         }
     }
@@ -61,7 +61,7 @@ class AccountController extends Controller
 
                 return response()->json([
                     'status' => 200,
-                    'message' => 'You have successfully logged in.',
+                    'message' => __('message.login_success'),
                     'id' => Auth::user()->id,
                     'name' => $user->name,
                     'token' => $token,
@@ -69,7 +69,7 @@ class AccountController extends Controller
             } else {
                 return response()->json([
                     'status' => 401,
-                    'message' => 'The email or password you entered is incorrect.'
+                    'message' => __('message.login_error')
                 ], 401);
             }
         } catch (\Throwable $e) {
@@ -77,7 +77,7 @@ class AccountController extends Controller
 
             return response()->json([
                 'status'    => 500,
-                'message'   => 'Server error.',
+                'message'   =>  __('message.error')
             ], 500);
         }
     }

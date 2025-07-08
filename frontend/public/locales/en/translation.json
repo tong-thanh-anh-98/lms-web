@@ -1,0 +1,150 @@
+{
+  "header": {
+    "brand": "Smart Learning",
+    "all_courses": "All Courses",
+    "language": "Language",
+    "en": "English",
+    "vi": "Vietnamese",
+    "my_account": "My Account"
+  },
+
+  "section_header": {
+    "title": "Learn Anytime, Anywhere",
+    "description": "Join our Learning Management System and explore a wide range of courses to enhance your skills and achieve your goals.",
+    "button": "Explore Courses",
+    "image_alt": "Student Learning"
+  },
+
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "my_learning": "My Learning",
+    "my_courses": "My Courses",
+    "change_password": "Change Password",
+    "logout": "Logout"
+  },
+
+  "footer": {
+    "brand": "LMS",
+    "description": "Join our Learning Management System and explore a wide range of courses to enhance your skills and achieve your goals.",
+    "popular_categories": "Popular Categories",
+    "quick_links": "Quick Links",
+
+    "categories": {
+      "digital_marketing": "Digital Marketing",
+      "web_development": "Web Development",
+      "machine_learning": "Machine Learning",
+      "web_design": "Web Design",
+      "logo_design": "Logo Design",
+      "graphic_design": "Graphic Design"
+    },
+
+    "links": {
+      "login": "Login",
+      "register": "Register",
+      "my_account": "My Account",
+      "courses": "Courses"
+    },
+
+    "copyright": "All Rights Reserved"
+  },
+
+  "dashboard": {
+    "title": "Dashboard",
+    "account": "Account",
+    "sales": "Sales",
+    "enrolled_users": "Enrolled Users",
+    "active_courses": "Active Courses",
+    "view_courses": "View Courses"
+  },
+
+  "my_courses": {
+    "title": "My Courses"
+  },
+
+  "my_learning": {
+    "title": "My Learning"
+  },
+
+  "watch": {
+    "unsupported_browser": "Your browser does not support the video tag.",
+    "lesson_title": "Introduction",
+    "lesson_description": "In this chapter we will learn about HTML basics.",
+    "course_title": "Web Development Crash Course",
+    "progress": "{{percent}}% complete",
+    "section_1": "Web Development Basics",
+    "section_2": "HTML",
+    "intro": "Introduction",
+    "what_is_html": "What is HTML",
+    "html_elements": "HTML Elements"
+  },
+
+  "courses": {
+    "home": "Home",
+    "courses": "Courses",
+    "search_placeholder": "Search by keyword",
+    "category": "Category",
+    "level": "Level",
+    "language": "Language",
+    "clear_filters": "Clear All Filters",
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advance": "Advance",
+    "newest_first": "Newest First",
+    "oldest_first": "Oldest First",
+    "web_development": "Web Development",
+    "mobile_development": "Mobile Development",
+    "digital_marketing": "Digital Marketing",
+    "graphic_design": "Graphic Design",
+    "software_design": "Software Design",
+    "english": "English",
+    "hindi": "Hindi",
+    "spanish": "Spanish",
+    "german": "German",
+    "italian": "Italian"
+  },
+
+  "button": {
+    "create": "Create",
+    "edit": "Edit",
+    "mark_complete": "Mark as complete",
+    "register": "Register",
+    "login": "Login",
+    "loading": "Loading...",
+    "read_more": "Read More",
+    "watch_now": "Watch Now"
+  },
+
+  "title": {
+    "login": "Login",
+    "register": "Register"
+  },
+
+  "label": {
+    "name": "Name",
+    "email": "Email",
+    "password": "Password"
+  },
+
+  "placeholder": {
+    "name": "Enter your name",
+    "email": "Enter your email",
+    "password": "Enter your password"
+  },
+
+  "required": {
+    "name": "The name field is required.",
+    "email": "The email field is required.",
+    "password": "The password field is required."
+  },
+
+  "message": {
+    "email_invalid": "Invalid email address",
+    "have_account": "Already have account?",
+    "logout": "You have logged out of your account."
+  },
+
+  "link": {
+    "register": "Register Here",
+    "login": "Login"
+  }
+}

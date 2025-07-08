@@ -1,3 +1,5 @@
+// translate
+import './i18n';
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/css/style.scss';
