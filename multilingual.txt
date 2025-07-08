@@ -1,0 +1,85 @@
+Setup multilingual in project:
+Backend:
+- composer require laravel-lang/lang
+- php artisan lang:add vi
+- php artisan lang:add en
+- php artisan make:middleware SetLocale
+{code}
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+class SetLocale
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function handle(Request $request, Closure $next): Response
+    {
+        $locale = $request->header('Accept-Language', config('app.locale'));
+        app()->setLocale($locale);
+
+        return $next($request);
+    }
+}
+{code}
+
+- update middleware in bootstrap/app.php
+{code}
+<?php
+
+use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Configuration\Exceptions;
+use Illuminate\Foundation\Configuration\Middleware;
+
+return Application::configure(basePath: dirname(__DIR__))
+    ->withRouting(
+        web: __DIR__.'/../routes/web.php',
+        api: __DIR__.'/../routes/api.php',
+        commands: __DIR__.'/../routes/console.php',
+        health: '/up',
+    )
+    ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->append(\App\Http\Middleware\SetLocale::class); // Set language
+    })
+    ->withExceptions(function (Exceptions $exceptions): void {
+        //
+    })->create();
+{code}
+
+Frontend:
+- install package: npm install i18next react-i18next i18next-http-backend i18next-browser-languagedetector
+- 2. Configuration src/i18n.js:
+{code}
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import HttpApi from 'i18next-http-backend';
+import LanguageDetector from 'i18next-browser-languagedetector';
+
+i18n
+    .use(HttpApi)
+    .use(LanguageDetector)
+    .use(initReactI18next)
+    .init({
+        supportedLngs: ['vi', 'en'],
+        fallbackLng: 'en',
+        detection: {
+            order: ['localStorage', 'navigator', 'htmlTag'],
+            caches: ['localStorage']
+        },
+        backend: {
+            loadPath: '/locales/{{lng}}/translation.json',
+        },
+        react: {
+            useSuspense: false,
+        },
+    });
+
+export default i18n;
+{code}
