@@ -1,13 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Layout from '../common/Layout';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { apiUrl } from '../common/Config';
+import { toast } from 'react-toastify';
 
 const Register = () => {
+    const {
+        register,
+        handleSubmit,
+        setError,
+        formState: { errors }
+    } = useForm();
+    const navigate = useNavigate();
+    const [disable, setDisable] = useState(false);
+
+    const onSubmit = async (data) => {
+        setDisable(true);
+
+        try {
+            const response = await fetch(`${apiUrl}/register`, {
+                method: 'POST',
+                headers: {
+                    'accept': 'application/json',
+                    'content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            // console.log(result.data);
+
+            if (response.ok && result.status === 201) {
+                toast.success(result.message);
+                navigate('/account/login');
+            } else {
+                const formErrors = result.errors;
+                Object.keys(formErrors).forEach((field) => {
+                    setError(field, { type: 'server', message: formErrors[field][0] });
+                });
+            }
+
+        } catch (error) {
+            console.error('Register failed:', error);
+        } finally {
+            setDisable(false);
+        }
+    }
+
     return (
         <Layout>
             <div className='container py-5 mt-5'>
                 <div className='d-flex align-items-center justify-content-center'>
-                    <form >
+                    <form onSubmit={handleSubmit(onSubmit)}>
                         <div className='card border-0 shadow register'>
                             <div className='card-body p-4'>
                                 <h3 className='border-bottom pb-3 mb-3'>Register</h3>
@@ -15,30 +60,55 @@ const Register = () => {
                                 <div className='mb-3'>
                                     <label className='form-label' htmlFor="name">Name</label>
                                     <input
+                                        {...register("name", { required: "The name field is required." })}
                                         type="text"
-                                        className={`form-control`}
-                                        placeholder='Name' />
+                                        className={`form-control ${errors.name && 'is-invalid'}`}
+                                        placeholder='Name'
+                                    />
+                                    {
+                                        errors.name && <p className='invalid-feedback'>{errors.name?.message}</p>
+                                    }
                                 </div>
 
 
                                 <div className='mb-3'>
                                     <label className='form-label' htmlFor="email">Email</label>
                                     <input
-                                        type="text" className={`form-control`}
-                                        placeholder='Email' />
+                                        {...register("email", {
+                                            required: "The email field is required.",
+                                            pattern: {
+                                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                                message: "Invalid email address"
+                                            }
+                                        })}
+                                        type="text"
+                                        className={`form-control ${errors.email && 'is-invalid'}`}
+                                        placeholder='Email'
+                                    />
+                                    {
+                                        errors.email && <p className='invalid-feedback'>{errors.email?.message}</p>
+                                    }
 
                                 </div>
 
                                 <div className='mb-3'>
                                     <label className='form-label' htmlFor="password">Password</label>
                                     <input
+                                        {...register("password", { required: "The password field is required." })}
                                         type="password"
-                                        className={`form-control`}
-                                        placeholder='Password' />
+                                        className={`form-control ${errors.password && 'is-invalid'}`}
+                                        placeholder='Password'
+                                    />
+                                    {
+                                        errors.password && <p className='invalid-feedback'>{errors.password?.message}</p>
+                                    }
                                 </div>
 
                                 <div>
-                                    <button className='btn btn-primary w-100'>Register</button>
+                                    {/* <button className='btn btn-primary w-100'>Register</button> */}
+                                    <button disabled={disable} type="submit" className="btn btn-primary w-100">
+                                        {disable ? 'Loading...' : 'Register'}
+                                    </button>
                                 </div>
 
                                 <div className='d-flex justify-content-center py-3'>
