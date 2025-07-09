@@ -111,7 +111,8 @@
     "login": "Login",
     "loading": "Loading...",
     "read_more": "Read More",
-    "watch_now": "Watch Now"
+    "watch_now": "Watch Now",
+    "continue": "Continue"
   },
 
   "title": {
@@ -122,19 +123,22 @@
   "label": {
     "name": "Name",
     "email": "Email",
-    "password": "Password"
+    "password": "Password",
+    "title": "Title"
   },
 
   "placeholder": {
     "name": "Enter your name",
     "email": "Enter your email",
-    "password": "Enter your password"
+    "password": "Enter your password",
+    "title": "Enter your title"
   },
 
   "required": {
     "name": "The name field is required.",
     "email": "The email field is required.",
-    "password": "The password field is required."
+    "password": "The password field is required.",
+    "title": "The title field is required."
   },
 
   "message": {
@@ -146,5 +150,17 @@
   "link": {
     "register": "Register Here",
     "login": "Login"
+  },
+
+  "course": {
+    "course": "Course",
+    "create": "Create course",
+    "edit": "Edit course"
+  },
+
+  "common": {
+    "account": "Account",
+    "create": "Create",
+    "edit": "Edit"
   }
 }

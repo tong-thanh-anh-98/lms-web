@@ -111,7 +111,8 @@
     "login": "Đăng nhập",
     "loading": "Đang xử lý...",
     "read_more": "Xem thêm",
-    "watch_now": "Xem ngay"
+    "watch_now": "Xem ngay",
+    "continue": "Tiếp tục"
   },
 
   "title": {
@@ -122,19 +123,22 @@
   "label": {
     "name": "Tên",
     "email": "Email",
-    "password": "Mật khẩu"
+    "password": "Mật khẩu",
+    "title": "Tiêu đề"
   },
 
   "placeholder": {
     "name": "Nhập tên",
     "email": "Nhập email",
-    "password": "Nhập mật khẩu"
+    "password": "Nhập mật khẩu",
+    "title": "Nhập tiêu đề"
   },
 
   "required": {
     "name": "Trường tên là bắt buộc.",
     "email": "Trường email là bắt buộc.",
-    "password": "Trường mật khẩu là bắt buộc."
+    "password": "Trường mật khẩu là bắt buộc.",
+    "title": "Trường tiêu đề là bắt buộc."
   },
 
   "message": {
@@ -146,5 +150,17 @@
   "link": {
     "register": "Đăng ký tại đây",
     "login": "Đăng nhập"
+  },
+
+  "course": {
+    "course": "Khóa học",
+    "create": "Tạo khóa học",
+    "edit": "Chỉnh sửa khóa học" 
+  },
+
+  "common": {
+    "account": "Tài khoản",
+    "create": "Tạo mới",
+    "edit": "Chỉnh sửa"
   }
 }

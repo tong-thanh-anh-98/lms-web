@@ -12,6 +12,9 @@ import MyLearning from './components/pages/account/MyLearning';
 import ChangePassword from './components/pages/account/ChangePassword';
 import RequireAuth from './components/common/RequireAuth';
 
+import Create from './components/pages/account/courses/Create';
+import Edit from './components/pages/account/courses/Edit';
+
 function App() {
 
     return (
@@ -35,6 +38,10 @@ function App() {
                     <Route element={<RequireAuth />}>
                         {/* Dashboard */}
                         <Route path="/account/dashboard" element={<Dashboard />} />
+
+                        {/* Courses */}
+                        <Route path="/account/courses/create" element={<Create />} />
+                        <Route path="/account/courses/edit/:id" element={<Edit />} />
                     </Route>
                 </Routes>
             </BrowserRouter>
