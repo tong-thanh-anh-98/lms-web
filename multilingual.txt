@@ -30,6 +30,31 @@ class SetLocale
 }
 {code}
 
+- Create CORS configuration file manually (config/cors.php):
+{code}
+<?php
+
+return [
+
+    'paths' => ['api/*', 'sanctum/csrf-cookie', 'translations/*'],
+
+    'allowed_methods' => ['*'],
+
+    'allowed_origins' => ['http://localhost:5173'],
+
+    'allowed_origins_patterns' => [],
+
+    'allowed_headers' => ['*'],
+
+    'exposed_headers' => [],
+
+    'max_age' => 0,
+
+    'supports_credentials' => false,
+
+];
+{code}
+
 - update middleware in bootstrap/app.php
 {code}
 <?php
@@ -46,6 +71,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->append(HandleCors::class); // apply to multilingual middleware
         $middleware->append(\App\Http\Middleware\SetLocale::class); // Set language
     })
     ->withExceptions(function (Exceptions $exceptions): void {
