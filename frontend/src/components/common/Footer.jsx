@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link} from 'react-router-dom';
 
 const Footer = () => {
     const { t } = useTranslation();
@@ -31,8 +32,8 @@ const Footer = () => {
                     <div className='col-lg-3 col-md-6 col-12'>
                         <h2>{t('footer.quick_links')}</h2>
                         <ul>
-                            <li><a href="#">{t('footer.links.login')}</a></li>
-                            <li><a href="#">{t('footer.links.register')}</a></li>
+                            <li><Link to={`/account/login`}>{t('footer.links.login')}</Link></li>
+                            <li><Link to={`/account/register`}>{t('footer.links.register')}</Link></li>
                             <li><a href="#">{t('footer.links.my_account')}</a></li>
                             <li><a href="#">{t('footer.links.courses')}</a></li>
                         </ul>

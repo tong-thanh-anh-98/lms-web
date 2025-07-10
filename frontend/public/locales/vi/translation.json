@@ -112,7 +112,8 @@
     "loading": "Đang xử lý...",
     "read_more": "Xem thêm",
     "watch_now": "Xem ngay",
-    "continue": "Tiếp tục"
+    "continue": "Tiếp tục",
+    "update": "Cập nhật"
   },
 
   "title": {
@@ -124,21 +125,39 @@
     "name": "Tên",
     "email": "Email",
     "password": "Mật khẩu",
-    "title": "Tiêu đề"
+    "title": "Tiêu đề",
+    "category": "Danh mục",
+    "level": "Mức độ",
+    "language": "Ngôn ngữ",
+    "description": "Mô tả",
+    "sellPrice": "Giá bán",
+    "crossPrice": "Giá chéo"
+  },
+
+  "select": {
+    "category": "Chọn một danh mục",
+    "level": "Chọn một mức độ",
+    "language": "Chọn một ngôn ngữ"
   },
 
   "placeholder": {
     "name": "Nhập tên",
     "email": "Nhập email",
     "password": "Nhập mật khẩu",
-    "title": "Nhập tiêu đề"
+    "title": "Nhập tiêu đề",
+    "description": "Nhập mô tả",
+    "sellPrice": "Nhập giá bán",
+    "crossPrice": "Nhập giá chéo"
   },
 
   "required": {
     "name": "Trường tên là bắt buộc.",
     "email": "Trường email là bắt buộc.",
     "password": "Trường mật khẩu là bắt buộc.",
-    "title": "Trường tiêu đề là bắt buộc."
+    "title": "Trường tiêu đề là bắt buộc.",
+    "category": "Trường danh mục là bắt buộc.",
+    "level": "Trường mức độ là bắt buộc.",
+    "language": "Trường ngôn ngữ là bắt buộc."
   },
 
   "message": {
@@ -155,7 +174,9 @@
   "course": {
     "course": "Khóa học",
     "create": "Tạo khóa học",
-    "edit": "Chỉnh sửa khóa học" 
+    "edit": "Chỉnh sửa khóa học",
+    "detail": "Chi tiết",
+    "pricing": "Giá"
   },
 
   "common": {

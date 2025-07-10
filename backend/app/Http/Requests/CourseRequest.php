@@ -21,7 +21,7 @@ class CourseRequest extends FormRequest
      */
     public function rules(): array
     {
-         $rules = [
+        $rules = [
             'title'         => 'required|string|max:255',
             'category_id'   => 'nullable|exists:categories,id',
             'level_id'      => 'nullable|exists:levels,id',

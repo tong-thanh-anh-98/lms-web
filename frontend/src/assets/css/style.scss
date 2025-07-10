@@ -97,6 +97,14 @@ p {
 
 
 .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
     .nav-link {
         font-weight: 700;
     }

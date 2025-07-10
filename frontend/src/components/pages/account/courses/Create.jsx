@@ -81,7 +81,7 @@ const Create = () => {
                                     <div className="card border-0 shadow-lg">
                                         <div className="card-body p-4">
                                             <div className="mb-3">
-                                                <label htmlFor="title">{t('label.title')}</label>
+                                                <label className='form-label' htmlFor="title">{t('label.title')}</label>
                                                 <input
                                                     {...register("title", { required: t('required.title') })}
                                                     type="text"
@@ -89,9 +89,10 @@ const Create = () => {
                                                     placeholder={t('placeholder.title')}
                                                 />
                                                 {
-                                                    errors.name && <p className='invalid-feedback'>{errors.name?.message}</p>
+                                                    errors.title && <p className='invalid-feedback'>{errors.title?.message}</p>
                                                 }
                                             </div>
+
                                             <div className="mb-3">
                                                 <button disabled={disable} type="submit" className='btn btn-primary'>
                                                     {disable ? t('button.loading') : t('button.continue')}

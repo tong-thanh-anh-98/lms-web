@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\front;
 
+use App\Models\Category;
 use App\Models\Course;
-use Illuminate\Http\Request;
+use App\Models\Level;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CourseRequest;
+use App\Models\Language;
 use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
@@ -50,23 +52,37 @@ class CourseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
-    }
+        try {
+            $course = Course::find($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+            if (!$course) {
+                return response()->json([
+                    'status'    => 404,
+                    'message' => __('message.not_found'),
+                ], 404);
+            }
+
+            return response()->json([
+                'status'  => 200,
+                'message' => __('message.success'),
+                'data'    => $course
+            ], 200);
+        } catch (\Throwable $e) {
+            Log::error('Errors: ' . $e->getMessage());
+
+            return response()->json([
+                'status'  => 500,
+                'message' => __('message.error'),
+            ], 500);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CourseRequest $request, $id)
     {
         //
     }
@@ -77,6 +93,30 @@ class CourseController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function metaData()
+    {
+        try {
+            $categories = Category::all();
+            $levels = Level::all();
+            $languages = Language::all();
+
+            return response()->json([
+                'status'    => 200,
+                'message' => __('message.success'),
+                'categories'      => $categories,
+                'levels'      => $levels,
+                'languages'      => $languages,
+            ], 200);
+        } catch (\Throwable $e) {
+            Log::error('Errors: ' . $e->getMessage());
+
+            return response()->json([
+                'status'    => 500,
+                'message'   =>  __('message.error')
+            ], 500);
+        }
     }
 
     private function extractCourseData(CourseRequest $request)

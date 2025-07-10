@@ -112,7 +112,8 @@
     "loading": "Loading...",
     "read_more": "Read More",
     "watch_now": "Watch Now",
-    "continue": "Continue"
+    "continue": "Continue",
+    "update": "Update"
   },
 
   "title": {
@@ -124,21 +125,39 @@
     "name": "Name",
     "email": "Email",
     "password": "Password",
-    "title": "Title"
+    "title": "Title",
+    "category": "Category",
+    "level": "Level",
+    "language": "Language",
+    "description": "Description",
+    "sellPrice": "Sell price",
+    "crossPrice": "Cross price"
+  },
+
+  "select": {
+    "category": "Select a category",
+    "level": "Select a level",
+    "language": "Select a language"
   },
 
   "placeholder": {
     "name": "Enter your name",
     "email": "Enter your email",
     "password": "Enter your password",
-    "title": "Enter your title"
+    "title": "Enter your title",
+    "description": "Enter your description",
+    "sellPrice": "Enter your sell price",
+    "crossPrice": "Enter your cross price"
   },
 
   "required": {
     "name": "The name field is required.",
     "email": "The email field is required.",
     "password": "The password field is required.",
-    "title": "The title field is required."
+    "title": "The title field is required.",
+    "category": "The category field is required.",
+    "level": "The level field is required.",
+    "language": "The language field is required."
   },
 
   "message": {
@@ -155,7 +174,9 @@
   "course": {
     "course": "Course",
     "create": "Create course",
-    "edit": "Edit course"
+    "edit": "Edit course",
+    "detail": "Detail",
+    "pricing": "Pricing"
   },
 
   "common": {
