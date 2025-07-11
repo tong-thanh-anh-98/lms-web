@@ -40,6 +40,7 @@ class CourseController extends Controller
                 'data'      => $course
             ], 201);
         } catch (\Throwable $e) {
+            DB::rollBack();
             Log::error('Errors: ' . $e->getMessage());
 
             return response()->json([
@@ -84,7 +85,36 @@ class CourseController extends Controller
      */
     public function update(CourseRequest $request, $id)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            $course = Course::find($id);
+
+            if (!$course) {
+                return response()->json([
+                    'status' => 404,
+                    'message' => __('message.not_found')
+                ], 404);
+            }
+
+            $data = $this->extractCourseData($request);
+            $course->update($data);
+            DB::commit();
+
+            return response()->json([
+                'status' => 200,
+                'message' => __('message.updated'),
+                'data' => $data
+            ], 200);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            Log::error('Errors: ' . $e->getMessage());
+
+            return response()->json([
+                'status'    => 500,
+                'message' => __('message.error'),
+            ], 500);
+        }
     }
 
     /**

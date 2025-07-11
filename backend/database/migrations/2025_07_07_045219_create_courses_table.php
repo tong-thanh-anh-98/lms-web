@@ -23,8 +23,8 @@ return new class extends Migration
 
             // Nội dung & thông tin
             $table->text('description')->nullable(); // description
-            $table->decimal('price', 10, 2)->nullable(); // price
-            $table->decimal('cross_price', 10, 2)->nullable(); // cross_price
+            $table->decimal('price', 15, 0)->nullable(); // price
+            $table->decimal('cross_price', 15, 0)->nullable(); // cross_price
 
             // Trạng thái
             $table->integer('status')->default(0); // status

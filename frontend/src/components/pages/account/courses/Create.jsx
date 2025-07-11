@@ -85,7 +85,7 @@ const Create = () => {
                                                 <input
                                                     {...register("title", { required: t('required.title') })}
                                                     type="text"
-                                                    className={`form-control ${errors.name && 'is-invalid'}`}
+                                                    className={`form-control ${errors.title && 'is-invalid'}`}
                                                     placeholder={t('placeholder.title')}
                                                 />
                                                 {

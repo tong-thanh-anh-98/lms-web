@@ -113,7 +113,8 @@
     "read_more": "Read More",
     "watch_now": "Watch Now",
     "continue": "Continue",
-    "update": "Update"
+    "update": "Update",
+    "save": "Save"
   },
 
   "title": {
@@ -131,7 +132,8 @@
     "language": "Language",
     "description": "Description",
     "sellPrice": "Sell price",
-    "crossPrice": "Cross price"
+    "crossPrice": "Cross price",
+    "text": "Outcome"
   },
 
   "select": {
@@ -147,7 +149,8 @@
     "title": "Enter your title",
     "description": "Enter your description",
     "sellPrice": "Enter your sell price",
-    "crossPrice": "Enter your cross price"
+    "crossPrice": "Enter your cross price",
+    "text": "Enter your outcome"
   },
 
   "required": {
@@ -157,7 +160,10 @@
     "title": "The title field is required.",
     "category": "The category field is required.",
     "level": "The level field is required.",
-    "language": "The language field is required."
+    "language": "The language field is required.",
+    "sellPrice": "The sell price field is required.",
+    "crossPrice": "The cross price field is required.",
+    "text": "The outcome field is required."
   },
 
   "message": {
@@ -176,7 +182,8 @@
     "create": "Create course",
     "edit": "Edit course",
     "detail": "Detail",
-    "pricing": "Pricing"
+    "pricing": "Pricing",
+    "outcome": "Outcome"
   },
 
   "common": {

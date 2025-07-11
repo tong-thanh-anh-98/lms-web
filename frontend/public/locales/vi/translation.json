@@ -113,7 +113,8 @@
     "read_more": "Xem thêm",
     "watch_now": "Xem ngay",
     "continue": "Tiếp tục",
-    "update": "Cập nhật"
+    "update": "Cập nhật",
+    "save": "Lưu"
   },
 
   "title": {
@@ -130,8 +131,9 @@
     "level": "Mức độ",
     "language": "Ngôn ngữ",
     "description": "Mô tả",
-    "sellPrice": "Giá bán",
-    "crossPrice": "Giá chéo"
+    "sellPrice": "Giá bán khuyến mãi",
+    "crossPrice": "Giá",
+    "text": "Kết quả"
   },
 
   "select": {
@@ -146,8 +148,9 @@
     "password": "Nhập mật khẩu",
     "title": "Nhập tiêu đề",
     "description": "Nhập mô tả",
-    "sellPrice": "Nhập giá bán",
-    "crossPrice": "Nhập giá chéo"
+    "sellPrice": "Nhập giá bán khuyến mãi",
+    "crossPrice": "Nhập giá",
+    "text": "Nhập kết quả"
   },
 
   "required": {
@@ -157,7 +160,10 @@
     "title": "Trường tiêu đề là bắt buộc.",
     "category": "Trường danh mục là bắt buộc.",
     "level": "Trường mức độ là bắt buộc.",
-    "language": "Trường ngôn ngữ là bắt buộc."
+    "language": "Trường ngôn ngữ là bắt buộc.",
+    "sellPrice": "Trường giá bán khuyến mãi là bắt buộc.",
+    "crossPrice": "Trường giá là bắt buộc.",
+    "text": "Trường kết quả bắt buộc."
   },
 
   "message": {
@@ -176,7 +182,8 @@
     "create": "Tạo khóa học",
     "edit": "Chỉnh sửa khóa học",
     "detail": "Chi tiết",
-    "pricing": "Giá"
+    "pricing": "Giá",
+    "outcome": "Kết quả"
   },
 
   "common": {

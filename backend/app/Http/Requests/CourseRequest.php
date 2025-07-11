@@ -33,6 +33,14 @@ class CourseRequest extends FormRequest
             'is_featured'   => 'in:yes,no',
         ];
 
+        // update function
+        if ($this->isMethod('put') || $this->isMethod('patch')) {
+            $rules['category_id'] = 'required|exists:categories,id';
+            $rules['level_id']    = 'required|exists:levels,id';
+            $rules['language_id'] = 'required|exists:languages,id';
+            $rules['price']       = 'required|numeric|min:0';
+        }
+
         return $rules;
     }
 }

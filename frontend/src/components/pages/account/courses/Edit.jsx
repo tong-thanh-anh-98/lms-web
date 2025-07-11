@@ -2,30 +2,31 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Layout from '../../../common/Layout';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import UserSidebar from '../../../common/UserSidebar';
 import { apiUrl, token } from '../../../common/Config';
 import { toast } from 'react-toastify';
+import ManageOutcome from './ManageOutcome';
 
 const Edit = () => {
     const { t, i18n } = useTranslation();
     const [disable, setDisable] = useState(false);
-    const navigate = useNavigate();
     const params = useParams();
-    const [courses, setCourses] = useState([]);
+    const [, setCourses] = useState([]);
     const [categories, setCategories] = useState([]);
     const [levels, setLevels] = useState([]);
     const [languages, setLanguages] = useState([]);
     const {
         register,
         reset,
+        setError,
         handleSubmit,
         formState: { errors }
     } = useForm();
 
     const fetchCourses = useCallback(async () => {
         try {
-            const response = await fetch(`${apiUrl}/courses/show/${params.id}`, {
+            const response = await fetch(`${apiUrl}/courses/${params.id}`, {
                 method: 'GET',
                 headers: {
                     'accept': 'application/json',
@@ -36,27 +37,56 @@ const Edit = () => {
             });
 
             const result = await response.json();
+            console.log(result.data);
             const data = result.data;
             setCourses(data);
 
             if (response.ok && result.status === 200) {
                 reset({
                     title: data.title,
-                    category: data.category_id,
-                    level: data.level_id,
-                    language: data.language_id,
+                    category_id: data.category_id,
+                    level_id: data.level_id,
+                    language_id: data.language_id,
                     description: data.description,
                     price: data.price,
-                    cross_price: data.cross_price
+                    cross_price: data.cross_price,
                 });
             } else {
                 toast.error(result.message);
             }
 
         } catch (error) {
-            console.error('Create failed:', error);
+            console.error('Fetch failed:', error);
         }
     }, [i18n.language, params.id, reset]);
+
+    const fetchMetaData = useCallback(async () => {
+        try {
+            const response = await fetch(`${apiUrl}/get-courses/meta-data`, {
+                method: 'GET',
+                headers: {
+                    'accept': 'application/json',
+                    'content-Type': 'application/json',
+                    'accept-language': i18n.language,
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            const result = await response.json();
+            console.log(result);
+
+            if (response.ok && result.status === 200) {
+                setCategories(result.categories);
+                setLevels(result.levels);
+                setLanguages(result.languages);
+            } else {
+                toast.error(result.message);
+            }
+
+        } catch (error) {
+            console.error('Fetch failed:', error);
+        }
+    }, [i18n.language, setCategories, setLevels, setLanguages]);
 
     const onSubmit = async (data) => {
         setDisable(true);
@@ -75,46 +105,22 @@ const Edit = () => {
 
             const result = await response.json();
 
-            if (response.ok && result.status === 201) {
+            if (response.ok && result.status === 200) {
                 toast.success(result.message);
-                navigate('/courses');
             } else {
+                const formErrors = result.errors;
+                Object.keys(formErrors).forEach((field) => {
+                    setError(field, { type: 'server', message: formErrors[field][0] });
+                });
                 toast.error(result.message);
             }
 
         } catch (error) {
-            console.error('Create failed:', error);
+            console.error('Update failed:', error);
         } finally {
             setDisable(false);
         }
     }
-
-    const fetchMetaData = useCallback(async () => {
-        try {
-            const response = await fetch(`${apiUrl}/courses/meta-data`, {
-                method: 'GET',
-                headers: {
-                    'accept': 'application/json',
-                    'content-Type': 'application/json',
-                    'accept-language': i18n.language,
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-
-            const result = await response.json();
-
-            if (response.ok && result.status === 200) {
-                setCategories(result.categories);
-                setLevels(result.levels);
-                setLanguages(result.languages);
-            } else {
-                toast.error(result.message);
-            }
-
-        } catch (error) {
-            console.error('Create failed:', error);
-        }
-    }, [i18n.language, setCategories, setLevels, setLanguages]);
 
     useEffect(() => {
         fetchCourses();
@@ -160,7 +166,7 @@ const Edit = () => {
                                                     <input
                                                         {...register("title", { required: t('required.title') })}
                                                         type="text"
-                                                        className={`form-control ${errors.name && 'is-invalid'}`}
+                                                        className={`form-control ${errors.title && 'is-invalid'}`}
                                                         placeholder={t('placeholder.title')}
                                                     />
                                                     {
@@ -171,7 +177,11 @@ const Edit = () => {
                                                 <div className="mb-3">
                                                     <label className='form-label' htmlFor="category">{t('label.category')}</label>
 
-                                                    <select className='form-select' id='category' {...register('category')}>
+                                                    <select
+                                                        {...register('category_id', { required: t('required.category') })}
+                                                        id='category'
+                                                        className={`form-select ${errors.category_id && 'is-invalid'}`}
+                                                    >
                                                         <option value="">{t('select.category')}</option>
 
                                                         {
@@ -182,12 +192,19 @@ const Edit = () => {
                                                             })
                                                         }
                                                     </select>
+                                                    {
+                                                        errors.category_id && <p className='invalid-feedback'>{errors.category_id?.message}</p>
+                                                    }
                                                 </div>
 
                                                 <div className="mb-3">
                                                     <label className='form-label' htmlFor="level">{t('label.level')}</label>
 
-                                                    <select className='form-select' id='level' {...register('level')}>
+                                                    <select
+                                                        {...register('level_id', { required: t('required.level') })}
+                                                        id='level'
+                                                        className={`form-select ${errors.level_id && 'is-invalid'}`}
+                                                    >
                                                         <option value="">{t('select.level')}</option>
 
                                                         {
@@ -198,12 +215,19 @@ const Edit = () => {
                                                             })
                                                         }
                                                     </select>
+                                                    {
+                                                        errors.level_id && <p className='invalid-feedback'>{errors.level_id?.message}</p>
+                                                    }
                                                 </div>
 
                                                 <div className="mb-3">
                                                     <label className='form-label' htmlFor="language">{t('label.language')}</label>
 
-                                                    <select className='form-select' id='language' {...register('language')}>
+                                                    <select
+                                                        {...register('language_id', { required: t('required.language') })}
+                                                        id='language'
+                                                        className={`form-select ${errors.language_id && 'is-invalid'}`}
+                                                    >
                                                         <option value="">{t('select.language')}</option>
 
                                                         {
@@ -214,14 +238,18 @@ const Edit = () => {
                                                             })
                                                         }
                                                     </select>
+                                                    {
+                                                        errors.language_id && <p className='invalid-feedback'>{errors.language_id?.message}</p>
+                                                    }
                                                 </div>
 
                                                 <div className="mb-3">
                                                     <label className='form-label' htmlFor="description">{t('label.description')}</label>
 
                                                     <textarea
-                                                        className='form-control'
+                                                        {...register("description")}
                                                         id='description'
+                                                        className={`form-control`}
                                                         rows={5}
                                                         placeholder={t('placeholder.description')}
                                                     >
@@ -233,12 +261,15 @@ const Edit = () => {
                                                 <div className="mb-3">
                                                     <label className='form-label' htmlFor="sell-price">{t('label.sellPrice')}</label>
                                                     <input
-                                                        {...register("price")}
+                                                        {...register("price", { required: t('required.sellPrice') })}
                                                         type="text"
                                                         id='sell-price'
-                                                        className={`form-control ${errors.name && 'is-invalid'}`}
+                                                        className={`form-control ${errors.price && 'is-invalid'}`}
                                                         placeholder={t('placeholder.sellPrice')}
                                                     />
+                                                    {
+                                                        errors.price && <p className='invalid-feedback'>{errors.price?.message}</p>
+                                                    }
                                                 </div>
 
                                                 <div className="mb-3">
@@ -247,7 +278,7 @@ const Edit = () => {
                                                         {...register("cross_price")}
                                                         type="text"
                                                         id='cross-price'
-                                                        className={`form-control ${errors.name && 'is-invalid'}`}
+                                                        className={`form-control`}
                                                         placeholder={t('placeholder.crossPrice')}
                                                     />
                                                 </div>
@@ -264,7 +295,7 @@ const Edit = () => {
                                 </div>
 
                                 <div className="col-md-5">
-
+                                    <ManageOutcome />
                                 </div>
                             </div>
                         </div>

@@ -5,6 +5,7 @@ use App\Http\Controllers\front\CategoryController;
 use App\Http\Controllers\front\CourseController;
 use App\Http\Controllers\front\LanguageController;
 use App\Http\Controllers\front\LevelController;
+use App\Http\Controllers\front\OutcomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,9 +17,19 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/courses', [CourseController::class, 'store'])->name('store');
-    Route::get('/courses/show/{id}', [CourseController::class, 'show'])->name('show');
-    Route::get('/courses/meta-data', [CourseController::class, 'metaData'])->name('metaData');
+    Route::apiResource('courses', CourseController::class);
+    // Route::post('/courses', [CourseController::class, 'store'])->name('store');
+    // Route::get('/courses/{id}', [CourseController::class, 'show'])->name('show');
+    // Route::put('/courses/{id}', [CourseController::class, 'update'])->name('update');
+    Route::get('/get-courses/meta-data', [CourseController::class, 'metaData'])->name('metaData');
+
+    Route::apiResource('outcomes', OutcomeController::class);
+    // Route::get('/outcomes', [OutcomeController::class, 'index'])->name('index');
+    // Route::post('/outcomes', [OutcomeController::class, 'store'])->name('store');
+    // Route::get('/outcomes/{id}', [OutcomeController::class, 'show'])->name('show');
+    // Route::put('/outcomes/{id}', [OutcomeController::class, 'update'])->name('update');
+    // Route::delete('/outcomes/{id}', [OutcomeController::class, 'destroy'])->name('destroy');
+
     Route::post('/categories', [CategoryController::class, 'store'])->name('store');
     Route::post('/levels', [LevelController::class, 'store'])->name('store');
     Route::post('/languages', [LanguageController::class, 'store'])->name('store');
