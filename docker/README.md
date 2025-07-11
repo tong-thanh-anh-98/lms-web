@@ -53,9 +53,9 @@ docker-compose -p lsm up -d --build
 
 ### Khởi tạo Laravel project:
 ```bash
-docker exec -it laravel-app composer install
-docker exec -it laravel-app php artisan migrate
-docker exec -it laravel-app php artisan key:generate
+docker exec -it lsm-laravel-app composer install
+docker exec -it lsm-laravel-app php artisan migrate
+docker exec -it lsm-laravel-app php artisan key:generate
 ```
 
 ## 🔧 Các lệnh hữu ích
