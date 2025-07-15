@@ -22,9 +22,9 @@ class OutcomeRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'course_id'    => 'required|exists:courses,id',
-            'text'          => 'required',
-            'sort_order'    => 'required'
+            'course_id'     => 'required|exists:courses,id',
+            'outcome'       => 'required',
+            'sort_order'    => 'nullable|integer'
         ];
 
         return $rules;

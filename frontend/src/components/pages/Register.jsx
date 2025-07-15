@@ -32,7 +32,6 @@ const Register = () => {
             });
 
             const result = await response.json();
-            // console.log(result.data);
 
             if (response.ok && result.status === 201) {
                 toast.success(result.message);

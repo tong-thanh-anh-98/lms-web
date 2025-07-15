@@ -37,7 +37,6 @@ const Edit = () => {
             });
 
             const result = await response.json();
-            console.log(result.data);
             const data = result.data;
             setCourses(data);
 
@@ -73,7 +72,6 @@ const Edit = () => {
             });
 
             const result = await response.json();
-            console.log(result);
 
             if (response.ok && result.status === 200) {
                 setCategories(result.categories);

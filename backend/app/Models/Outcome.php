@@ -11,7 +11,7 @@ class Outcome extends Model
 
     protected $fillable = [
         'course_id',
-        'text',
+        'outcome',
         'sort_order'
     ];
 }

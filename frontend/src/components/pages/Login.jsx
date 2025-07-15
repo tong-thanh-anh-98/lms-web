@@ -34,7 +34,6 @@ const Login = () => {
             });
 
             const result = await response.json();
-            // console.log(result.data);
 
             if (response.ok && result.status === 200) {
                 const userInfo = {

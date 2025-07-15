@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('outcomes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('course_id')->constrained()->onDelete('cascade'); // course_id
-            $table->string('text');
+            $table->string('outcome');
             $table->integer('sort_order');
             $table->timestamps();
             $table->softDeletes();

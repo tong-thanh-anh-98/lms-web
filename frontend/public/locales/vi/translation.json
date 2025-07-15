@@ -114,7 +114,10 @@
     "watch_now": "Xem ngay",
     "continue": "Tiếp tục",
     "update": "Cập nhật",
-    "save": "Lưu"
+    "save": "Lưu",
+    "close": "Đóng",
+    "cancel": "Hủy",
+    "delete": "Xóa"
   },
 
   "title": {
@@ -133,7 +136,7 @@
     "description": "Mô tả",
     "sellPrice": "Giá bán khuyến mãi",
     "crossPrice": "Giá",
-    "text": "Kết quả"
+    "outcome": "Kết quả"
   },
 
   "select": {
@@ -150,7 +153,7 @@
     "description": "Nhập mô tả",
     "sellPrice": "Nhập giá bán khuyến mãi",
     "crossPrice": "Nhập giá",
-    "text": "Nhập kết quả"
+    "outcome": "Nhập kết quả"
   },
 
   "required": {
@@ -163,7 +166,7 @@
     "language": "Trường ngôn ngữ là bắt buộc.",
     "sellPrice": "Trường giá bán khuyến mãi là bắt buộc.",
     "crossPrice": "Trường giá là bắt buộc.",
-    "text": "Trường kết quả bắt buộc."
+    "outcome": "Trường kết quả bắt buộc."
   },
 
   "message": {
@@ -183,12 +186,18 @@
     "edit": "Chỉnh sửa khóa học",
     "detail": "Chi tiết",
     "pricing": "Giá",
-    "outcome": "Kết quả"
+    "outcome": "Kết quả",
+    "update_outcome": "Cập nhật kết quả"
   },
 
   "common": {
     "account": "Tài khoản",
     "create": "Tạo mới",
     "edit": "Chỉnh sửa"
+  },
+
+  "modal": {
+    "title": "Màn hình xác nhận",
+    "confirm": "Bạn có chắc chắn muốn xóa dữ liệu này không?"
   }
 }

@@ -17,18 +17,11 @@ class OutcomeController extends Controller
             $course_id = $request->course_id;
             $outcomes = Outcome::where('course_id', $course_id)->get();
 
-            if ($outcomes->isEmpty()) {
-                return response()->json([
-                    'status' => 404,
-                    'message' => __('message.not_found'),
-                ], 404);
-            } else {
-                return response()->json([
-                    'status'  => 200,
-                    'message' => __('message.success'),
-                    'data'    => $outcomes
-                ], 200);
-            }
+            return response()->json([
+                'status'  => 200,
+                'message' => __('message.success'),
+                'data'    => $outcomes
+            ], 200);
         } catch (\Throwable $e) {
             Log::error('Errors: ' . $e->getMessage());
 
@@ -154,10 +147,15 @@ class OutcomeController extends Controller
 
     private function extractOutcomeData(OutcomeRequest $request)
     {
-        return $request->only([
-            'course_id',
-            'text',
-            'sort_order'
-        ]);
+        return array_merge(
+            $request->only([
+                'outcome',
+                'course_id',
+                'status',
+            ]),
+            [
+                'sort_order' => $request->input('sort_order', 1000), // defaults to 1000 if not present
+            ]
+        );
     }
 }
