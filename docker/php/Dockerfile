@@ -8,8 +8,12 @@ RUN apt-get update && apt-get install -y \
 # Cài Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+# Cài Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_23.x | bash - \
     && apt-get install -y nodejs
+
+# Thêm cấu hình PHP
+COPY ./docker/php/custom-php.ini /usr/local/etc/php/conf.d/custom-php.ini
 
 WORKDIR /var/www
 
