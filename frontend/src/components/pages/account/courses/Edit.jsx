@@ -7,6 +7,7 @@ import UserSidebar from '../../../common/UserSidebar';
 import { apiUrl, token } from '../../../common/Config';
 import { toast } from 'react-toastify';
 import ManageOutcome from './ManageOutcome';
+import ManageRequirement from './ManageRequirement';
 
 const Edit = () => {
     const { t, i18n } = useTranslation();
@@ -294,6 +295,8 @@ const Edit = () => {
 
                                 <div className="col-md-5">
                                     <ManageOutcome />
+
+                                    <ManageRequirement />
                                 </div>
                             </div>
                         </div>

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Outcome extends Model
 {
-     use SoftDeletes;
+    use SoftDeletes;
 
     protected $fillable = [
         'course_id',

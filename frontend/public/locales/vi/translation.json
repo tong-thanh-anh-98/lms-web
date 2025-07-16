@@ -136,7 +136,8 @@
     "description": "Mô tả",
     "sellPrice": "Giá bán khuyến mãi",
     "crossPrice": "Giá",
-    "outcome": "Kết quả"
+    "outcome": "Kết quả",
+    "requirement": "Yêu cầu"
   },
 
   "select": {
@@ -153,7 +154,8 @@
     "description": "Nhập mô tả",
     "sellPrice": "Nhập giá bán khuyến mãi",
     "crossPrice": "Nhập giá",
-    "outcome": "Nhập kết quả"
+    "outcome": "Nhập kết quả",
+    "requirement": "Nhập yêu cầu"
   },
 
   "required": {
@@ -166,7 +168,8 @@
     "language": "Trường ngôn ngữ là bắt buộc.",
     "sellPrice": "Trường giá bán khuyến mãi là bắt buộc.",
     "crossPrice": "Trường giá là bắt buộc.",
-    "outcome": "Trường kết quả bắt buộc."
+    "outcome": "Trường kết quả là bắt buộc.",
+    "requirement": "Trường yêu cầu là bắt buộc."
   },
 
   "message": {
@@ -187,7 +190,9 @@
     "detail": "Chi tiết",
     "pricing": "Giá",
     "outcome": "Kết quả",
-    "update_outcome": "Cập nhật kết quả"
+    "update_outcome": "Cập nhật kết quả",
+    "requirement": "Yêu cầu",
+    "update_requirement": "Cập nhật yêu cầu"
   },
 
   "common": {

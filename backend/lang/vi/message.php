@@ -14,4 +14,5 @@ return [
     'uploaded'              => 'Đã tải lên thành công.', // status 200 function upload file
     'updated'               => 'Đã cập nhật thành công.', // status 200 function update
     'deleted'               => 'Đã xóa thành công.', // status 200 function delete
+    'success_sort'          => 'Sắp xếp thành công.', // status 200 function sort
 ];

@@ -14,4 +14,5 @@ return [
     'uploaded'              => 'Uploaded successfully.', // status 200 function upload file
     'updated'               => 'Updated successfully.', // status 200 function update
     'deleted'               => 'Deleted successfully.', // status 200 function delete
+    'success_sort'          => 'Sort successfully.', // status 200 function sort
 ];

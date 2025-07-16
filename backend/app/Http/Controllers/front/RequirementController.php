@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers\front;
 
-use App\Models\Outcome;
+use App\Models\Requirement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\OutcomeRequest;
+use App\Http\Requests\RequirementRequest;
 
-class OutcomeController extends Controller
+class RequirementController extends Controller
 {
-    private function extractOutcomeData(OutcomeRequest $request)
+    private function extractRequirementData(RequirementRequest $request)
     {
         return array_merge(
             $request->only([
-                'outcome',
-                'course_id'
+                'course_id',
+                'requirement',
             ]),
             [
                 'sort_order' => $request->input('sort_order', 1000), // defaults to 1000 if not present
@@ -24,16 +24,36 @@ class OutcomeController extends Controller
         );
     }
 
+    public function getAllRequirement()
+    {
+        try {
+            $requirement = Requirement::orderBy('created_at', 'desc')->orderBy('sort_order')->get();
+
+            return response()->json([
+                'status'    => 200,
+                'message'       => __('message.success'),
+                'data'      => $requirement
+            ], 200);
+        } catch (\Throwable $e) {
+            Log::error('Error' . $e->getMessage());
+
+            return response()->json([
+                'status'    => 500,
+                'message'       => __('message.error')
+            ], 500);
+        }
+    }
+
     public function index(Request $request)
     {
         try {
             $course_id = $request->course_id;
-            $outcomes = Outcome::where('course_id', $course_id)->orderBy('sort_order')->get();
+            $requirements = Requirement::where('course_id', $course_id)->get();
 
             return response()->json([
                 'status'  => 200,
                 'message' => __('message.success'),
-                'data'    => $outcomes
+                'data'    => $requirements
             ], 200);
         } catch (\Throwable $e) {
             Log::error('Errors: ' . $e->getMessage());
@@ -45,19 +65,19 @@ class OutcomeController extends Controller
         }
     }
 
-    public function store(OutcomeRequest $request)
+    public function store(RequirementRequest $request)
     {
         DB::beginTransaction();
 
         try {
-            $data = $this->extractOutcomeData($request);
-            $outcome = Outcome::create($data);
+            $data = $this->extractRequirementData($request);
+            $requirement = Requirement::create($data);
             DB::commit();
 
             return response()->json([
                 'status'    => 201,
                 'message' => __('message.created'),
-                'data'      => $outcome
+                'data'      => $requirement
             ], 201);
         } catch (\Throwable $e) {
             Log::error('Errors: ' . $e->getMessage());
@@ -72,19 +92,18 @@ class OutcomeController extends Controller
     public function show($id)
     {
         try {
-            $outcome = Outcome::find($id);
-
-            if (!$outcome) {
+            $requirement = Requirement::find($id);
+            if (!$requirement) {
                 return response()->json([
                     'status'    => 404,
-                    'message' => __('message.not_found'),
+                    'message'   => __('message.not_found')
                 ], 404);
             }
 
             return response()->json([
-                'status'  => 200,
-                'message' => __('message.success'),
-                'data'    => $outcome
+                'status'    => 200,
+                'message'   => __('message.success'),
+                'data'      => $requirement
             ], 200);
         } catch (\Throwable $e) {
             Log::error('Errors: ' . $e->getMessage());
@@ -96,28 +115,27 @@ class OutcomeController extends Controller
         }
     }
 
-    public function update(OutcomeRequest $request, $id)
+    public function update(RequirementRequest $request, $id)
     {
         DB::beginTransaction();
 
         try {
-            $outcome = Outcome::find($id);
-
-            if (!$outcome) {
+            $requirement = Requirement::find($id);
+            if (!$requirement) {
                 return response()->json([
-                    'status' => 404,
-                    'message' => __('message.not_found')
+                    'status'    => 404,
+                    'message'   => __('message.not_found')
                 ], 404);
             }
 
-            $data = $this->extractOutcomeData($request);
-            $outcome->update($data);
+            $data = $this->extractRequirementData($request);
+            $requirement->update($data);
             DB::commit();
 
             return response()->json([
                 'status'    => 201,
                 'message' => __('message.updated'),
-                'data'      => $outcome
+                'data'      => $requirement
             ], 201);
         } catch (\Throwable $e) {
             Log::error('Errors: ' . $e->getMessage());
@@ -132,21 +150,21 @@ class OutcomeController extends Controller
     public function destroy($id)
     {
         try {
-            $outcome = Outcome::find($id);
+            $requirement = Requirement::find($id);
 
-            if (!$outcome) {
+            if (!$requirement) {
                 return response()->json([
                     'status'    => 404,
                     'message' => __('message.not_found'),
                 ], 404);
             }
 
-            $outcome->delete();
+            $requirement->delete();
 
             return response()->json([
                 'status'  => 200,
                 'message' => __('message.deleted'),
-                'data'    => $outcome
+                'data'    => $requirement
             ], 200);
         } catch (\Throwable $e) {
             Log::error('Errors: ' . $e->getMessage());
@@ -158,12 +176,12 @@ class OutcomeController extends Controller
         }
     }
 
-    public function sortOutcomes(Request $request)
+    public function sortRequirements(Request $request)
     {
         try {
-            if (!empty($request->outcomes)) {
-                foreach ($request->outcomes as $key => $outcome) {
-                    Outcome::where('id', $outcome['id'])->update(['sort_order' => $key]);
+            if (!empty($request->requirements)) {
+                foreach ($request->requirements as $key => $requirement) {
+                    Requirement::where('id', $requirement['id'])->update(['sort_order' => $key]);
                 }
             }
 

@@ -136,7 +136,8 @@
     "description": "Description",
     "sellPrice": "Sell price",
     "crossPrice": "Cross price",
-    "outcome": "Outcome"
+    "outcome": "Outcome",
+    "requirement": "Requirement"
   },
 
   "select": {
@@ -153,7 +154,8 @@
     "description": "Enter your description",
     "sellPrice": "Enter your sell price",
     "crossPrice": "Enter your cross price",
-    "outcome": "Enter your outcome"
+    "outcome": "Enter your outcome",
+    "requirement": "Enter your requirement"
   },
 
   "required": {
@@ -166,7 +168,8 @@
     "language": "The language field is required.",
     "sellPrice": "The sell price field is required.",
     "crossPrice": "The cross price field is required.",
-    "outcome": "The outcome field is required."
+    "outcome": "The outcome field is required.",
+    "requirement": "The requirement field is required."
   },
 
   "message": {
@@ -187,7 +190,9 @@
     "detail": "Detail",
     "pricing": "Pricing",
     "outcome": "Outcome",
-    "update_outcome": "Update outcome"
+    "update_outcome": "Update outcome",
+    "requirement": "Requirements",
+    "update_requirement": "Update requirement"
   },
 
   "common": {
