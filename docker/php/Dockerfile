@@ -1,8 +1,10 @@
 FROM php:8.3-fpm
 
-# Cài extensions
+# Cài extensions + GD with WebP
 RUN apt-get update && apt-get install -y \
     git curl zip unzip libpng-dev libonig-dev libxml2-dev libzip-dev libpq-dev \
+    libjpeg-dev libwebp-dev libfreetype6-dev \
+    && docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype \
     && docker-php-ext-install pdo pdo_mysql zip mbstring exif pcntl bcmath gd
 
 # Cài Composer
