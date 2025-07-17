@@ -19,6 +19,18 @@ class Course extends Model
         'price',
         'cross_price',
         'status',
-        'is_featured'
+        'is_featured',
+        'image'
     ];
+
+    protected $appends = ['image_url'];
+
+    public function getImageUrlAttribute()
+    {
+        if (empty($this->image)) {
+            return "";
+        }
+
+        return asset('uploads/courses/small/' . $this->image);
+    }
 }

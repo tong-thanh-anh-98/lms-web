@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Layout from '../../../common/Layout';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 import UserSidebar from '../../../common/UserSidebar';
@@ -8,22 +8,23 @@ import { apiUrl, token } from '../../../common/Config';
 import { toast } from 'react-toastify';
 import ManageOutcome from './ManageOutcome';
 import ManageRequirement from './ManageRequirement';
+import EditCover from './EditCover';
+import { NumericFormat } from 'react-number-format';
 
 const Edit = () => {
     const { t, i18n } = useTranslation();
     const [disable, setDisable] = useState(false);
     const params = useParams();
-    const [, setCourses] = useState([]);
+    const [course, setCourse] = useState([]);
     const [categories, setCategories] = useState([]);
     const [levels, setLevels] = useState([]);
     const [languages, setLanguages] = useState([]);
-    const {
-        register,
-        reset,
-        setError,
-        handleSubmit,
-        formState: { errors }
-    } = useForm();
+    const { register, reset, setError, handleSubmit, setValue, formState: { errors }, control } = useForm();
+
+    // format price
+    const price = useWatch({ control, name: "price" });
+    const crossPrice = useWatch({ control, name: "cross_price" });
+
 
     const fetchCourses = useCallback(async () => {
         try {
@@ -39,7 +40,6 @@ const Edit = () => {
 
             const result = await response.json();
             const data = result.data;
-            setCourses(data);
 
             if (response.ok && result.status === 200) {
                 reset({
@@ -51,6 +51,7 @@ const Edit = () => {
                     price: data.price,
                     cross_price: data.cross_price,
                 });
+                setCourse(data);
             } else {
                 toast.error(result.message);
             }
@@ -259,12 +260,24 @@ const Edit = () => {
 
                                                 <div className="mb-3">
                                                     <label className='form-label' htmlFor="sell-price">{t('label.sellPrice')}</label>
-                                                    <input
+                                                    {/* <input
                                                         {...register("price", { required: t('required.sellPrice') })}
                                                         type="text"
                                                         id='sell-price'
                                                         className={`form-control ${errors.price && 'is-invalid'}`}
                                                         placeholder={t('placeholder.sellPrice')}
+                                                    /> */}
+                                                    <NumericFormat
+                                                        value={price}
+                                                        thousandSeparator="."
+                                                        decimalSeparator=","
+                                                        suffix=" ₫"
+                                                        allowNegative={false}
+                                                        className={`form-control ${errors.price && 'is-invalid'}`}
+                                                        placeholder={t('placeholder.sellPrice')}
+                                                        onValueChange={(values) => {
+                                                            setValue("price", values.value); // Lưu giá trị dạng số
+                                                        }}
                                                     />
                                                     {
                                                         errors.price && <p className='invalid-feedback'>{errors.price?.message}</p>
@@ -273,12 +286,24 @@ const Edit = () => {
 
                                                 <div className="mb-3">
                                                     <label className='form-label' htmlFor="cross-price">{t('label.crossPrice')}</label>
-                                                    <input
+                                                    {/* <input
                                                         {...register("cross_price")}
                                                         type="text"
                                                         id='cross-price'
                                                         className={`form-control`}
                                                         placeholder={t('placeholder.crossPrice')}
+                                                    /> */}
+                                                    <NumericFormat
+                                                        value={crossPrice}
+                                                        thousandSeparator="."
+                                                        decimalSeparator=","
+                                                        suffix=" ₫"
+                                                        allowNegative={false}
+                                                        className="form-control"
+                                                        placeholder={t('placeholder.crossPrice')}
+                                                        onValueChange={(values) => {
+                                                            setValue("cross_price", values.value);
+                                                        }}
                                                     />
                                                 </div>
 
@@ -297,6 +322,11 @@ const Edit = () => {
                                     <ManageOutcome />
 
                                     <ManageRequirement />
+
+                                    <EditCover
+                                        course={course}
+                                        setCourse={setCourse}
+                                    />
                                 </div>
                             </div>
                         </div>

@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Route::get('/courses/{id}', [CourseController::class, 'show'])->name('show');
     // Route::put('/courses/{id}', [CourseController::class, 'update'])->name('update');
     Route::get('/get-courses/meta-data', [CourseController::class, 'metaData'])->name('metaData');
+    Route::post('/save-course-image/{id}', [CourseController::class, 'saveCourseImage'])->name('saveCourseImage');
 
     Route::apiResource('outcomes', OutcomeController::class);
     // Route::get('/outcomes', [OutcomeController::class, 'index'])->name('index');

@@ -14,8 +14,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory()->create([
-            'name' => 'Default User Name',
-            'email' => 'default.user.name@lsm.com',
+            'name' => 'Default User',
+            'email' => 'default.user@lms.com',
         ]);
 
         $this->call(CategorySeeder::class);

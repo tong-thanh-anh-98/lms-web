@@ -13,4 +13,5 @@ Packages
 - npm install filepond-plugin-file-validate-type
 - npm install react-player
 - npm install react-bootstrap bootstrap
-- npm install react-toastify
+- npm install 
+- npm install react-number-format

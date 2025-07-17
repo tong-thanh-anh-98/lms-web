@@ -35,7 +35,7 @@ const Footer = () => {
                             <li><Link to={`/account/login`}>{t('footer.links.login')}</Link></li>
                             <li><Link to={`/account/register`}>{t('footer.links.register')}</Link></li>
                             <li><a href="#">{t('footer.links.my_account')}</a></li>
-                            <li><a href="#">{t('footer.links.courses')}</a></li>
+                            <li><Link to={`/account/courses/create`}>{t('footer.links.courses')}</Link></li>
                         </ul>
                     </div>
 

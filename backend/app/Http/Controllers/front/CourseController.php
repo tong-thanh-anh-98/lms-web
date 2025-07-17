@@ -2,18 +2,41 @@
 
 namespace App\Http\Controllers\front;
 
-use App\Models\Category;
-use App\Models\Course;
 use App\Models\Level;
+use App\Models\Course;
+use App\Models\Category;
+use App\Models\Language;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CourseRequest;
-use App\Models\Language;
+use App\Services\ImageUploadService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class CourseController extends Controller
 {
+    private function extractCourseData(CourseRequest $request)
+    {
+        return array_merge(
+            $request->only([
+                'title',
+                'category_id',
+                'level_id',
+                'language_id',
+                'description',
+                'price',
+                'cross_price',
+                'status',
+                'is_featured'
+            ]),
+            [
+                'user_id' => Auth::id(), // user login
+            ]
+        );
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -149,23 +172,55 @@ class CourseController extends Controller
         }
     }
 
-    private function extractCourseData(CourseRequest $request)
+    public function saveCourseImage(Request $request, $id, ImageUploadService $imageService)
     {
-        return array_merge(
-            $request->only([
-                'title',
-                'category_id',
-                'level_id',
-                'language_id',
-                'description',
-                'price',
-                'cross_price',
-                'status',
-                'is_featured'
-            ]),
-            [
-                'user_id' => Auth::id(), // user login
-            ]
-        );
+        DB::beginTransaction();
+
+        try {
+            $course = Course::find($id);
+            if (!$course) {
+                return response()->json([
+                    'status' => 404,
+                    'message' => __('message.not_found'),
+                ], 404);
+            }
+
+            $validator = Validator::make($request->all(), [
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:20480',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 400,
+                    'errors' => $validator->errors(),
+                ], 400);
+            }
+
+            // Xóa ảnh cũ nếu có
+            if (!empty($course->image)) {
+                $imageService->deleteImage('courses', $course->image);
+            }
+
+            // Upload ảnh mới
+            $imageName = $imageService->uploadImage($request->image, 'courses', [750, 480]);
+            $course->image = $imageName;
+            $course->save();
+
+            DB::commit();
+
+            return response()->json([
+                'status' => 200,
+                'message' => __('message.uploaded'),
+                'data' => $course,
+            ], 200);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            Log::error('Errors: ' . $e->getMessage());
+
+            return response()->json([
+                'status' => 500,
+                'message' => __('message.error'),
+            ], 500);
+        }
     }
 }

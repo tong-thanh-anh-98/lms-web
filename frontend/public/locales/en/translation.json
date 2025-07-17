@@ -137,7 +137,8 @@
     "sellPrice": "Sell price",
     "crossPrice": "Cross price",
     "outcome": "Outcome",
-    "requirement": "Requirement"
+    "requirement": "Requirement",
+    "labelIdle": "Drag & Drop your files or Browse"
   },
 
   "select": {
@@ -192,7 +193,8 @@
     "outcome": "Outcome",
     "update_outcome": "Update outcome",
     "requirement": "Requirements",
-    "update_requirement": "Update requirement"
+    "update_requirement": "Update requirement",
+    "editCover": "Edit cover"
   },
 
   "common": {

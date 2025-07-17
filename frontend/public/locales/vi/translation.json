@@ -137,7 +137,8 @@
     "sellPrice": "Giá bán khuyến mãi",
     "crossPrice": "Giá",
     "outcome": "Kết quả",
-    "requirement": "Yêu cầu"
+    "requirement": "Yêu cầu",
+    "labelIdle": "Kéo và Thả các tập tin của bạn hoặc Duyệt"
   },
 
   "select": {
@@ -192,7 +193,8 @@
     "outcome": "Kết quả",
     "update_outcome": "Cập nhật kết quả",
     "requirement": "Yêu cầu",
-    "update_requirement": "Cập nhật yêu cầu"
+    "update_requirement": "Cập nhật yêu cầu",
+    "editCover": "Chỉnh sửa bìa"
   },
 
   "common": {
