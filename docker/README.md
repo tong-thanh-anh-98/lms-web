@@ -43,7 +43,8 @@ DB_PASSWORD=root
 docker-compose up -d --build
 
 Để tránh trùng container_name, nên đặt prefix hoặc dùng --project-name:
-docker-compose -p lsm up -d --build
+docker-compose -p lsm-web down
+docker-compose -p lsm-web up -d --build
 ```
 
 ### Truy cập:
@@ -69,9 +70,6 @@ docker exec -it laravel-app bash
 
 # Dừng tất cả container
 docker-compose down
+or
+docker-compose down -v
 ```
-
-## 💡 Lưu ý
-- Laravel nằm ở thư mục `./backend`
-- ReactJS nằm ở `./frontend`
-- Nên đổi port nếu bạn đang chạy nhiều dự án khác
