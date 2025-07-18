@@ -24,6 +24,26 @@ class OutcomeController extends Controller
         );
     }
 
+    public function getAllOutcomes()
+    {
+        try {
+            $outcomes = Outcome::orderBy('created_at', 'desc')->get();
+
+            return response()->json([
+                'status'    => 200,
+                'message'       => __('message.success'),
+                'data'      => $outcomes
+            ], 200);
+        } catch (\Throwable $e) {
+            Log::error('Error' . $e->getMessage());
+
+            return response()->json([
+                'status'    => 500,
+                'message'       => __('message.error')
+            ], 500);
+        }
+    }
+
     public function index(Request $request)
     {
         try {

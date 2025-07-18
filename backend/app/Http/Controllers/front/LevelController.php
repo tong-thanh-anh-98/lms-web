@@ -11,12 +11,35 @@ use App\Http\Controllers\Controller;
 
 class LevelController extends Controller
 {
+    private function extractLevelData(LevelRequest $request)
+    {
+        return $request->only([
+            'name',
+            'status'
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        try {
+            $levels = Level::orderBy('created_at', 'desc')->get();
+
+            return response()->json([
+                'status' => 200,
+                'message' =>  __('message.success'),
+                'data' => $levels
+            ], 200);
+        } catch (\Throwable $e) {
+            Log::error('Error' . $e->getMessage());
+
+            return response()->json([
+                'status'    => 500,
+                'message'       => __('message.error')
+            ], 500);
+        }
     }
 
     /**
@@ -76,13 +99,5 @@ class LevelController extends Controller
     public function destroy(string $id)
     {
         //
-    }
-
-    private function extractLevelData(LevelRequest $request)
-    {
-        return $request->only([
-            'name',
-            'status'
-        ]);
     }
 }

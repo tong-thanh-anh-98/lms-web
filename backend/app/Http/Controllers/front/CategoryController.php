@@ -11,12 +11,35 @@ use App\Http\Requests\CategoryRequest;
 
 class CategoryController extends Controller
 {
+    private function extractCategoryData(CategoryRequest $request)
+    {
+        return $request->only([
+            'name',
+            'status'
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        try {
+            $categories = Category::orderBy('created_at', 'desc')->get();
+
+            return response()->json([
+                'status' => 200,
+                'message' =>  __('message.success'),
+                'data' => $categories
+            ], 200);
+        } catch (\Throwable $e) {
+            Log::error('Error' . $e->getMessage());
+
+            return response()->json([
+                'status'    => 500,
+                'message'       => __('message.error')
+            ], 500);
+        }
     }
 
     /**
@@ -59,14 +82,6 @@ class CategoryController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
@@ -80,13 +95,5 @@ class CategoryController extends Controller
     public function destroy(string $id)
     {
         //
-    }
-
-    private function extractCategoryData(CategoryRequest $request)
-    {
-        return $request->only([
-            'name',
-            'status'
-        ]);
     }
 }
