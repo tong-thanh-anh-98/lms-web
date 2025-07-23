@@ -10,6 +10,7 @@ import ManageOutcome from './ManageOutcome';
 import ManageRequirement from './ManageRequirement';
 import EditCover from './EditCover';
 import { NumericFormat } from 'react-number-format';
+import ManageChapter from './ManageChapter';
 
 const Edit = () => {
     const { t, i18n } = useTranslation();
@@ -316,6 +317,11 @@ const Edit = () => {
 
                                         </div>
                                     </form>
+
+                                    <ManageChapter
+                                        course={course}
+                                        params={params}
+                                    />
                                 </div>
 
                                 <div className="col-md-5">

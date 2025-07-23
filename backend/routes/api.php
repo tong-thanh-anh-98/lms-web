@@ -40,6 +40,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/languages', [LanguageController::class, 'index'])->name('index');
     Route::post('/languages', [LanguageController::class, 'store'])->name('store');
 
+    Route::get('get-all-chapters', [ChapterController::class, 'getAllChapters'])->name('getAllChapters');
     Route::apiResource('chapters', ChapterController::class);
     Route::post('/sort-chapters', [ChapterController::class, 'sortChapters'])->name('sortChapters');
 });

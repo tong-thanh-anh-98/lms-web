@@ -194,7 +194,11 @@
     "update_outcome": "Cập nhật kết quả",
     "requirement": "Yêu cầu",
     "update_requirement": "Cập nhật yêu cầu",
-    "editCover": "Chỉnh sửa bìa"
+    "editCover": "Chỉnh sửa bìa",
+    "title": "Tiêu đề",
+    "chapter": "Chương",
+    "update_chapter": "Cập nhật chương",
+    "delete_chapter": "Xóa chương"
   },
 
   "common": {

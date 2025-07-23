@@ -25,6 +25,26 @@ class ChapterController extends Controller
         );
     }
 
+    public function getAllChapters()
+    {
+        try {
+            $chapter = Chapter::orderBy('created_at', 'desc')->get();
+
+            return response()->json([
+                'status'    => 200,
+                'message'   => __('message.success'),
+                'data'  => $chapter
+            ], 200);
+        } catch (\Throwable $e) {
+            Log::error('Error: ' . $e->getMessage());
+
+            return response()->json([
+                'status' => 500,
+                'message'   => __('message.error')
+            ], 500);
+        }
+    }
+
     /**
      * Display a listing of the resource.
      */

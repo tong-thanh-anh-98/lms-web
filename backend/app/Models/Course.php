@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Chapter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -32,5 +33,10 @@ class Course extends Model
         }
 
         return asset('uploads/courses/small/' . $this->image);
+    }
+
+    public function chapters()
+    {
+        return $this->hasMany(Chapter::class);
     }
 }

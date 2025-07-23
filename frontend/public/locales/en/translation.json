@@ -194,7 +194,12 @@
     "update_outcome": "Update outcome",
     "requirement": "Requirements",
     "update_requirement": "Update requirement",
-    "editCover": "Edit cover"
+    "editCover": "Edit cover",
+    "title": "Title",
+    "chapter": "Chapter",
+    "update_chapter": "Update chapter",
+    "delete_chapter": "Delete chapter"
+
   },
 
   "common": {
