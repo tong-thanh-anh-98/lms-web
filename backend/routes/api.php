@@ -5,6 +5,7 @@ use App\Http\Controllers\front\CategoryController;
 use App\Http\Controllers\front\ChapterController;
 use App\Http\Controllers\front\CourseController;
 use App\Http\Controllers\front\LanguageController;
+use App\Http\Controllers\front\LessonController;
 use App\Http\Controllers\front\LevelController;
 use App\Http\Controllers\front\OutcomeController;
 use App\Http\Controllers\front\RequirementController;
@@ -43,4 +44,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('get-all-chapters', [ChapterController::class, 'getAllChapters'])->name('getAllChapters');
     Route::apiResource('chapters', ChapterController::class);
     Route::post('/sort-chapters', [ChapterController::class, 'sortChapters'])->name('sortChapters');
+
+    Route::get('get-all-lessons', [LessonController::class, 'getAllLessons'])->name('getAllLessons');
+    Route::apiResource('lessons', LessonController::class);
+
 });

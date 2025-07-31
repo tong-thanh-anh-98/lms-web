@@ -49,6 +49,7 @@ const UpdateChapter = ({ chapterData, showChapter, handleClose, setChapters }) =
             });
         }
     }, [chapterData, reset]);
+
     return (
         <>
             <Modal size='lg' show={showChapter} onHide={handleClose}>

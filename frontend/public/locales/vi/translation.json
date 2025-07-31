@@ -138,13 +138,20 @@
     "crossPrice": "Giá",
     "outcome": "Kết quả",
     "requirement": "Yêu cầu",
-    "labelIdle": "Kéo và Thả các tập tin của bạn hoặc Duyệt"
+    "labelIdle": "Kéo và Thả các tập tin của bạn hoặc Duyệt",
+    "chapter": "Chương",
+    "lesson": "Bài giảng",
+    "status": "Trạng thái"
   },
 
   "select": {
     "category": "Chọn một danh mục",
     "level": "Chọn một mức độ",
-    "language": "Chọn một ngôn ngữ"
+    "language": "Chọn một ngôn ngữ",
+    "chapter": "Chọn chương",
+    "status": "Chọn trạng thái",
+    "active": "Hiển thị",
+    "block": "Ẩn"
   },
 
   "placeholder": {
@@ -156,7 +163,8 @@
     "sellPrice": "Nhập giá bán khuyến mãi",
     "crossPrice": "Nhập giá",
     "outcome": "Nhập kết quả",
-    "requirement": "Nhập yêu cầu"
+    "requirement": "Nhập yêu cầu",
+    "lesson": "Nhập tên bài giảng"
   },
 
   "required": {
@@ -170,7 +178,10 @@
     "sellPrice": "Trường giá bán khuyến mãi là bắt buộc.",
     "crossPrice": "Trường giá là bắt buộc.",
     "outcome": "Trường kết quả là bắt buộc.",
-    "requirement": "Trường yêu cầu là bắt buộc."
+    "requirement": "Trường yêu cầu là bắt buộc.",
+    "chapter": "Trường chương là bắt buộc.",
+    "lesson": "Trường bài giảng là bắt buộc.",
+    "status": "Trường trạng thái là bắt buộc."
   },
 
   "message": {
@@ -198,7 +209,9 @@
     "title": "Tiêu đề",
     "chapter": "Chương",
     "update_chapter": "Cập nhật chương",
-    "delete_chapter": "Xóa chương"
+    "delete_chapter": "Xóa chương",
+    "add_lesson": "Thêm bài học",
+    "create_lesson": "Tạo bài học"
   },
 
   "common": {

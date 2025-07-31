@@ -6,18 +6,29 @@ import Accordion from 'react-bootstrap/Accordion';
 import { apiUrl, token } from '../../../common/Config';
 import UpdateChapter from './UpdateChapter';
 import ModalDelete from '../../../common/ModalDelete';
+import CreateLesson from './CreateLesson';
+import {Link} from 'react-router-dom';
+import { FaPlusCircle } from "react-icons/fa";
 
 const ManageChapter = ({ course, params }) => {
     const { t, i18n } = useTranslation();
     const [loading, setLoading] = useState(false);
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
+    // update chapter modal
     const [chapterData, setChapterData] = useState([]);
     const [showChapter, setShowChapter] = useState(false);
     const handleClose = () => setShowChapter(false);
     const handleShow = (chapter) => {
         setShowChapter(true);
         setChapterData(chapter);
+    };
+
+    // create lesson modal 
+    const [showLesson, setShowLesson] = useState(false);
+    const handleCloseLesson = () => setShowLesson(false);
+    const handleShowLesson = () => {
+        setShowLesson(true);
     };
 
     const [showModal, setShowModal] = useState(false);
@@ -120,7 +131,10 @@ const ManageChapter = ({ course, params }) => {
             <div className="card shadow-lg border-0 mt-4">
                 <div className="card-body p-4">
                     <div className="d-flex">
-                        <h4 className="h5 mb-3">{t('course.chapter')}</h4>
+                        <div className="d-flex justify-content-between w-100">
+                            <h4 className="h5 mb-3">{t('course.chapter')}</h4>
+                            <Link onClick={() => handleShowLesson()}><FaPlusCircle size={12} /> <strong>{t('course.add_lesson')}</strong></Link>
+                        </div>
                     </div>
                     <form className='mb-4' onSubmit={handleSubmit(onSubmit)}>
                         <div className="mb-3">
@@ -190,6 +204,12 @@ const ManageChapter = ({ course, params }) => {
                 onClose={() => setShowModal(false)}
                 onConfirm={deleteChapter}
                 isDeleting={isDeleting}
+            />
+
+            <CreateLesson
+                showLesson={showLesson}
+                handleCloseLesson={handleCloseLesson}
+                course={course}
             />
         </>
     )

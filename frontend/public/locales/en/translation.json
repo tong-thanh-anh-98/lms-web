@@ -138,13 +138,20 @@
     "crossPrice": "Cross price",
     "outcome": "Outcome",
     "requirement": "Requirement",
-    "labelIdle": "Drag & Drop your files or Browse"
+    "labelIdle": "Drag & Drop your files or Browse",
+    "chapter": "Chapter",
+    "lesson": "Lesson",
+    "status": "Status"
   },
 
   "select": {
     "category": "Select a category",
     "level": "Select a level",
-    "language": "Select a language"
+    "language": "Select a language",
+    "chapter": "Select a chapter",
+    "status": "Select a status",
+    "active": "Active",
+    "block": "Block"
   },
 
   "placeholder": {
@@ -156,7 +163,8 @@
     "sellPrice": "Enter your sell price",
     "crossPrice": "Enter your cross price",
     "outcome": "Enter your outcome",
-    "requirement": "Enter your requirement"
+    "requirement": "Enter your requirement",
+    "lesson": "Enter your lesson"
   },
 
   "required": {
@@ -170,7 +178,10 @@
     "sellPrice": "The sell price field is required.",
     "crossPrice": "The cross price field is required.",
     "outcome": "The outcome field is required.",
-    "requirement": "The requirement field is required."
+    "requirement": "The requirement field is required.",
+    "chapter": "The chapter field is required.",
+    "lesson": "The lesson field is required.",
+    "status": "The status field is required."
   },
 
   "message": {
@@ -198,8 +209,9 @@
     "title": "Title",
     "chapter": "Chapter",
     "update_chapter": "Update chapter",
-    "delete_chapter": "Delete chapter"
-
+    "delete_chapter": "Delete chapter",
+    "add_lesson": "Add lesson",
+    "create_lesson": "Create lesson"
   },
 
   "common": {
