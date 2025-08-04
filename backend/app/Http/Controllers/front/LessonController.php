@@ -17,7 +17,6 @@ class LessonController extends Controller
             $request->only([
                 'title',
                 'chapter_id',
-                // 'is_free_preview',
                 'duration',
                 'video',
                 'description',

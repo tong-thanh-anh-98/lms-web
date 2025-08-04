@@ -91,7 +91,7 @@ const CreateLesson = ({ showLesson, handleCloseLesson, course }) => {
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="chapter" className='form-label'>{t('label.status')}</label>
+                            <label htmlFor="status" className='form-label'>{t('label.status')}</label>
                             <select
                                 {...register("status", { required: t('required.status') })}
                                 className={`form-select ${errors.status && 'is-invalid'}`}

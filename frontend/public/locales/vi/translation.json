@@ -141,7 +141,9 @@
     "labelIdle": "Kéo và Thả các tập tin của bạn hoặc Duyệt",
     "chapter": "Chương",
     "lesson": "Bài giảng",
-    "status": "Trạng thái"
+    "status": "Trạng thái",
+    "duration": "Khoảng thời gian (phút)",
+    "preview": "Xem trước"
   },
 
   "select": {
@@ -151,7 +153,10 @@
     "chapter": "Chọn chương",
     "status": "Chọn trạng thái",
     "active": "Hiển thị",
-    "block": "Ẩn"
+    "block": "Ẩn",
+    "preview": "Chọn xem trước",
+    "yes": "Xem",
+    "no": "Không"
   },
 
   "placeholder": {
@@ -164,7 +169,9 @@
     "crossPrice": "Nhập giá",
     "outcome": "Nhập kết quả",
     "requirement": "Nhập yêu cầu",
-    "lesson": "Nhập tên bài giảng"
+    "lesson": "Nhập tên bài giảng",
+    "chapter": "Nhập tên chương",
+    "duration": "Nhập khoảng thời gian"
   },
 
   "required": {
@@ -181,7 +188,8 @@
     "requirement": "Trường yêu cầu là bắt buộc.",
     "chapter": "Trường chương là bắt buộc.",
     "lesson": "Trường bài giảng là bắt buộc.",
-    "status": "Trường trạng thái là bắt buộc."
+    "status": "Trường trạng thái là bắt buộc.",
+    "duration": "Trường khoảng thời gian là bắt buộc"
   },
 
   "message": {
@@ -212,6 +220,13 @@
     "delete_chapter": "Xóa chương",
     "add_lesson": "Thêm bài học",
     "create_lesson": "Tạo bài học"
+  },
+
+  "lesson": {
+    "lesson": "Bài giảng",
+    "detail": "Thông tin cơ bản",
+    "title": "Tiêu đề",
+    "edit": "Chỉnh sửa bài giảng"
   },
 
   "common": {

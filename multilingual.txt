@@ -107,5 +107,26 @@ i18n
         },
     });
 
+    // cấu hình để tạo file dịch từ backend
+    // i18n
+    //     .use(HttpApi)
+    //     .use(LanguageDetector)
+    //     .use(initReactI18next)
+    //     .init({
+    //         supportedLngs: ['vi', 'en'],
+    //         fallbackLng: 'vi',
+    //         detection: {
+    //             order: ['localStorage', 'navigator', 'htmlTag'],
+    //             caches: ['localStorage']
+    //         },
+    //         backend: {
+    //             loadPath: 'http://localhost:8000/api/translations/{{lng}}',
+    //         },
+    //         react: {
+    //             useSuspense: true,
+    //         },
+    //         // debug: true // Bật debug để xem log trên console
+    //     });
+
 export default i18n;
 {code}

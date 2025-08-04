@@ -141,7 +141,9 @@
     "labelIdle": "Drag & Drop your files or Browse",
     "chapter": "Chapter",
     "lesson": "Lesson",
-    "status": "Status"
+    "status": "Status",
+    "duration": "Duration (mins)",
+    "preview": "Preview"
   },
 
   "select": {
@@ -151,7 +153,10 @@
     "chapter": "Select a chapter",
     "status": "Select a status",
     "active": "Active",
-    "block": "Block"
+    "block": "Block",
+    "preview": "Select free preview",
+    "yes": "Yes",
+    "no": "No"
   },
 
   "placeholder": {
@@ -164,7 +169,9 @@
     "crossPrice": "Enter your cross price",
     "outcome": "Enter your outcome",
     "requirement": "Enter your requirement",
-    "lesson": "Enter your lesson"
+    "lesson": "Enter your lesson",
+    "chapter": "Enter your chapter",
+    "duration": "Enter your duration"
   },
 
   "required": {
@@ -181,7 +188,8 @@
     "requirement": "The requirement field is required.",
     "chapter": "The chapter field is required.",
     "lesson": "The lesson field is required.",
-    "status": "The status field is required."
+    "status": "The status field is required.",
+    "duration": "The duration field is required"
   },
 
   "message": {
@@ -212,6 +220,13 @@
     "delete_chapter": "Delete chapter",
     "add_lesson": "Add lesson",
     "create_lesson": "Create lesson"
+  },
+
+  "lesson": {
+    "lesson": "Lesson",
+    "detail": "Basic information",
+    "title": "Title",
+    "edit": "Edit lesson"
   },
 
   "common": {
