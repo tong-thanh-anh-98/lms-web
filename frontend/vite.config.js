@@ -13,6 +13,14 @@ export default defineConfig({
         hmr: {
             host: 'localhost', // Nếu không chạy Docker trên localhost (VD: WSL2), hãy đổi thành IP máy thật
             port: 5173,
+        },
+        proxy: {
+            // proxy /uploads từ Vite dev -> nginx host (trên host máy dev)
+            '/uploads': {
+                target: 'http://localhost:5173', // lưu ý: đây là host máy dev
+                changeOrigin: true,
+                secure: false,
+            }
         }
     },
     plugins: [react()],
