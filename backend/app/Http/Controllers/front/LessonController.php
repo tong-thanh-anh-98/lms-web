@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LessonRequest;
+use App\Services\UploadService;
+use Illuminate\Support\Facades\Validator;
 
 class LessonController extends Controller
 {
@@ -190,6 +192,64 @@ class LessonController extends Controller
 
             return response()->json([
                 'status'  => 500,
+                'message' => __('message.error'),
+            ], 500);
+        }
+    }
+
+    public function saveVideo(Request $request, $id, UploadService $uploadService)
+    {
+        DB::beginTransaction();
+
+        try {
+            $lesson = Lesson::find($id);
+            if (!$lesson) {
+                return response()->json([
+                    'status' => 404,
+                    'message' => __('message.not_found'),
+                ], 404);
+            }
+
+            $validator = Validator::make($request->all(), [
+                'video' => 'required|mimes:mp4'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 400,
+                    'errors' => $validator->errors(),
+                ], 400);
+            }
+
+            // Xóa video cũ nếu có
+            if (!empty($lesson->video)) {
+                $uploadService->deleteVideo('courses/videos', $lesson->video);
+            }
+
+            // Upload video mới
+            $videoName = $uploadService->uploadVideo($request->file('video'), 'courses/videos');
+            $lesson->video = $videoName;
+            $lesson->save();
+
+            DB::commit();
+
+            // Tạo URL public tới file
+            $videoUrl = asset("uploads/courses/videos/{$videoName}");
+
+            return response()->json([
+                'status' => 200,
+                'message' => __('message.uploaded'),
+                'data' => [
+                    'lesson' => $lesson,
+                    'video_url' => $videoUrl,
+                ],
+            ], 200);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            Log::error('Upload video error: ' . $e->getMessage());
+
+            return response()->json([
+                'status' => 500,
                 'message' => __('message.error'),
             ], 500);
         }

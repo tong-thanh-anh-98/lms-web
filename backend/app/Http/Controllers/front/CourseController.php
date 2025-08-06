@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CourseRequest;
-use App\Services\ImageUploadService;
+use App\Services\UploadService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -187,7 +187,7 @@ class CourseController extends Controller
         }
     }
 
-    public function saveCourseImage(Request $request, $id, ImageUploadService $imageService)
+    public function saveCourseImage(Request $request, $id, UploadService $imageService)
     {
         DB::beginTransaction();
 
@@ -201,7 +201,7 @@ class CourseController extends Controller
             }
 
             $validator = Validator::make($request->all(), [
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:20480',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp',
             ]);
 
             if ($validator->fails()) {

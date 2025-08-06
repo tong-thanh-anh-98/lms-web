@@ -19,4 +19,15 @@ class Lesson extends Model
         'sort_order',
         'status'
     ];
+
+    protected $appends = ['video_url'];
+
+    public function getVideoUrlAttribute()
+    {
+        if (empty($this->video)) {
+            return "";
+        }
+
+        return asset('uploads/courses/videos/' . $this->video);
+    }
 }

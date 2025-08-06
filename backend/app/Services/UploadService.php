@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 
-class ImageUploadService
+class UploadService
 {
     /**
      * Upload image and optionally create a thumbnail
@@ -62,6 +62,43 @@ class ImageUploadService
 
         if (File::exists($smallImagePath)) {
             File::delete($smallImagePath);
+        }
+    }
+
+    /**
+     * Upload video
+     *
+     * @param \Illuminate\Http\UploadedFile $video
+     * @param string $folder
+     * @return string video name
+     */
+    public function uploadVideo($video, $folder)
+    {
+        $videoName = Str::uuid() . '.' . $video->getClientOriginalExtension();
+
+        $uploadPath = public_path("uploads/{$folder}");
+        if (!File::exists($uploadPath)) {
+            File::makeDirectory($uploadPath, 0755, true);
+        }
+
+        $video->move($uploadPath, $videoName);
+
+        return $videoName;
+    }
+
+    /**
+     * Delete video
+     *
+     * @param string $folder
+     * @param string $videoName
+     * @return void
+     */
+    public function deleteVideo($folder, $videoName)
+    {
+        $videoPath = public_path("uploads/{$folder}/{$videoName}");
+
+        if (File::exists($videoPath)) {
+            File::delete($videoPath);
         }
     }
 }

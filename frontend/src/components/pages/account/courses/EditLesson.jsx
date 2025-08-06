@@ -7,12 +7,13 @@ import UserSidebar from '../../../common/UserSidebar';
 import { apiUrl, token } from '../../../common/Config';
 import { toast } from 'react-toastify';
 import JoditEditor from 'jodit-react';
+import LessonVideo from './LessonVideo';
 
 const EditLesson = ({ placeholder }) => {
     const { t, i18n } = useTranslation();
     const [loading, setLoading] = useState(false);
     const params = useParams();
-    const [, setLesson] = useState([]);
+    const [lesson, setLesson] = useState([]);
     const [chapters, setChapters] = useState([]);
     const { register, setError, handleSubmit, reset, formState: { errors } } = useForm();
 
@@ -138,6 +139,7 @@ const EditLesson = ({ placeholder }) => {
                             <div className='col-md-12 mt-5 mb-3'>
                                 <div className='d-flex justify-content-between'>
                                     <h2 className='h4 mb-0 pb-0'>{t('lesson.edit')}</h2>
+                                    <Link className='btn btn-primary' to={`/account/courses/edit/${params.id}`}>Back</Link>
                                 </div>
                             </div>
 
@@ -147,7 +149,7 @@ const EditLesson = ({ placeholder }) => {
 
                             <div className='col-lg-9'>
                                 <div className='row'>
-                                    <div className="col-md-7">
+                                    <div className="col-md-8">
                                         <form onSubmit={handleSubmit(onSubmit)}>
                                             <div className="card border-0 shadow-lg">
                                                 <div className="card-body p-4">
@@ -243,9 +245,12 @@ const EditLesson = ({ placeholder }) => {
                                             </div>
                                         </form>
                                     </div>
+
+                                    <div className="col-md-4">
+                                        <LessonVideo lesson={lesson} />
+                                    </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </section>

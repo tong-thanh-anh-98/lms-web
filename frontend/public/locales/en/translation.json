@@ -226,7 +226,8 @@
     "lesson": "Lesson",
     "detail": "Basic information",
     "title": "Title",
-    "edit": "Edit lesson"
+    "edit": "Edit lesson",
+    "video": "Video"
   },
 
   "common": {

@@ -180,7 +180,7 @@ const ManageChapter = ({ course, params }) => {
                                                     {
                                                         chapter.lessons && chapter.lessons.map(lesson => {
                                                             return (
-                                                                <div className='card shadow px-3 py-2 mb-2'>
+                                                                <div className='card shadow px-3 py-2 mb-2' key={`chapter-${chapter.id}`}>
                                                                     <div className="row">
                                                                         <div className="col-md-7">
                                                                             {lesson.title}
