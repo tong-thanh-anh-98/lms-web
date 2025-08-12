@@ -5,7 +5,7 @@ import { apiUrl, token } from '../../../common/Config';
 import { toast } from 'react-toastify';
 import { Modal } from 'react-bootstrap';
 
-const CreateLesson = ({ showLesson, handleCloseLesson, course }) => {
+const CreateLesson = ({ showLesson, handleCloseLesson, course, refreshCourse  }) => {
     const { t, i18n } = useTranslation();
     const [loading, setLoading] = useState(false);
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
@@ -29,6 +29,11 @@ const CreateLesson = ({ showLesson, handleCloseLesson, course }) => {
 
             if (response.ok && result.status === 201) {
                 toast.success(result.message);
+
+                // Gọi callback để reload dữ liệu course
+                if (typeof refreshCourse === 'function') {
+                    await refreshCourse();
+                }
 
                 reset({
                     'chapter_id': '',

@@ -2,7 +2,7 @@
 
 return [
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie', 'uploads/*', 'translations/*'],
+    'paths' => ['api/*', 'sanctum/csrf-cookie', 'translations/*', 'uploads/*', 'save-lesson-video/*'],
 
     'allowed_methods' => ['*'],
 
@@ -12,7 +12,8 @@ return [
 
     'allowed_headers' => ['*'],
 
-    'exposed_headers' => [],
+    // 'exposed_headers' => [],
+    'exposed_headers' => ['Content-Length', 'Content-Range'],
 
     'max_age' => 0,
 

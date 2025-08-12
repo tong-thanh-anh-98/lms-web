@@ -12,7 +12,7 @@ import { FaPlusCircle } from "react-icons/fa";
 import { HiPencilSquare } from "react-icons/hi2";
 import { FaTrash } from "react-icons/fa";
 
-const ManageChapter = ({ course, params }) => {
+const ManageChapter = ({ course, params, refreshCourse }) => {
     const { t, i18n } = useTranslation();
     const [loading, setLoading] = useState(false);
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
@@ -36,6 +36,8 @@ const ManageChapter = ({ course, params }) => {
     const [showModal, setShowModal] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
     const [chapterId, setDeleteChapter] = useState(null);
+    const [lessonId, setDeleteLesson] = useState(null);
+    const [deleteType, setDeleteType] = useState(null); // 'chapter' | 'lesson' | null
 
     const chaptersReducer = (state, action) => {
         switch (action.type) {
@@ -122,6 +124,35 @@ const ManageChapter = ({ course, params }) => {
 
     };
 
+    const deleteLesson = async () => {
+        setIsDeleting(true);
+        try {
+            const res = await fetch(`${apiUrl}/lessons/${lessonId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Accept-Language': i18n.language,
+                    'Authorization': `Bearer ${token}`
+                }
+
+            });
+            const result = await res.json();
+
+            if (result.status === 200) {
+                setChapters({ type: "UPDATE_CHAPTER", payload: result.chapter });
+                toast.success(result.message);
+            } else {
+                toast.error(result.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        } finally {
+            setShowModal(false);
+            setIsDeleting(false);
+        }
+    }
+
     useEffect(() => {
         if (course.chapters) {
             setChapters({ type: "SET_CHAPTERS", payload: course.chapters });
@@ -162,7 +193,7 @@ const ManageChapter = ({ course, params }) => {
                         {
                             chapters.map((chapter, index) => {
                                 return (
-                                    <Accordion.Item key={`chapter-${chapter.id}`} eventKey={index}>
+                                    <Accordion.Item key={chapter.id} eventKey={index}>
                                         <Accordion.Header>{chapter.title}</Accordion.Header>
                                         <Accordion.Body>
                                             <div className="row">
@@ -180,7 +211,7 @@ const ManageChapter = ({ course, params }) => {
                                                     {
                                                         chapter.lessons && chapter.lessons.map(lesson => {
                                                             return (
-                                                                <div className='card shadow px-3 py-2 mb-2' key={`chapter-${chapter.id}`}>
+                                                                <div className='card shadow px-3 py-2 mb-2' key={`${chapter.id}-${lesson.id}`}>
                                                                     <div className="row">
                                                                         <div className="col-md-7">
                                                                             {lesson.title}
@@ -199,7 +230,15 @@ const ManageChapter = ({ course, params }) => {
                                                                                 <HiPencilSquare />
                                                                             </Link>
 
-                                                                            <Link className='ms-2 text-danger'>
+                                                                            <Link
+                                                                                className='ms-2 text-danger'
+                                                                                disabled={isDeleting}
+                                                                                onClick={() => {
+                                                                                    setDeleteType('lesson');
+                                                                                    setDeleteLesson(lesson.id);
+                                                                                    setShowModal(true);
+                                                                                }}
+                                                                            >
                                                                                 <FaTrash />
                                                                             </Link>
                                                                         </div>
@@ -217,6 +256,7 @@ const ManageChapter = ({ course, params }) => {
                                                             className='btn btn-danger btn-sm'
                                                             disabled={isDeleting}
                                                             onClick={() => {
+                                                                setDeleteType('chapter');
                                                                 setDeleteChapter(chapter.id);
                                                                 setShowModal(true);
                                                             }}
@@ -252,7 +292,7 @@ const ManageChapter = ({ course, params }) => {
             <ModalDelete
                 show={showModal}
                 onClose={() => setShowModal(false)}
-                onConfirm={deleteChapter}
+                onConfirm={deleteType === 'chapter' ? deleteChapter : deleteLesson}
                 isDeleting={isDeleting}
             />
 
@@ -260,6 +300,7 @@ const ManageChapter = ({ course, params }) => {
                 showLesson={showLesson}
                 handleCloseLesson={handleCloseLesson}
                 course={course}
+                refreshCourse={refreshCourse} // 👈 truyền tiếp
             />
         </>
     )

@@ -23,13 +23,8 @@ const LessonVideo = ({ lesson }) => {
     const [videoUrl, setVideoUrl] = useState();
 
     useEffect(() => {
-        // if (lesson) {
-        //     setVideoUrl(lesson.video_url);
-        // }
-        const url = lesson?.video_url || lesson?.data?.video_url;
-        if (url) {
-            console.log('Video URL:', url);
-            setVideoUrl(url);
+        if (lesson) {
+            setVideoUrl(lesson.video_url);
         }
     }, [lesson]);
 
@@ -55,15 +50,12 @@ const LessonVideo = ({ lesson }) => {
                                 headers: {
                                     'Accept-Language': i18n.language,
                                     'Authorization': `Bearer ${token}`,
-                                    'Content-type': 'video/mp4',
-                                    'Accept-Ranges': 'bytes'
                                 },
                                 onload: (response) => {
                                     try {
                                         response = JSON.parse(response);
                                         toast.success(response.message);
                                         setVideoUrl(response.data.video_url);
-                                        // Clear the files
                                         setFiles([]);
                                     } catch (error) {
                                         console.error(error);
@@ -79,17 +71,15 @@ const LessonVideo = ({ lesson }) => {
                     />
 
                     {videoUrl && (
-                        // <ReactPlayer
-                        //     url={videoUrl}
-                        //     width="100%"
-                        //     height="100%"
-                        //     controls
-                        // />
                         <video
                             src={videoUrl}
                             width="100%"
                             height="100%"
                             controls
+                            preload="metadata"
+                            onLoadedMetadata={(e) => {
+                                e.target.currentTime = 0;
+                            }}
                         />
                     )}
 

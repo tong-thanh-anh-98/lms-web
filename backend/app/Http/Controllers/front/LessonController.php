@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\front;
 
+use App\Models\Chapter;
 use App\Models\Lesson;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -168,7 +169,7 @@ class LessonController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
         try {
             $lesson = Lesson::find($id);
@@ -180,12 +181,15 @@ class LessonController extends Controller
                 ], 404);
             }
 
+            $chapterId = $lesson->chapter_id;
             $lesson->delete();
+            $chapter = Chapter::where('id', $chapterId)->with('lessons')->first();
 
             return response()->json([
                 'status'  => 200,
                 'message' => __('message.deleted'),
-                'data'    => $lesson
+                'data'    => $lesson,
+                'chapter' => $chapter
             ], 200);
         } catch (\Throwable $e) {
             Log::error('Errors: ' . $e->getMessage());

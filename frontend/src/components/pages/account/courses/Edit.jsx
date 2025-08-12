@@ -26,7 +26,6 @@ const Edit = () => {
     const price = useWatch({ control, name: "price" });
     const crossPrice = useWatch({ control, name: "cross_price" });
 
-
     const fetchCourses = useCallback(async () => {
         try {
             const response = await fetch(`${apiUrl}/courses/${params.id}`, {
@@ -321,6 +320,7 @@ const Edit = () => {
                                     <ManageChapter
                                         course={course}
                                         params={params}
+                                        refreshCourse={fetchCourses} // 👈 truyền xuống
                                     />
                                 </div>
 

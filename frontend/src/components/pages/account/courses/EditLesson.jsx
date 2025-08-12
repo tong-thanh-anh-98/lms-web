@@ -17,6 +17,8 @@ const EditLesson = ({ placeholder }) => {
     const [chapters, setChapters] = useState([]);
     const { register, setError, handleSubmit, reset, formState: { errors } } = useForm();
 
+    const [courseId, setCourseId] = useState(null);
+
     const editor = useRef(null);
     const [description, setDescription] = useState('');
     const config = useMemo(() => ({
@@ -43,6 +45,7 @@ const EditLesson = ({ placeholder }) => {
 
             if (response.ok && result.status === 200) {
                 setLesson(data);
+                setCourseId(data.course_id); // lưu course_id
                 reset({
                     title: data.title,
                     chapter_id: data.chapter_id,
@@ -139,7 +142,7 @@ const EditLesson = ({ placeholder }) => {
                             <div className='col-md-12 mt-5 mb-3'>
                                 <div className='d-flex justify-content-between'>
                                     <h2 className='h4 mb-0 pb-0'>{t('lesson.edit')}</h2>
-                                    <Link className='btn btn-primary' to={`/account/courses/edit/${params.id}`}>Back</Link>
+                                    <Link className='btn btn-primary' to={`/account/courses/edit/${courseId || params.courseId}`}>Back</Link>
                                 </div>
                             </div>
 
