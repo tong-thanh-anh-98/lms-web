@@ -258,4 +258,32 @@ class LessonController extends Controller
             ], 500);
         }
     }
+
+    public function sortLessons(Request $request)
+    {
+        try {
+            $chapterId = '';
+            if (!empty($request->lessons)) {
+                foreach ($request->lessons as $key => $lesson) {
+                    $chapterId = $lesson['chapter_id'];
+                    Lesson::where('id', $lesson['id'])->update(['sort_order' => $key]);
+                }
+            }
+
+            $chapter = Chapter::where('id', $chapterId)->with('lessons')->first();
+
+            return response()->json([
+                'status'  => 200,
+                'chapter' => $chapter,
+                'message' => __('message.success_sort'),
+            ], 200);
+        } catch (\Throwable $e) {
+            Log::error('Errors: ' . $e->getMessage());
+
+            return response()->json([
+                'status'  => 500,
+                'message' => __('message.error'),
+            ], 500);
+        }
+    }
 }

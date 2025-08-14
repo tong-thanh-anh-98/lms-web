@@ -141,6 +141,7 @@ class ChapterController extends Controller
 
             $data = $this->extractChapterData($request);
             $chapter->update($data);
+            // $chapter->load('lesson');
             DB::commit();
 
             return response()->json([
@@ -193,14 +194,19 @@ class ChapterController extends Controller
     public function sortChapters(Request $request)
     {
         try {
+            $courseId = '';
             if (!empty($request->chapters)) {
                 foreach ($request->chapters as $key => $chapter) {
+                    $courseId =$chapter['course_id'];
                     Chapter::where('id', $chapter['id'])->update(['sort_order' => $key]);
                 }
             }
 
+            $chapters = Chapter::where('course_id', $courseId)->with('lessons')->orderBy('sort_order', 'ASC')->get();
+
             return response()->json([
                 'status'  => 200,
+                'chapters' => $chapters,
                 'message' => __('message.success_sort'),
             ], 200);
         } catch (\Throwable $e) {

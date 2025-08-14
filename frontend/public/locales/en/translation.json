@@ -219,7 +219,8 @@
     "update_chapter": "Update chapter",
     "delete_chapter": "Delete chapter",
     "add_lesson": "Add lesson",
-    "create_lesson": "Create lesson"
+    "create_lesson": "Create lesson",
+    "reorder_chapter": "Reorder chapter"
   },
 
   "lesson": {
@@ -227,7 +228,10 @@
     "detail": "Basic information",
     "title": "Title",
     "edit": "Edit lesson",
-    "video": "Video"
+    "video": "Video",
+    "sort": "Sort",
+    "reorder": "Reorder Lessons",
+    "sort_chapter": "Sort chapter"
   },
 
   "common": {

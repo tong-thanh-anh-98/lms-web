@@ -152,7 +152,7 @@ const EditLesson = ({ placeholder }) => {
 
                             <div className='col-lg-9'>
                                 <div className='row'>
-                                    <div className="col-md-8">
+                                    <div className="col-md-7">
                                         <form onSubmit={handleSubmit(onSubmit)}>
                                             <div className="card border-0 shadow-lg">
                                                 <div className="card-body p-4">
@@ -249,7 +249,7 @@ const EditLesson = ({ placeholder }) => {
                                         </form>
                                     </div>
 
-                                    <div className="col-md-4">
+                                    <div className="col-md-5">
                                         <LessonVideo lesson={lesson} />
                                     </div>
                                 </div>

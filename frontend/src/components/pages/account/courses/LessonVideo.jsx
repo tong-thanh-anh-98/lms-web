@@ -9,6 +9,19 @@ import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import { apiUrl, token } from '../../../common/Config';
 import ReactPlayer from 'react-player';
+import {
+    MediaController,
+    MediaControlBar,
+    MediaTimeRange,
+    MediaTimeDisplay,
+    MediaVolumeRange,
+    MediaPlaybackRateButton,
+    MediaPlayButton,
+    MediaSeekBackwardButton,
+    MediaSeekForwardButton,
+    MediaMuteButton,
+    MediaFullscreenButton,
+} from "media-chrome/react";
 
 // Register FilePond plugins
 registerPlugin(
@@ -23,8 +36,10 @@ const LessonVideo = ({ lesson }) => {
     const [videoUrl, setVideoUrl] = useState();
 
     useEffect(() => {
-        if (lesson) {
-            setVideoUrl(lesson.video_url);
+        const url = lesson?.video_url || lesson?.data?.video_url;
+        if (url) {
+            // console.log('Video URL:', url);
+            setVideoUrl(url);
         }
     }, [lesson]);
 
@@ -70,18 +85,43 @@ const LessonVideo = ({ lesson }) => {
                         labelIdle={t('label.labelIdle')}
                     />
 
-                    {videoUrl && (
-                        <video
+                    {/* {videoUrl && (
+                        <video width="100%" height="100%" controls>
+                            <source src={videoUrl} type="video/mp4" />
+                        </video>
+                    )} */}
+
+                    <MediaController
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                            // height: 'auto',
+                            aspectRatio: "16/9",
+                        }}
+                    >
+                        <ReactPlayer
+                            slot="media"
                             src={videoUrl}
-                            width="100%"
-                            height="100%"
-                            controls
-                            preload="metadata"
-                            onLoadedMetadata={(e) => {
-                                e.target.currentTime = 0;
+                            controls={false}
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                                "--controls": "none",
                             }}
-                        />
-                    )}
+                        ></ReactPlayer>
+
+                        <MediaControlBar>
+                            <MediaPlayButton />
+                            <MediaSeekBackwardButton seekOffset={10} />
+                            <MediaSeekForwardButton seekOffset={10} />
+                            <MediaTimeRange />
+                            <MediaTimeDisplay showDuration />
+                            <MediaMuteButton />
+                            <MediaVolumeRange />
+                            <MediaPlaybackRateButton />
+                            <MediaFullscreenButton />
+                        </MediaControlBar>
+                    </MediaController>
 
                 </div>
             </div>

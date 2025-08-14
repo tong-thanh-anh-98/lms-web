@@ -320,7 +320,7 @@ const Edit = () => {
                                     <ManageChapter
                                         course={course}
                                         params={params}
-                                        refreshCourse={fetchCourses} // 👈 truyền xuống
+                                        refreshCourse={fetchCourses}
                                     />
                                 </div>
 

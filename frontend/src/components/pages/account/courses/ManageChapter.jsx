@@ -11,6 +11,9 @@ import { Link } from 'react-router-dom';
 import { FaPlusCircle } from "react-icons/fa";
 import { HiPencilSquare } from "react-icons/hi2";
 import { FaTrash } from "react-icons/fa";
+import LessonSort from './LessonSort';
+import SortChapters from './SortChapters';
+import { AiOutlineDrag } from "react-icons/ai";
 
 const ManageChapter = ({ course, params, refreshCourse }) => {
     const { t, i18n } = useTranslation();
@@ -20,6 +23,7 @@ const ManageChapter = ({ course, params, refreshCourse }) => {
     // update chapter modal
     const [chapterData, setChapterData] = useState([]);
     const [showChapter, setShowChapter] = useState(false);
+    const [lessonsData, setLessonsData] = useState([]);
     const handleClose = () => setShowChapter(false);
     const handleShow = (chapter) => {
         setShowChapter(true);
@@ -29,8 +33,21 @@ const ManageChapter = ({ course, params, refreshCourse }) => {
     // create lesson modal 
     const [showLesson, setShowLesson] = useState(false);
     const handleCloseLesson = () => setShowLesson(false);
-    const handleShowLesson = () => {
-        setShowLesson(true);
+    const handleShowLesson = () => { setShowLesson(true); };
+
+    // sort lesson modal 
+    const [showLessonSortModal, setShowLessonSortModal] = useState(false);
+    const handleCloseLessonSortModal = () => setShowLessonSortModal(false);
+    const handleShowLessonSortModal = (lessons) => {
+        setLessonsData(lessons);
+        setShowLessonSortModal(true);
+    };
+
+    // sort chapter modal 
+    const [showChapterSortModal, setShowChapterSortModal] = useState(false);
+    const handleCloseChapterSortModal = () => setShowChapterSortModal(false);
+    const handleShowChapterSortModal = () => {
+        setShowChapterSortModal(true);
     };
 
     const [showModal, setShowModal] = useState(false);
@@ -43,17 +60,31 @@ const ManageChapter = ({ course, params, refreshCourse }) => {
         switch (action.type) {
             case "SET_CHAPTERS":
                 return action.payload;
+
             case "ADD_CHAPTER":
                 return [...state, action.payload];
+
+            // case "UPDATE_CHAPTER":
+            //     return state.map(chapter => {
+            //         if (chapter.id === action.payload.id) {
+            //             return action.payload;
+            //         }
+            //         return chapter;
+            //     });
+
+            // case "DELETE_CHAPTER":
+            //     return state.filter(chapter => chapter.id !== action.payload.id);
+
             case "UPDATE_CHAPTER":
-                return state.map(chapter => {
-                    if (chapter.id === action.payload.id) {
-                        return action.payload;
-                    }
-                    return chapter;
-                });
+                if (!action.payload || !action.payload.id) return state;
+                return state.map(chapter =>
+                    chapter.id === action.payload.id ? action.payload : chapter
+                );
+
             case "DELETE_CHAPTER":
+                if (!action.payload || !action.payload.id) return state;
                 return state.filter(chapter => chapter.id !== action.payload.id);
+
             default:
                 return state;
         }
@@ -109,9 +140,12 @@ const ManageChapter = ({ course, params, refreshCourse }) => {
             });
             const result = await res.json();
 
+            // if (result.status === 200) {
+            //     setChapters({ type: "DELETE_CHAPTER", payload: result.data });
+            //     toast.success(result.message);
+            // } 
             if (result.status === 200) {
-                setChapters({ type: "DELETE_CHAPTER", payload: result.data });
-                toast.success(result.message);
+                setChapters({ type: "DELETE_CHAPTER", payload: { id: chapterId } });
             } else {
                 toast.error(result.message);
             }
@@ -139,9 +173,14 @@ const ManageChapter = ({ course, params, refreshCourse }) => {
             });
             const result = await res.json();
 
+            // if (result.status === 200) {
+            //     setChapters({ type: "UPDATE_CHAPTER", payload: result.chapter });
+            //     toast.success(result.message);
+            // }
             if (result.status === 200) {
-                setChapters({ type: "UPDATE_CHAPTER", payload: result.chapter });
-                toast.success(result.message);
+                if (result.chapter && result.chapter.id) {
+                    setChapters({ type: "UPDATE_CHAPTER", payload: result.chapter });
+                }
             } else {
                 toast.error(result.message);
             }
@@ -166,7 +205,10 @@ const ManageChapter = ({ course, params, refreshCourse }) => {
                     <div className="d-flex">
                         <div className="d-flex justify-content-between w-100">
                             <h4 className="h5 mb-3">{t('course.chapter')}</h4>
-                            <Link onClick={() => handleShowLesson()}><FaPlusCircle size={12} /> <strong>{t('course.add_lesson')}</strong></Link>
+                            <div>
+                                <Link onClick={() => handleShowLesson()}><FaPlusCircle size={12} /> <strong>{t('course.add_lesson')}</strong></Link>
+                                <Link className='ms-2' onClick={() => handleShowChapterSortModal()}><AiOutlineDrag size={12} /> <strong>{t('course.reorder_chapter')}</strong></Link>
+                            </div>
                         </div>
                     </div>
                     <form className='mb-4' onSubmit={handleSubmit(onSubmit)}>
@@ -199,11 +241,11 @@ const ManageChapter = ({ course, params, refreshCourse }) => {
                                             <div className="row">
                                                 <div className="col-md-12">
                                                     <div className="d-flex justify-content-between mb-2 mt-4">
-                                                        <h4 className="h5">Lesson</h4>
+                                                        <h4 className="h5">{t("lesson.lesson")}</h4>
 
-                                                        <a href="#" className='h6' data-discover='true'>
-                                                            <strong>Reorder Lessons</strong>
-                                                        </a>
+                                                        <Link onClick={() => handleShowLessonSortModal(chapter.lessons)} href="#" className='h6' data-discover='true'>
+                                                            <strong>{t('lesson.reorder')}</strong>
+                                                        </Link>
                                                     </div>
                                                 </div>
 
@@ -211,7 +253,7 @@ const ManageChapter = ({ course, params, refreshCourse }) => {
                                                     {
                                                         chapter.lessons && chapter.lessons.map(lesson => {
                                                             return (
-                                                                <div className='card shadow px-3 py-2 mb-2' key={`${chapter.id}-${lesson.id}`}>
+                                                                <div key={lesson.id} className='card shadow px-3 py-2 mb-2'>
                                                                     <div className="row">
                                                                         <div className="col-md-7">
                                                                             {lesson.title}
@@ -300,7 +342,21 @@ const ManageChapter = ({ course, params, refreshCourse }) => {
                 showLesson={showLesson}
                 handleCloseLesson={handleCloseLesson}
                 course={course}
-                refreshCourse={refreshCourse} // 👈 truyền tiếp
+                refreshCourse={refreshCourse}
+            />
+
+            <LessonSort
+                showLessonSortModal={showLessonSortModal}
+                handleCloseLessonSortModal={handleCloseLessonSortModal}
+                lessonsData={lessonsData}
+                setChapters={setChapters}
+            />
+
+            <SortChapters
+                showChapterSortModal={showChapterSortModal}
+                handleCloseChapterSortModal={handleCloseChapterSortModal}
+                course={course}
+                setChapters={setChapters}
             />
         </>
     )

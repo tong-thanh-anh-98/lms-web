@@ -219,7 +219,8 @@
     "update_chapter": "Cập nhật chương",
     "delete_chapter": "Xóa chương",
     "add_lesson": "Thêm bài học",
-    "create_lesson": "Tạo bài học"
+    "create_lesson": "Tạo bài học",
+    "reorder_chapter": "Sắp xếp chương"
   },
 
   "lesson": {
@@ -227,7 +228,10 @@
     "detail": "Thông tin cơ bản",
     "title": "Tiêu đề",
     "edit": "Chỉnh sửa bài giảng",
-    "video": "Video"
+    "video": "Video",
+    "sort": "Sắp xếp",
+    "reorder": "Sắp xếp bài học",
+    "sort_chapter": "Sắp xếp chương"
   },
 
   "common": {

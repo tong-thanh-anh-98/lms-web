@@ -48,5 +48,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('get-all-lessons', [LessonController::class, 'getAllLessons'])->name('getAllLessons');
     Route::apiResource('lessons', LessonController::class);
     Route::post('/save-lesson-video/{id}', [LessonController::class, 'saveVideo'])->name('saveVideo');
+    Route::post('/sort-lessons', [LessonController::class, 'sortLessons'])->name('sortLessons');
 
 });
