@@ -6,7 +6,6 @@ import { apiUrl, token } from '../../../common/Config';
 import { toast } from 'react-toastify';
 
 const SortChapters = ({ showChapterSortModal, handleCloseChapterSortModal, setChapters, chapters }) => {
-    // const SortChapters = ({ showChapterSortModal, handleCloseChapterSortModal, course, setChapters }) => {
     const { t, i18n } = useTranslation();
     const [chaptersData, setChaptersData] = useState([]);
 
