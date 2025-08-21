@@ -201,7 +201,7 @@ class LessonController extends Controller
         }
     }
 
-    public function saveVideo(Request $request, $id, UploadService $uploadService)
+    public function saveVideo(Request $request, $id, UploadService $videoService)
     {
         DB::beginTransaction();
 
@@ -227,11 +227,11 @@ class LessonController extends Controller
 
             // Xóa video cũ nếu có
             if (!empty($lesson->video)) {
-                $uploadService->deleteVideo('courses/videos', $lesson->video);
+                $videoService->deleteVideo('courses/videos', $lesson->video);
             }
 
             // Upload video mới
-            $videoName = $uploadService->uploadVideo($request->file('video'), 'courses/videos');
+            $videoName = $videoService->uploadVideo($request->file('video'), 'courses/videos');
             $lesson->video = $videoName;
             $lesson->save();
 

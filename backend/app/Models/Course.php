@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Level;
 use App\Models\Chapter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -38,5 +39,54 @@ class Course extends Model
     public function chapters()
     {
         return $this->hasMany(Chapter::class)->orderBy('sort_order', 'ASC');
+    }
+
+    public function outcomes()
+    {
+        return $this->hasMany(Outcome::class);
+    }
+
+    public function requirements()
+    {
+        return $this->hasMany(Requirement::class);
+    }
+
+    public function level()
+    {
+        return $this->belongsTo(Level::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($course) {
+            // Xóa ảnh thumbnail của course
+            if (!empty($course->image)) {
+                app(\App\Services\UploadService::class)->deleteImage('courses', $course->image);
+            }
+
+            // Xóa chapters và lessons
+            foreach ($course->chapters as $chapter) {
+                foreach ($chapter->lessons as $lesson) {
+                    // Xóa file video nếu có
+                    if (!empty($lesson->video)) {
+                        app(\App\Services\UploadService::class)->deleteVideo('courses/videos', $lesson->video);
+                    }
+                    $lesson->delete();
+                }
+                $chapter->delete();
+            }
+
+            // Xóa outcomes
+            foreach ($course->outcomes as $outcome) {
+                $outcome->delete();
+            }
+
+            // Xóa requirements
+            foreach ($course->requirements as $requirement) {
+                $requirement->delete();
+            }
+        });
     }
 }

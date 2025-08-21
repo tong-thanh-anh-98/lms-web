@@ -8,20 +8,20 @@ import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import { apiUrl, token } from '../../../common/Config';
-import ReactPlayer from 'react-player';
-import {
-    MediaController,
-    MediaControlBar,
-    MediaTimeRange,
-    MediaTimeDisplay,
-    MediaVolumeRange,
-    MediaPlaybackRateButton,
-    MediaPlayButton,
-    MediaSeekBackwardButton,
-    MediaSeekForwardButton,
-    MediaMuteButton,
-    MediaFullscreenButton,
-} from "media-chrome/react";
+// import ReactPlayer from 'react-player';
+// import {
+//     MediaController,
+//     MediaControlBar,
+//     MediaTimeRange,
+//     MediaTimeDisplay,
+//     MediaVolumeRange,
+//     MediaPlaybackRateButton,
+//     MediaPlayButton,
+//     MediaSeekBackwardButton,
+//     MediaSeekForwardButton,
+//     MediaMuteButton,
+//     MediaFullscreenButton,
+// } from "media-chrome/react";
 
 // Register FilePond plugins
 registerPlugin(
@@ -85,13 +85,13 @@ const LessonVideo = ({ lesson }) => {
                         labelIdle={t('label.labelIdle')}
                     />
 
-                    {/* {videoUrl && (
+                    {videoUrl && (
                         <video width="100%" height="100%" controls>
                             <source src={videoUrl} type="video/mp4" />
                         </video>
-                    )} */}
+                    )}
 
-                    <MediaController
+                    {/* <MediaController
                         style={{
                             width: "100%",
                             height: "100%",
@@ -121,7 +121,7 @@ const LessonVideo = ({ lesson }) => {
                             <MediaPlaybackRateButton />
                             <MediaFullscreenButton />
                         </MediaControlBar>
-                    </MediaController>
+                    </MediaController> */}
 
                 </div>
             </div>

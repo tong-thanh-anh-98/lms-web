@@ -341,7 +341,8 @@ const ManageChapter = ({ course, params, refreshCourse }) => {
             <CreateLesson
                 showLesson={showLesson}
                 handleCloseLesson={handleCloseLesson}
-                course={course}
+                // course={course}
+                chapters={chapters}
                 refreshCourse={refreshCourse}
             />
 
@@ -356,6 +357,7 @@ const ManageChapter = ({ course, params, refreshCourse }) => {
                 showChapterSortModal={showChapterSortModal}
                 handleCloseChapterSortModal={handleCloseChapterSortModal}
                 course={course}
+                chapters={chapters}
                 setChapters={setChapters}
             />
         </>

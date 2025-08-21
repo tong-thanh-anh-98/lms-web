@@ -67,6 +67,8 @@ const Create = () => {
                         <div className='col-md-12 mt-5 mb-3'>
                             <div className='d-flex justify-content-between'>
                                 <h2 className='h4 mb-0 pb-0'>{t('course.create')}</h2>
+
+                                <Link to={`/account/my-courses`} className='btn btn-secondary'>{t('button.back')}</Link>
                             </div>
                         </div>
 

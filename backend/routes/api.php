@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('courses', CourseController::class);
     Route::get('/get-courses/meta-data', [CourseController::class, 'metaData'])->name('metaData');
     Route::post('/save-course-image/{id}', [CourseController::class, 'saveCourseImage'])->name('saveCourseImage');
+    Route::post('/change-course-status/{id}', [CourseController::class, 'changeStatus'])->name('changeStatus');
 
     Route::get('get-all-outcomes', [OutcomeController::class, 'getAllOutcomes'])->name('getAllOutcomes');
     Route::apiResource('outcomes', OutcomeController::class);
@@ -50,4 +51,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/save-lesson-video/{id}', [LessonController::class, 'saveVideo'])->name('saveVideo');
     Route::post('/sort-lessons', [LessonController::class, 'sortLessons'])->name('sortLessons');
 
+    Route::get('/my-courses', [AccountController::class, 'courses'])->name('courses');
 });

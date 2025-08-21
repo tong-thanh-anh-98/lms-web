@@ -117,7 +117,8 @@
     "save": "Lưu",
     "close": "Đóng",
     "cancel": "Hủy",
-    "delete": "Xóa"
+    "delete": "Xóa",
+    "back": "Quay lại"
   },
 
   "title": {
@@ -220,7 +221,9 @@
     "delete_chapter": "Xóa chương",
     "add_lesson": "Thêm bài học",
     "create_lesson": "Tạo bài học",
-    "reorder_chapter": "Sắp xếp chương"
+    "reorder_chapter": "Sắp xếp chương",
+    "publish": "Xuất bản",
+    "unpublish": "Hủy xuất bản"
   },
 
   "lesson": {

@@ -15,4 +15,6 @@ return [
     'updated'               => 'Updated successfully.', // status 200 function update
     'deleted'               => 'Deleted successfully.', // status 200 function delete
     'success_sort'          => 'Sort successfully.', // status 200 function sort
+    'published'                => 'Course published successfully.',
+    'unpublished'               => 'Course unpublished successfully.'
 ];

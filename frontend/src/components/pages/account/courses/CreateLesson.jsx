@@ -5,7 +5,7 @@ import { apiUrl, token } from '../../../common/Config';
 import { toast } from 'react-toastify';
 import { Modal } from 'react-bootstrap';
 
-const CreateLesson = ({ showLesson, handleCloseLesson, course, refreshCourse  }) => {
+const CreateLesson = ({ showLesson, handleCloseLesson, refreshCourse, chapters }) => {
     const { t, i18n } = useTranslation();
     const [loading, setLoading] = useState(false);
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
@@ -70,11 +70,9 @@ const CreateLesson = ({ showLesson, handleCloseLesson, course, refreshCourse  })
                             >
                                 <option value="">{t('select.chapter')}</option>
                                 {
-                                    course.chapters && course.chapters.map(chapter => {
-                                        return (
-                                            <option key={`chapter-${chapter.id}`} value={chapter.id}>{chapter.title}</option>
-                                        )
-                                    })
+                                    chapters && chapters.map(chapter => (
+                                        <option key={chapter.id} value={chapter.id}>{chapter.title}</option>
+                                    ))
                                 }
                             </select>
                             {

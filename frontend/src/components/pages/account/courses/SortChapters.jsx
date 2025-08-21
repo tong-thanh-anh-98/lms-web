@@ -5,7 +5,8 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { apiUrl, token } from '../../../common/Config';
 import { toast } from 'react-toastify';
 
-const SortChapters = ({ showChapterSortModal, handleCloseChapterSortModal, course, setChapters }) => {
+const SortChapters = ({ showChapterSortModal, handleCloseChapterSortModal, setChapters, chapters }) => {
+    // const SortChapters = ({ showChapterSortModal, handleCloseChapterSortModal, course, setChapters }) => {
     const { t, i18n } = useTranslation();
     const [chaptersData, setChaptersData] = useState([]);
 
@@ -48,10 +49,10 @@ const SortChapters = ({ showChapterSortModal, handleCloseChapterSortModal, cours
     };
 
     useEffect(() => {
-        if (course) {
-            setChaptersData(course.chapters);
+        if (chapters) {
+            setChaptersData(chapters);
         }
-    }, [course]);
+    }, [chapters]);
     return (
         <>
             <Modal size='lg' show={showChapterSortModal} onHide={handleCloseChapterSortModal}>

@@ -91,6 +91,10 @@ const Edit = () => {
     const onSubmit = async (data) => {
         setDisable(true);
 
+        // ép kiểu thành number với price và cross_price.
+        data.price = Number(data.price);
+        data.cross_price = Number(data.cross_price);
+
         try {
             const response = await fetch(`${apiUrl}/courses/${params.id}`, {
                 method: 'PUT',
@@ -122,6 +126,35 @@ const Edit = () => {
         }
     }
 
+    const changeStatus = useCallback(async (course) => {
+        try {
+            const status = (course.status == 1) ? 0 : 1;
+
+            const response = await fetch(`${apiUrl}/change-course-status/${course.id}`, {
+                method: 'POST',
+                headers: {
+                    'accept': 'application/json',
+                    'content-Type': 'application/json',
+                    'accept-language': i18n.language,
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ status: status })
+            });
+
+            const result = await response.json();
+
+            if (response.ok && result.status === 200) {
+                toast.success(result.message);
+                setCourse({ ...course, status: result.course.status });
+            } else {
+                toast.error(result.message);
+            }
+
+        } catch (error) {
+            console.error('Fetch failed:', error);
+        }
+    }, [i18n.language]);
+
     useEffect(() => {
         fetchCourses();
         fetchMetaData();
@@ -146,6 +179,23 @@ const Edit = () => {
                         <div className='col-md-12 mt-5 mb-3'>
                             <div className='d-flex justify-content-between'>
                                 <h2 className='h4 mb-0 pb-0'>{t('course.edit')}</h2>
+                                <div>
+                                    {/* {
+                                        course.status == 1 && <Link onClick={() => changeStatus(course)} className='btn btn-primary'>{t('course.publish')}</Link>
+                                    }
+                                    {
+                                        course.status == 0 && <Link onClick={() => changeStatus(course)} className='btn btn-secondary'>{t('course.unpublish')}</Link>
+                                    } */}
+
+                                    <Link
+                                        onClick={() => changeStatus(course)}
+                                        className={`btn ${course.status === 1 ? 'btn-primary' : 'btn-secondary'}`}
+                                    >
+                                        {course.status === 1 ? t('course.publish') : t('course.unpublish')}
+                                    </Link>
+
+                                    <Link to={`/account/my-courses`} className='btn btn-light ms-2'>{t('button.back')}</Link>
+                                </div>
                             </div>
                         </div>
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\front;
 
+use App\Models\Course;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +15,15 @@ use Illuminate\Support\Facades\Validator;
 
 class AccountController extends Controller
 {
+    private function extractUserData(RegisterRequest $request)
+    {
+        return [
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password')),
+        ];
+    }
+
     public function register(RegisterRequest $request)
     {
         DB::beginTransaction();
@@ -82,12 +92,22 @@ class AccountController extends Controller
         }
     }
 
-    private function extractUserData(RegisterRequest $request)
+    public function courses(Request $request)
     {
-        return [
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-        ];
+        try {
+            $courses = Course::where('user_id', $request->user()->id)->with('level')->get();
+
+            return response()->json([
+                'status' => 200,
+                'data' => $courses
+            ], 200);
+        } catch (\Throwable $e) {
+            Log::error('Errors: ' . $e->getMessage());
+
+            return response()->json([
+                'status'    => 500,
+                'message'   =>  __('message.error')
+            ], 500);
+        }
     }
 }
