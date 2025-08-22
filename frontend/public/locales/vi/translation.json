@@ -7,14 +7,12 @@
     "vi": "Tiếng Việt",
     "my_account": "Tài khoản"
   },
-
   "section_header": {
     "title": "Học mọi lúc, mọi nơi",
     "description": "Tham gia hệ thống quản lý học tập và khám phá hàng loạt khóa học để nâng cao kỹ năng và đạt được mục tiêu của bạn.",
     "button": "Khám phá khóa học",
     "image_alt": "Học viên đang học"
   },
-
   "sidebar": {
     "dashboard": "Bảng điều khiển",
     "my_learning": "Khóa học của tôi",
@@ -22,13 +20,11 @@
     "change_password": "Đổi mật khẩu",
     "logout": "Đăng xuất"
   },
-
   "footer": {
     "brand": "LMS",
     "description": "Tham gia hệ thống quản lý học tập của chúng tôi và khám phá nhiều khóa học để nâng cao kỹ năng và đạt được mục tiêu của bạn.",
     "popular_categories": "Danh mục phổ biến",
     "quick_links": "Liên kết nhanh",
-
     "categories": {
       "digital_marketing": "Tiếp thị số",
       "web_development": "Phát triển Web",
@@ -37,17 +33,14 @@
       "logo_design": "Thiết kế Logo",
       "graphic_design": "Thiết kế Đồ họa"
     },
-
     "links": {
       "login": "Đăng nhập",
       "register": "Đăng ký",
       "my_account": "Tài khoản của tôi",
       "courses": "Khóa học"
     },
-
     "copyright": "Bảo lưu mọi quyền"
   },
-
   "dashboard": {
     "title": "Bảng điều khiển",
     "account": "Tài khoản",
@@ -56,15 +49,12 @@
     "active_courses": "Khóa học đang hoạt động",
     "view_courses": "Xem khóa học"
   },
-
   "my_courses": {
     "title": "Khóa học của tôi"
   },
-
   "my_learning": {
     "title": "Khóa học đã ghi danh"
   },
-
   "watch": {
     "unsupported_browser": "Trình duyệt của bạn không hỗ trợ thẻ video.",
     "lesson_title": "Giới thiệu",
@@ -77,7 +67,6 @@
     "what_is_html": "HTML là gì",
     "html_elements": "Các phần tử HTML"
   },
-
   "courses": {
     "home": "Trang chủ",
     "courses": "Khóa học",
@@ -102,7 +91,6 @@
     "german": "Tiếng Đức",
     "italian": "Tiếng Ý"
   },
-
   "button": {
     "create": "Tạo mới",
     "edit": "Chỉnh sửa",
@@ -120,12 +108,10 @@
     "delete": "Xóa",
     "back": "Quay lại"
   },
-
   "title": {
     "login": "Đăng nhập",
     "register": "Đăng ký"
   },
-
   "label": {
     "name": "Tên",
     "email": "Email",
@@ -146,7 +132,6 @@
     "duration": "Khoảng thời gian (phút)",
     "preview": "Xem trước"
   },
-
   "select": {
     "category": "Chọn một danh mục",
     "level": "Chọn một mức độ",
@@ -159,7 +144,6 @@
     "yes": "Xem",
     "no": "Không"
   },
-
   "placeholder": {
     "name": "Nhập tên",
     "email": "Nhập email",
@@ -174,7 +158,6 @@
     "chapter": "Nhập tên chương",
     "duration": "Nhập khoảng thời gian"
   },
-
   "required": {
     "name": "Trường tên là bắt buộc.",
     "email": "Trường email là bắt buộc.",
@@ -192,18 +175,15 @@
     "status": "Trường trạng thái là bắt buộc.",
     "duration": "Trường khoảng thời gian là bắt buộc"
   },
-
   "message": {
     "email_invalid": "Địa chỉ email không hợp lệ",
     "have_account": "Bạn đã có tài khoản?",
     "logout": "Bạn đã đăng xuất khỏi tài khoản của mình."
   },
-
   "link": {
     "register": "Đăng ký tại đây",
     "login": "Đăng nhập"
   },
-
   "course": {
     "course": "Khóa học",
     "create": "Tạo khóa học",
@@ -225,7 +205,6 @@
     "publish": "Xuất bản",
     "unpublish": "Hủy xuất bản"
   },
-
   "lesson": {
     "lesson": "Bài giảng",
     "detail": "Thông tin cơ bản",
@@ -236,15 +215,19 @@
     "reorder": "Sắp xếp bài học",
     "sort_chapter": "Sắp xếp chương"
   },
-
   "common": {
     "account": "Tài khoản",
     "create": "Tạo mới",
     "edit": "Chỉnh sửa"
   },
-
   "modal": {
     "title": "Màn hình xác nhận",
     "confirm": "Bạn có chắc chắn muốn xóa dữ liệu này không?"
+  },
+  "home": {
+    "explore_categories": "Khám phá các danh mục",
+    "context": "Khám phá các danh mục được thiết kế để giúp bạn phát triển vượt bậc trong sự nghiệp và cá nhân.",
+    "featured_courses": "Các khóa học nổi bật",
+    "context_courses": "Khám phá các khóa học được thiết kế để giúp bạn phát triển vượt bậc về mặt chuyên môn và cá nhân."
   }
 }

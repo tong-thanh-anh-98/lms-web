@@ -4,6 +4,7 @@ use App\Http\Controllers\front\AccountController;
 use App\Http\Controllers\front\CategoryController;
 use App\Http\Controllers\front\ChapterController;
 use App\Http\Controllers\front\CourseController;
+use App\Http\Controllers\front\HomeController;
 use App\Http\Controllers\front\LanguageController;
 use App\Http\Controllers\front\LessonController;
 use App\Http\Controllers\front\LevelController;
@@ -14,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [AccountController::class, 'register'])->name('register');
 Route::post('/login', [AccountController::class, 'authenticate'])->name('authenticate');
+
+// Show Featured Courses on Home
+Route::get('/fetch-categories', [HomeController::class, 'fetchCategories'])->name('fetchCategories');
+Route::get('/fetch-feature-courses', [HomeController::class, 'fetchFeatureCourses'])->name('fetchFeatureCourses');
 
 Route::get('/user', function (Request $request) {
     return $request->user();

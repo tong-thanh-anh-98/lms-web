@@ -8,20 +8,6 @@ import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import { apiUrl, token } from '../../../common/Config';
-// import ReactPlayer from 'react-player';
-// import {
-//     MediaController,
-//     MediaControlBar,
-//     MediaTimeRange,
-//     MediaTimeDisplay,
-//     MediaVolumeRange,
-//     MediaPlaybackRateButton,
-//     MediaPlayButton,
-//     MediaSeekBackwardButton,
-//     MediaSeekForwardButton,
-//     MediaMuteButton,
-//     MediaFullscreenButton,
-// } from "media-chrome/react";
 
 // Register FilePond plugins
 registerPlugin(
@@ -38,7 +24,6 @@ const LessonVideo = ({ lesson }) => {
     useEffect(() => {
         const url = lesson?.video_url || lesson?.data?.video_url;
         if (url) {
-            // console.log('Video URL:', url);
             setVideoUrl(url);
         }
     }, [lesson]);
@@ -91,37 +76,6 @@ const LessonVideo = ({ lesson }) => {
                         </video>
                     )}
 
-                    {/* <MediaController
-                        style={{
-                            width: "100%",
-                            height: "100%",
-                            // height: 'auto',
-                            aspectRatio: "16/9",
-                        }}
-                    >
-                        <ReactPlayer
-                            slot="media"
-                            src={videoUrl}
-                            controls={false}
-                            style={{
-                                width: "100%",
-                                height: "100%",
-                                "--controls": "none",
-                            }}
-                        ></ReactPlayer>
-
-                        <MediaControlBar>
-                            <MediaPlayButton />
-                            <MediaSeekBackwardButton seekOffset={10} />
-                            <MediaSeekForwardButton seekOffset={10} />
-                            <MediaTimeRange />
-                            <MediaTimeDisplay showDuration />
-                            <MediaMuteButton />
-                            <MediaVolumeRange />
-                            <MediaPlaybackRateButton />
-                            <MediaFullscreenButton />
-                        </MediaControlBar>
-                    </MediaController> */}
 
                 </div>
             </div>

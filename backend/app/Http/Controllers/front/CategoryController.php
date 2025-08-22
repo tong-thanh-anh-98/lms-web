@@ -47,7 +47,7 @@ class CategoryController extends Controller
      *
      * @param CategoryRequest $request
      *
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(CategoryRequest $request)
     {

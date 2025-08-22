@@ -32,7 +32,7 @@ const Header = () => {
                                 </Dropdown.Menu>
                             </Dropdown>
 
-                            <a href='/account/my-learning' className="btn btn-primary">{t('header.my_account')}</a>
+                            <a href='/account/dashboard' className="btn btn-primary">{t('header.my_account')}</a>
                         </div>
                     </Navbar.Collapse>
                 </Container>
