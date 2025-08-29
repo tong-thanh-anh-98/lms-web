@@ -18,7 +18,10 @@ Route::post('/login', [AccountController::class, 'authenticate'])->name('authent
 
 // Show Featured Courses on Home
 Route::get('/fetch-categories', [HomeController::class, 'fetchCategories'])->name('fetchCategories');
+Route::get('/fetch-levels', [HomeController::class, 'fetchLevels'])->name('fetchLevels');
+Route::get('/fetch-languages', [HomeController::class, 'fetchLanguages'])->name('fetchLanguages');
 Route::get('/fetch-feature-courses', [HomeController::class, 'fetchFeatureCourses'])->name('fetchFeatureCourses');
+Route::get('/fetch-courses', [HomeController::class, 'courses'])->name('courses');
 
 Route::get('/user', function (Request $request) {
     return $request->user();

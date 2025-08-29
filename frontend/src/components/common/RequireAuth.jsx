@@ -2,22 +2,19 @@ import React, { useContext } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
-// const RequireAuth = ({ children }) => {
-//     const { user } = useContext(AuthContext);
-//     if (!user) {
-//         return <Navigate to={`/account/login`} />
-//     }
-//     return children;
-// }
-
 const RequireAuth = () => {
-    const { user } = useContext(AuthContext);
+    const { user, loading } = useContext(AuthContext);
 
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    // Nếu chưa đăng nhập thì redirect về trang login
     if (!user) {
         return <Navigate to={`/account/login`} />
     }
 
-    // khi dùng <RequireAuth /> trong App.jsx bọc các route con bên trong mà không hiển thị trang trắng.
+    // Nếu đã đăng nhập thì render các route con
     return <Outlet />;
 }
 

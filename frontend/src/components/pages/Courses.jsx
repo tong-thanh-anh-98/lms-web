@@ -1,11 +1,178 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Layout from '../common/Layout';
 import Course from '../common/Course';
 import { useTranslation } from 'react-i18next';
+import { apiUrl } from '../common/Config';
+import { toast } from 'react-toastify';
+import { Link, useSearchParams } from 'react-router-dom';
 
 const Courses = () => {
-    const { t } = useTranslation();
-    const [rating, setRating] = useState(4.0);
+    const { t, i18n } = useTranslation();
+    const [loading, setLoading] = useState(false);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [categories, setCategories] = useState([]);
+    const [levels, setLevels] = useState([]);
+    const [languages, setLanguages] = useState([]);
+    const [courses, setCourses] = useState([]);
+
+    // đọc từ URL để khởi tạo từ state
+    const [categoryChecked, setCategoryChecked] = useState(() => {
+        const category = searchParams.get('category');
+        return category ? category.split(',') : [];
+    });
+
+    const [levelChecked, setLevelChecked] = useState(() => {
+        const level = searchParams.get('level');
+        return level ? level.split(',') : [];
+    });
+
+    const [languageChecked, setLanguageChecked] = useState(() => {
+        const language = searchParams.get('language');
+        return language ? language.split(',') : [];
+    });
+
+    // hàm dùng chung cho checkbox
+    const handleFilterChange = (e, type) => {
+        const { checked, value } = e.target;
+
+        if (type === 'category') {
+            setCategoryChecked(prev => checked ? [...prev, value] : prev.filter(id => id !== value));
+        }
+
+        if (type === 'level') {
+            setLevelChecked(prev => checked ? [...prev, value] : prev.filter(id => id !== value));
+        }
+
+        if (type === 'language') {
+            setLanguageChecked(prev => checked ? [...prev, value] : prev.filter(id => id !== value));
+        }
+    };
+
+    const fetchCategories = useCallback(async () => {
+        try {
+            const response = await fetch(`${apiUrl}/fetch-categories`, {
+                method: 'GET',
+                headers: {
+                    'accept': 'application/json',
+                    'content-Type': 'application/json',
+                    'accept-language': i18n.language,
+                }
+            });
+            const result = await response.json();
+
+            if (response.ok && response.status === 200) {
+                setCategories(result.data);
+            } else {
+                toast.error(result.message);
+            }
+        } catch (error) {
+            console.error('Fetch failed:', error);
+        }
+    }, [i18n.language]);
+
+    const fetchLevels = useCallback(async () => {
+        try {
+            const response = await fetch(`${apiUrl}/fetch-levels`, {
+                method: 'GET',
+                headers: {
+                    'accept': 'application/json',
+                    'content-Type': 'application/json',
+                    'accept-language': i18n.language,
+                }
+            });
+            const result = await response.json();
+
+            if (response.ok && response.status === 200) {
+                setLevels(result.data);
+            } else {
+                toast.error(result.message);
+            }
+        } catch (error) {
+            console.error('Fetch failed:', error);
+        }
+    }, [i18n.language]);
+
+    const fetchLanguages = useCallback(async () => {
+        try {
+            const response = await fetch(`${apiUrl}/fetch-languages`, {
+                method: 'GET',
+                headers: {
+                    'accept': 'application/json',
+                    'content-Type': 'application/json',
+                    'accept-language': i18n.language,
+                }
+            });
+            const result = await response.json();
+
+            if (response.ok && response.status === 200) {
+                setLanguages(result.data);
+            } else {
+                toast.error(result.message);
+            }
+        } catch (error) {
+            console.error('Fetch failed:', error);
+        }
+    }, [i18n.language]);
+
+    const fetchCourses = useCallback(async () => {
+        setLoading(true);
+
+        let params = new URLSearchParams();
+
+        if (categoryChecked.length > 0) {
+            params.append('category', categoryChecked.join(','));
+        }
+
+        if (levelChecked.length > 0) {
+            params.append('level', levelChecked.join(','));
+        }
+
+        if (languageChecked.length > 0) {
+            params.append('language', languageChecked.join(','));
+        }
+
+        // cập nhật query string trên URL
+        setSearchParams(params);
+
+        try {
+            const response = await fetch(`${apiUrl}/fetch-courses?${params.toString()}`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Accept-Language': i18n.language
+                }
+            });
+
+            const result = await response.json();
+
+            if (response.ok && response.status === 200) {
+                setCourses(result.data);
+            } else {
+                toast.error(result.message);
+            }
+        } catch (error) {
+            console.error('Fetch failed: ', error);
+        } finally {
+            setLoading(false);
+        }
+    }, [i18n.language, categoryChecked, levelChecked, languageChecked, setSearchParams]);
+
+    const clearFilters = () => {
+        setCategoryChecked([]);
+        setLevelChecked([]);
+        setLanguageChecked([]);
+        setSearchParams({}); // clear URL query string
+        // gọi lại API để fetch toàn bộ courses
+        fetchCourses();
+    };
+
+    useEffect(() => {
+        fetchCategories();
+        fetchLevels();
+        fetchLanguages();
+        fetchCourses();
+    }, [fetchCategories, fetchLevels, fetchLanguages, fetchCourses]);
 
     return (
         <Layout>
@@ -24,123 +191,100 @@ const Courses = () => {
                                 <div className='pt-3'>
                                     <h3>{t('courses.category')}</h3>
                                     <ul>
-                                        <li>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                                                <label className="form-check-label" htmlFor="flexCheckDefault">
-                                                    <label>{t('courses.web_development')}</label>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault2" />
-                                                <label className="form-check-label" htmlFor="flexCheckDefault2">
-                                                    {t('courses.mobile_development')}
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault3" />
-                                                <label className="form-check-label" htmlFor="flexCheckDefault3">
-                                                    {t('courses.digital_marketing')}
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault4" />
-                                                <label className="form-check-label" htmlFor="flexCheckDefault4">
-                                                    {t('courses.graphic_design')}
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault5" />
-                                                <label className="form-check-label" htmlFor="flexCheckDefault5">
-                                                   {t('courses.software_design')}
-                                                </label>
-                                            </div>
-                                        </li>
+                                        {
+                                            categories && categories.map(category => {
+                                                return (
+                                                    <li key={category.id}>
+                                                        <div className="form-check">
+                                                            <input
+                                                                // onClick={(e) => handCategory(e)}
+                                                                className="form-check-input"
+                                                                type="checkbox"
+                                                                value={category.id}
+                                                                id={`category-${category.id}`}
+                                                                checked={categoryChecked.includes(String(category.id))}
+                                                                onChange={(e) => handleFilterChange(e, 'category')}
+                                                            />
+                                                            <label
+                                                                className="form-check-label"
+                                                                htmlFor={`category-${category.id}`}
+                                                            >
+                                                                {category.name}
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                )
+                                            })
+                                        }
                                     </ul>
                                 </div>
                                 <div className='mb-3'>
                                     <h3 className='h5  mb-2'>{t('courses.level')}</h3>
                                     <ul>
-                                        <li>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault11" />
-                                                <label className="form-check-label" htmlFor="flexCheckDefault11">
-                                                    {t('courses.beginner')}
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault12" />
-                                                <label className="form-check-label" htmlFor="flexCheckDefault12">
-                                                    {t('courses.intermediate')}
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault13" />
-                                                <label className="form-check-label" htmlFor="flexCheckDefault13">
-                                                    {t('courses.advance')}
-                                                </label>
-                                            </div>
-                                        </li>
+                                        {
+                                            levels && levels.map(level => {
+                                                return (
+                                                    <li key={level.id}>
+                                                        <div className="form-check">
+                                                            <input
+                                                                className="form-check-input"
+                                                                type="checkbox"
+                                                                value={level.id}
+                                                                id={`level-${level.id}`}
+                                                                checked={levelChecked.includes(String(level.id))}
+                                                                onChange={(e) => handleFilterChange(e, 'level')}
+                                                            />
+                                                            <label
+                                                                className="form-check-label"
+                                                                htmlFor={`level-${level.id}`}
+                                                            >
+                                                                {level.name}
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                )
+                                            })
+                                        }
                                     </ul>
                                 </div>
                                 <div className='mb-3'>
                                     <h3 className='h5 mb-2'>{t('courses.language')}</h3>
                                     <ul>
-                                        <li>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault31" />
-                                                <label className="form-check-label" htmlFor="flexCheckDefault31">
-                                                    {t('courses.english')}
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault32" />
-                                                <label className="form-check-label" htmlFor="flexCheckDefault32">
-                                                    {t('courses.hindi')}
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault33" />
-                                                <label className="form-check-label" htmlFor="flexCheckDefault33">
-                                                    {t('courses.spanish')}
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault33" />
-                                                <label className="form-check-label" htmlFor="flexCheckDefault33">
-                                                    {t('courses.german')}
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault34" />
-                                                <label className="form-check-label" htmlFor="flexCheckDefault34">
-                                                    {t('courses.italian')}
-                                                </label>
-                                            </div>
-                                        </li>
+                                        {
+                                            languages && languages.map(language => {
+                                                return (
+                                                    <li key={language.id}>
+                                                        <div className="form-check">
+                                                            <input
+                                                                className="form-check-input"
+                                                                type="checkbox"
+                                                                value={language.id}
+                                                                id={`language-${language.id}`}
+                                                                checked={languageChecked.includes(String(language.id))}
+                                                                onChange={(e) => handleFilterChange(e, 'language')}
+                                                            />
+                                                            <label
+                                                                className="form-check-label"
+                                                                htmlFor={`language-${language.id}`}
+                                                            >
+                                                                {language.name}
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                )
+                                            })
+                                        }
                                     </ul>
                                 </div>
-                                <a href="" className='clear-filter'>{t('courses.clear_filters')}</a>
+                                <Link
+                                    className='clear-filter'
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        clearFilters();
+                                    }}
+                                >
+                                    {t('courses.clear_filters')}
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -148,8 +292,9 @@ const Courses = () => {
                         <section className='section-3'>
                             <div className='d-flex justify-content-between mb-3 align-items-center'>
                                 <div className='h5 mb-0'>
-                                    {/* 10 courses found */}
+
                                 </div>
+
                                 <div>
                                     <select name="" id="" className='form-select'>
                                         <option value="0">{t('courses.newest_first')}</option>
@@ -157,44 +302,27 @@ const Courses = () => {
                                     </select>
                                 </div>
                             </div>
-                            <div className="row gy-4">
 
-                                <Course
-                                    title='The complete 2025 Web Development Bootcamp'
-                                    level='Advance'
-                                    enrolled='10'
-                                    customClasses="col-lg-4 col-md-6"
-                                />
-                                <Course
-                                    title='The complete 2025 Web Development Bootcamp'
-                                    level='Advance'
-                                    enrolled='10'
-                                    customClasses="col-lg-4 col-md-6"
-                                />
-                                <Course
-                                    title='The complete 2025 Web Development Bootcamp'
-                                    level='Advance'
-                                    enrolled='10'
-                                    customClasses="col-lg-4 col-md-6"
-                                />
-                                <Course
-                                    title='The complete 2025 Web Development Bootcamp'
-                                    level='Advance'
-                                    enrolled='10'
-                                    customClasses="col-lg-4 col-md-6"
-                                />
-                                <Course
-                                    title='The complete 2025 Web Development Bootcamp'
-                                    level='Advance'
-                                    enrolled='10'
-                                    customClasses="col-lg-4 col-md-6"
-                                />
-                                <Course
-                                    title='The complete 2025 Web Development Bootcamp'
-                                    level='Advance'
-                                    enrolled='10'
-                                    customClasses="col-lg-4 col-md-6"
-                                />
+                            <div className="row gy-4">
+                                {/* {
+                                    courses && courses.map(course => {
+                                        return (
+                                            <Course
+                                                key={course.id}
+                                                customClasses="col-lg-4 col-md-6"
+                                                course={course}
+                                            />
+                                        )
+                                    })
+                                } */}
+
+                                {loading ? (
+                                    <p>{t('button.loading')}</p>
+                                ) : (
+                                    courses.map(course => (
+                                        <Course key={course.id} course={course} customClasses="col-lg-4 col-md-6" />
+                                    ))
+                                )}
                             </div>
                         </section>
                     </div>

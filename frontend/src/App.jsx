@@ -22,23 +22,26 @@ function App() {
         <>
             <BrowserRouter>
                 <Routes>
-                    {/* Frontend - Public */}
-                    <Route path='/' element={<Home />} />
-                    <Route path='/courses' element={<Course />} />
-                    <Route path='/detail' element={<Detail />} />
-                    <Route path='/account/my-courses' element={<MyCourses />} />
-                    <Route path='/account/watch-course' element={<WatchCourse />} />
-                    <Route path='/account/my-learning' element={<MyLearning />} />
-                    <Route path='/account/change-password' element={<ChangePassword />} />
-
                     {/* Backend - Public */}
                     <Route path='/account/register' element={<Register />} />
                     <Route path='/account/login' element={<Login />} />
 
-                    {/* Backend - Protected */}
+                    {/* Frontend - Public */}
+                    <Route path='/' element={<Home />} />
+                    <Route path='/courses' element={<Course />} />
+                    <Route path='/detail' element={<Detail />} />
+                    {/* <Route path='/account/my-courses' element={<MyCourses />} />
+                    <Route path='/account/watch-course' element={<WatchCourse />} />
+                    <Route path='/account/my-learning' element={<MyLearning />} />
+                    <Route path='/account/change-password' element={<ChangePassword />} /> */}
+
+                    {/* Protected */}
                     <Route element={<RequireAuth />}>
-                        {/* Dashboard */}
                         <Route path="/account/dashboard" element={<Dashboard />} />
+                        <Route path='/account/my-courses' element={<MyCourses />} />
+                        <Route path='/account/watch-course' element={<WatchCourse />} />
+                        <Route path='/account/my-learning' element={<MyLearning />} />
+                        <Route path='/account/change-password' element={<ChangePassword />} />
 
                         {/* Courses */}
                         <Route path="/account/courses/create" element={<Create />} />
@@ -50,10 +53,7 @@ function App() {
                 </Routes>
             </BrowserRouter>
 
-            <ToastContainer
-                position="top-center"
-                reverseOrder={false}
-            />
+            <ToastContainer position="top-center" reverseOrder={false} />
         </>
     )
 }

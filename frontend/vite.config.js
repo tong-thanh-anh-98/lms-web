@@ -1,23 +1,33 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
 export default defineConfig({
     server: {
-        host: '0.0.0.0',     // Cho phép truy cập từ ngoài container
+        host: '0.0.0.0', // Allow access from outside the container
         port: 5173,
         strictPort: true,
         watch: {
-            usePolling: true, //Cần thiết trong Docker để Vite theo dõi file
+            usePolling: true, // Required in Docker
         },
         hmr: {
-            host: 'localhost', // Nếu không chạy Docker trên localhost (VD: WSL2), hãy đổi thành IP máy thật
+            host: 'localhost',
             port: 5173,
         },
+
+        // Proxy API Laravel
         proxy: {
-            // proxy /uploads từ Vite dev -> nginx host (trên host máy dev)
+            '/api': {
+                target: 'http://web', // service nginx
+                changeOrigin: true,
+                secure: false,
+            },
             '/uploads': {
-                target: 'http://localhost:5173', // lưu ý: đây là host máy dev
+                target: 'http://web', // for ReactPlayer to load video via nginx
+                changeOrigin: true,
+                secure: false,
+            },
+            '/save-lesson-video': {
+                target: 'http://web',
                 changeOrigin: true,
                 secure: false,
             }
