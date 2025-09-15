@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { apiUrl, token } from './Config';
+import { apiUrl, getToken } from './Config';
 import { toast } from 'react-toastify';
 import ModalDelete from './ModalDelete';
 
@@ -21,7 +21,7 @@ const CourseEdit = ({ course, onDeleteSuccess }) => {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                     'Accept-Language': i18n.language,
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${getToken()}`
                 }
 
             });

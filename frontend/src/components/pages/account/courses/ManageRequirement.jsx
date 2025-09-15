@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { apiUrl, token } from '../../../common/Config';
+import { apiUrl, getToken } from '../../../common/Config';
 import { toast } from 'react-toastify';
 import { Link, useParams } from 'react-router-dom';
 import { MdDragIndicator } from "react-icons/md";
@@ -49,7 +49,7 @@ const ManageRequirement = () => {
                     'accept': 'application/json',
                     'content-Type': 'application/json',
                     'accept-language': i18n.language,
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${getToken()}`
                 },
                 body: JSON.stringify({ requirements: updateRequirements })
             });
@@ -78,7 +78,7 @@ const ManageRequirement = () => {
                     'accept': 'application/json',
                     'content-Type': 'application/json',
                     'accept-language': i18n.language,
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${getToken()}`
                 },
                 body: JSON.stringify(formData)
             });
@@ -109,7 +109,7 @@ const ManageRequirement = () => {
                     'accept': 'application/json',
                     'content-type': 'application/json',
                     'accept-language': i18n.language,
-                    'authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${getToken()}`
                 }
             });
 
@@ -140,7 +140,7 @@ const ManageRequirement = () => {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                     'Accept-Language': i18n.language,
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${getToken()}`
                 }
 
             });

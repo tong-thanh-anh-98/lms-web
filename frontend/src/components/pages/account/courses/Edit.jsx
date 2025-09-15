@@ -4,7 +4,7 @@ import { useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 import UserSidebar from '../../../common/UserSidebar';
-import { apiUrl, token } from '../../../common/Config';
+import { apiUrl, getToken } from '../../../common/Config';
 import { toast } from 'react-toastify';
 import ManageOutcome from './ManageOutcome';
 import ManageRequirement from './ManageRequirement';
@@ -34,7 +34,7 @@ const Edit = () => {
                     'accept': 'application/json',
                     'content-Type': 'application/json',
                     'accept-language': i18n.language,
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${getToken()}`
                 }
             });
 
@@ -69,7 +69,7 @@ const Edit = () => {
                     'accept': 'application/json',
                     'content-Type': 'application/json',
                     'accept-language': i18n.language,
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${getToken()}`
                 }
             });
 
@@ -102,7 +102,7 @@ const Edit = () => {
                     'accept': 'application/json',
                     'content-Type': 'application/json',
                     'accept-language': i18n.language,
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${getToken()}`
                 },
                 body: JSON.stringify(data)
             });
@@ -136,7 +136,7 @@ const Edit = () => {
                     'accept': 'application/json',
                     'content-Type': 'application/json',
                     'accept-language': i18n.language,
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${getToken()}`
                 },
                 body: JSON.stringify({ status: status })
             });

@@ -7,7 +7,7 @@ import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orien
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
-import { apiUrl, token } from '../../../common/Config';
+import { apiUrl, getToken } from '../../../common/Config';
 
 // Register FilePond plugins
 registerPlugin(
@@ -49,7 +49,7 @@ const LessonVideo = ({ lesson }) => {
                                 method: 'POST',
                                 headers: {
                                     'Accept-Language': i18n.language,
-                                    'Authorization': `Bearer ${token}`,
+                                    'Authorization': `Bearer ${getToken()}`
                                 },
                                 onload: (response) => {
                                     try {

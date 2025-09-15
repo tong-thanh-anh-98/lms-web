@@ -16,13 +16,25 @@ class LevelSeeder extends Seeder
     {
         DB::table('levels')->insert([
             [
-                'name' => 'Basic',
+                'name' => 'Beginner',
                 'status' => 1,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
             [
-                'name' => 'Advance',
+                'name' => 'Professional',
+                'status' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'Advanced',
+                'status' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'name' => 'Expert / Master',
                 'status' => 1,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()

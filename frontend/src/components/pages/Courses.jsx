@@ -197,7 +197,6 @@ const Courses = () => {
                                                     <li key={category.id}>
                                                         <div className="form-check">
                                                             <input
-                                                                // onClick={(e) => handCategory(e)}
                                                                 className="form-check-input"
                                                                 type="checkbox"
                                                                 value={category.id}
@@ -304,18 +303,6 @@ const Courses = () => {
                             </div>
 
                             <div className="row gy-4">
-                                {/* {
-                                    courses && courses.map(course => {
-                                        return (
-                                            <Course
-                                                key={course.id}
-                                                customClasses="col-lg-4 col-md-6"
-                                                course={course}
-                                            />
-                                        )
-                                    })
-                                } */}
-
                                 {loading ? (
                                     <p>{t('button.loading')}</p>
                                 ) : (

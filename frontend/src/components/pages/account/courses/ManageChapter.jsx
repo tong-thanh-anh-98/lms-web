@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import Accordion from 'react-bootstrap/Accordion';
-import { apiUrl, token } from '../../../common/Config';
+import { apiUrl, getToken } from '../../../common/Config';
 import UpdateChapter from './UpdateChapter';
 import ModalDelete from '../../../common/ModalDelete';
 import CreateLesson from './CreateLesson';
@@ -103,7 +103,7 @@ const ManageChapter = ({ course, params, refreshCourse }) => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     'Accept-Language': i18n.language,
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${getToken()}`
                 },
                 body: JSON.stringify(formData)
             });
@@ -134,7 +134,7 @@ const ManageChapter = ({ course, params, refreshCourse }) => {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                     'Accept-Language': i18n.language,
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${getToken()}`
                 }
 
             });
@@ -167,7 +167,7 @@ const ManageChapter = ({ course, params, refreshCourse }) => {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                     'Accept-Language': i18n.language,
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${getToken()}`
                 }
 
             });

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { apiUrl, token } from '../../../common/Config';
+import { apiUrl, getToken } from '../../../common/Config';
 import { toast } from 'react-toastify';
 
 const UpdateRequirement = ({ requirementData, showRequirement, handleClose, requirements, setRequirements }) => {
@@ -26,7 +26,7 @@ const UpdateRequirement = ({ requirementData, showRequirement, handleClose, requ
                     'accept': 'application/json',
                     'content-Type': 'application/json',
                     'accept-language': i18n.language,
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${getToken()}`
                 },
                 body: JSON.stringify(formData)
             });

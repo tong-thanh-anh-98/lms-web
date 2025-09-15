@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import UserSidebar from '../../../common/UserSidebar';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { apiUrl, token } from '../../../common/Config';
+import { apiUrl, getToken } from '../../../common/Config';
 
 const Create = () => {
     const { t, i18n } = useTranslation();
@@ -27,7 +27,7 @@ const Create = () => {
                     'accept': 'application/json',
                     'content-Type': 'application/json',
                     'accept-language': i18n.language,
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${getToken()}`
                 },
                 body: JSON.stringify(data)
             });

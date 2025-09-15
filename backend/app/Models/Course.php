@@ -33,7 +33,7 @@ class Course extends Model
             return "";
         }
 
-        return asset('uploads/courses/small/' . $this->image);
+        return '/uploads/courses/small/' . $this->image;
     }
 
     public function chapters()

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Layout from '../../../common/Layout';
 import { Link, useParams } from 'react-router-dom';
 import UserSidebar from '../../../common/UserSidebar';
-import { apiUrl, token } from '../../../common/Config';
+import { apiUrl, getToken } from '../../../common/Config';
 import { toast } from 'react-toastify';
 import JoditEditor from 'jodit-react';
 import LessonVideo from './LessonVideo';
@@ -36,7 +36,7 @@ const EditLesson = ({ placeholder }) => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     'Accept-Language': i18n.language,
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${getToken()}`
                 }
             });
 
@@ -79,7 +79,7 @@ const EditLesson = ({ placeholder }) => {
                     'accept': 'application/json',
                     'content-Type': 'application/json',
                     'accept-language': i18n.language,
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${getToken()}`
                 },
                 body: JSON.stringify(data)
             });
@@ -111,7 +111,7 @@ const EditLesson = ({ placeholder }) => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     'Accept-Language': i18n.language,
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${getToken()}`
                 }
             });
 

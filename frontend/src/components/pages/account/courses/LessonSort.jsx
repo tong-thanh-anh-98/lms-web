@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Modal } from 'react-bootstrap';
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
-import { apiUrl, token } from '../../../common/Config';
+import { apiUrl, getToken } from '../../../common/Config';
 import { toast } from 'react-toastify';
 
 const LessonSort = ({ showLessonSortModal, handleCloseLessonSortModal, lessonsData, setChapters }) => {
@@ -28,7 +28,7 @@ const LessonSort = ({ showLessonSortModal, handleCloseLessonSortModal, lessonsDa
                     'accept': 'application/json',
                     'content-Type': 'application/json',
                     'accept-language': i18n.language,
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${getToken()}`
                 },
                 body: JSON.stringify({ lessons: updateLessons })
             });

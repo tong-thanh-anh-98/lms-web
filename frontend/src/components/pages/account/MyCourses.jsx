@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import UserSidebar from '../../common/UserSidebar';
 import CourseEdit from '../../common/CourseEdit';
 import { useTranslation } from 'react-i18next';
-import { apiUrl, token } from '../../common/Config';
+import { apiUrl, getToken } from '../../common/Config';
 import { toast } from 'react-toastify';
 
 const MyCourses = () => {
@@ -16,10 +16,10 @@ const MyCourses = () => {
             const response = await fetch(`${apiUrl}/my-courses`, {
                 method: 'GET',
                 headers: {
-                    'accept': 'application/json',
-                    'content-Type': 'application/json',
-                    'accept-language': i18n.language,
-                    'Authorization': `Bearer ${token}`
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Accept-Language': i18n.language,
+                    'Authorization': `Bearer ${getToken()}`
                 }
             });
 
