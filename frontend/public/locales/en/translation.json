@@ -89,7 +89,8 @@
     "hindi": "Hindi",
     "spanish": "Spanish",
     "german": "German",
-    "italian": "Italian"
+    "italian": "Italian",
+    "no_results": "No results match."
   },
   "button": {
     "create": "Create",
@@ -106,7 +107,8 @@
     "close": "Close",
     "cancel": "Cancel",
     "delete": "Delete",
-    "back": "Back"
+    "back": "Back",
+    "search": "Search"
   },
   "title": {
     "login": "Login",

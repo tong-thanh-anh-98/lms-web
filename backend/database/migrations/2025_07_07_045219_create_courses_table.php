@@ -28,7 +28,7 @@ return new class extends Migration
 
             // Trạng thái
             $table->integer('status')->default(0); // status
-            $table->enum('is_featured', ['yes', 'no'])->default('no'); // is_featured
+            $table->enum('is_featured', ['yes', 'no'])->default('yes'); // is_featured
 
             $table->string('image')->nullable(); // image
 

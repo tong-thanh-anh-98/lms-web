@@ -5,14 +5,18 @@ import { useTranslation } from 'react-i18next';
 import { apiUrl } from '../common/Config';
 import { toast } from 'react-toastify';
 import { Link, useSearchParams } from 'react-router-dom';
+import Loading from '../common/Loading';
+import NotFound from '../common/NotFound';
 
 const Courses = () => {
     const { t, i18n } = useTranslation();
     const [loading, setLoading] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
+    const [keyword, setKeyword] = useState('');
     const [categories, setCategories] = useState([]);
     const [levels, setLevels] = useState([]);
     const [languages, setLanguages] = useState([]);
+    const [sortOrder, setSortOrder] = useState('desc');
     const [courses, setCourses] = useState([]);
 
     // đọc từ URL để khởi tạo từ state
@@ -119,6 +123,10 @@ const Courses = () => {
 
         let params = new URLSearchParams();
 
+        if (keyword.trim() !== '') {
+            params.append('keyword', keyword.trim());
+        }
+
         if (categoryChecked.length > 0) {
             params.append('category', categoryChecked.join(','));
         }
@@ -129,6 +137,10 @@ const Courses = () => {
 
         if (languageChecked.length > 0) {
             params.append('language', languageChecked.join(','));
+        }
+
+        if (sortOrder) {
+            params.append('sort', sortOrder); // desc hoặc asc
         }
 
         // cập nhật query string trên URL
@@ -156,13 +168,18 @@ const Courses = () => {
         } finally {
             setLoading(false);
         }
-    }, [i18n.language, categoryChecked, levelChecked, languageChecked, setSearchParams]);
+    }, [i18n.language, keyword, categoryChecked, levelChecked, languageChecked, sortOrder, setSearchParams]);
 
     const clearFilters = () => {
-        setCategoryChecked([]);
-        setLevelChecked([]);
-        setLanguageChecked([]);
-        setSearchParams({}); // clear URL query string
+        setKeyword('');               // reset keyword
+        setCategoryChecked([]);       // reset category
+        setLevelChecked([]);          // reset level
+        setLanguageChecked([]);       // reset language
+        setSortOrder('desc');         // reset sort (newest first)
+
+        // clear URL query string
+        setSearchParams({});
+
         // gọi lại API để fetch toàn bộ courses
         fetchCourses();
     };
@@ -187,7 +204,25 @@ const Courses = () => {
                     <div className='col-lg-3'>
                         <div className='sidebar mb-5 card border-0'>
                             <div className='card-body shadow'>
-                                <input type="text" className='form-control' placeholder={t('courses.search_placeholder')} />
+                                <form
+                                    className="d-flex"
+                                    onSubmit={(e) => {
+                                        e.preventDefault();
+                                        fetchCourses();
+                                    }}
+                                >
+                                    <input
+                                        value={keyword}
+                                        onChange={(e) => setKeyword(e.target.value)}
+                                        type="text"
+                                        className='form-control me-2'
+                                        placeholder={t('courses.search_placeholder')}
+                                    />
+                                    <button type="submit" className="btn btn-primary">
+                                        {t('button.search')}
+                                    </button>
+                                </form>
+
                                 <div className='pt-3'>
                                     <h3>{t('courses.category')}</h3>
                                     <ul>
@@ -295,16 +330,23 @@ const Courses = () => {
                                 </div>
 
                                 <div>
-                                    <select name="" id="" className='form-select'>
-                                        <option value="0">{t('courses.newest_first')}</option>
-                                        <option value="1">{t('courses.oldest_first')}</option>
+                                    <select
+                                        className='form-select'
+                                        value={sortOrder}
+                                        onChange={(e) => setSortOrder(e.target.value)}
+                                    >
+                                        <option value="desc">{t('courses.newest_first')}</option>
+                                        <option value="asc">{t('courses.oldest_first')}</option>
                                     </select>
+
                                 </div>
                             </div>
 
                             <div className="row gy-4">
                                 {loading ? (
-                                    <p>{t('button.loading')}</p>
+                                    <Loading />
+                                ) : courses.length === 0 ? (
+                                    <NotFound />
                                 ) : (
                                     courses.map(course => (
                                         <Course key={course.id} course={course} customClasses="col-lg-4 col-md-6" />

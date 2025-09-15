@@ -89,7 +89,8 @@
     "hindi": "Tiếng Hindi",
     "spanish": "Tiếng Tây Ban Nha",
     "german": "Tiếng Đức",
-    "italian": "Tiếng Ý"
+    "italian": "Tiếng Ý",
+    "no_results": "Không có kết quả nào phù hợp."
   },
   "button": {
     "create": "Tạo mới",
@@ -106,7 +107,8 @@
     "close": "Đóng",
     "cancel": "Hủy",
     "delete": "Xóa",
-    "back": "Quay lại"
+    "back": "Quay lại",
+    "search": "Tìm kiếm"
   },
   "title": {
     "login": "Đăng nhập",
