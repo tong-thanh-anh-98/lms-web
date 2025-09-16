@@ -22,6 +22,7 @@ Route::get('/fetch-levels', [HomeController::class, 'fetchLevels'])->name('fetch
 Route::get('/fetch-languages', [HomeController::class, 'fetchLanguages'])->name('fetchLanguages');
 Route::get('/fetch-feature-courses', [HomeController::class, 'fetchFeatureCourses'])->name('fetchFeatureCourses');
 Route::get('/fetch-courses', [HomeController::class, 'courses'])->name('courses');
+Route::get('/fetch-course/{id}', [HomeController::class, 'course'])->name('course');
 
 Route::get('/user', function (Request $request) {
     return $request->user();

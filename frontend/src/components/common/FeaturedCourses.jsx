@@ -21,7 +21,6 @@ const FeaturedCourses = () => {
             const result = await response.json();
 
             if (response.ok && response.status === 200) {
-                console.log(result.data);
                 setCourses(result.data);
             } else {
                 toast.error(result.message);

@@ -156,4 +156,52 @@ class HomeController extends Controller
             ], 500);
         }
     }
+
+    public function course($id)
+    {
+        $course = Course::where('id', $id)
+            ->withCount('chapters')
+            ->with([
+                'category',
+                'level',
+                'language',
+                'chapters' => function ($query) {
+                    $query->withCount(['lessons' => function ($query) {
+                        $query->where('status', 1);
+                        $query->whereNotNull('video');
+                    }]);
+                    $query->withSum(['lessons' => function ($query) {
+                        $query->where('status', 1);
+                        $query->whereNotNull('video');
+                    }], 'duration');
+                },
+                'chapters.lessons' => function ($query) {
+                    $query->where('status', 1);
+                    $query->whereNotNull('video');
+                },
+                'outcomes',
+                'requirements'
+
+            ])
+            ->first();
+
+        if ($course === null) {
+            return response()->json([
+                'status'    => 404,
+                'message'   => __('message.not_found')
+            ], 404);
+        }
+
+        $totalDuration = $course->chapters->sum('lessons_sum_duration');
+        $totalLessons = $course->chapters->sum('lessons_count');
+
+        $course->lessons_sum_duration = $totalDuration;
+        $course->lessons_count = $totalLessons;
+
+        return response()->json([
+            'status'    => 200,
+            'message'   => __('message.success'),
+            'data'  => $course
+        ]);
+    }
 }

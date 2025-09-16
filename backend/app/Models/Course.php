@@ -33,7 +33,7 @@ class Course extends Model
             return "";
         }
 
-        return '/uploads/courses/small/' . $this->image;
+        return url('/uploads/courses/small/' . $this->image);
     }
 
     public function chapters()
@@ -43,17 +43,27 @@ class Course extends Model
 
     public function outcomes()
     {
-        return $this->hasMany(Outcome::class);
+        return $this->hasMany(Outcome::class)->orderBy('sort_order', 'ASC');
     }
 
     public function requirements()
     {
-        return $this->hasMany(Requirement::class);
+        return $this->hasMany(Requirement::class)->orderBy('sort_order', 'ASC');
     }
 
     public function level()
     {
         return $this->belongsTo(Level::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function language()
+    {
+        return $this->belongsTo(Language::class);
     }
 
     protected static function boot()

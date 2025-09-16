@@ -29,11 +29,7 @@ function App() {
                     {/* Frontend - Public */}
                     <Route path='/' element={<Home />} />
                     <Route path='/courses' element={<Course />} />
-                    <Route path='/detail' element={<Detail />} />
-                    {/* <Route path='/account/my-courses' element={<MyCourses />} />
-                    <Route path='/account/watch-course' element={<WatchCourse />} />
-                    <Route path='/account/my-learning' element={<MyLearning />} />
-                    <Route path='/account/change-password' element={<ChangePassword />} /> */}
+                    <Route path='/detail/:id' element={<Detail />} />
 
                     {/* Protected */}
                     <Route element={<RequireAuth />}>

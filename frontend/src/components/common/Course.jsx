@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NumericFormat } from 'react-number-format';
+import { Link } from 'react-router-dom';
 
 const Course = ({ course, customClasses }) => {
     const { t } = useTranslation();
@@ -67,7 +68,7 @@ const Course = ({ course, customClasses }) => {
                         }
 
                         <div className="add-to-cart">
-                            <a href="/detail" className="btn btn-primary">{t('button.read_more')}</a>
+                            <Link to={`/detail/${course.id}`} className="btn btn-primary">{t('button.read_more')}</Link>
                         </div>
                     </div>
                 </div>

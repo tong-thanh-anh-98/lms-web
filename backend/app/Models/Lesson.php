@@ -28,6 +28,6 @@ class Lesson extends Model
             return "";
         }
 
-        return '/uploads/courses/videos/' . $this->video;
+        return url('/uploads/courses/videos/' . $this->video);
     }
 }
