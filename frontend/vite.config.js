@@ -4,14 +4,14 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
     server: {
         host: '0.0.0.0', // Allow access from outside the container
-        port: 5173,
+        port: 5173,      // internal dev server port (container)
         strictPort: true,
         watch: {
             usePolling: true, // Required in Docker
         },
         hmr: {
-            host: 'localhost',
-            port: 5173,
+            host: 'localhost', // client should connect to host machine
+            port: 9173,        // host port we mapped: 9173
         },
 
         // Proxy API Laravel

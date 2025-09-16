@@ -1,5 +1,4 @@
-// export const apiUrl = import.meta.env.VITE_API_URL;
-export const apiUrl = '/api';
+export const apiUrl = import.meta.env.VITE_API_URL || '/api';
 
 export const getToken = () => {
     const userInfo = localStorage.getItem('userInfoLsm');
