@@ -16,5 +16,6 @@ return [
     'deleted'               => 'Đã xóa thành công.', // status 200 function delete
     'success_sort'          => 'Sắp xếp thành công.', // status 200 function sort
     'published'             => 'Khóa học đã được xuất bản thành công.',
-    'unpublished'           => 'Khóa học đã được hủy xuất bản thành công.'
+    'unpublished'           => 'Khóa học đã được hủy xuất bản thành công.',
+    'exists'                => 'Bạn đã đăng ký rồi.',
 ];

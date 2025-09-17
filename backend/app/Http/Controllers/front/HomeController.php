@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\front;
 
-use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\Course;
-use App\Models\Language;
 use App\Models\Level;
+use App\Models\Course;
+use App\Models\Category;
+use App\Models\Language;
+use App\Models\Enrollment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -203,5 +206,52 @@ class HomeController extends Controller
             'message'   => __('message.success'),
             'data'  => $course
         ]);
+    }
+
+    public function enroll(Request $request)
+    {
+        $course = Course::find($request->course_id);
+
+        if (!$course) {
+            return response()->json([
+                'status'    => 404,
+                'message'   => __('message.not_found')
+            ], 404);
+        }
+
+        $exists = Enrollment::where([
+            'user_id'   => $request->user()->id,
+            'course_id' => $request->course_id,
+        ])->exists();
+
+        if ($exists) {
+            return response()->json([
+                'status'  => 409,
+                'message' => __('message.exists')
+            ], 409);
+        }
+
+        DB::beginTransaction();
+        try {
+            $enrollment = new Enrollment();
+            $enrollment->user_id = $request->user()->id;
+            $enrollment->course_id = $request->course_id;
+            $enrollment->save();
+            DB::commit();
+
+            return response()->json([
+                'status'    => 201,
+                'message' => __('message.created'),
+                'data'      => $enrollment
+            ], 201);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            Log::error('Errors: ' . $e->getMessage());
+
+            return response()->json([
+                'status'    => 500,
+                'message'   =>  __('message.error')
+            ], 500);
+        }
     }
 }

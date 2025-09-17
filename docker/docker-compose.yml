@@ -39,9 +39,10 @@ services:
       - "9306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: db_lsm
+      MYSQL_DATABASE: db_lms
     volumes:
-      - lsm-mysql-data:/var/lib/mysql
+      # - lsm-mysql-data:/var/lib/mysql
+      - ./db:/var/lib/mysql   # mount ra thư mục db trong dự án
     networks:
       - network-lsm
 

@@ -3,18 +3,30 @@ import Layout from '../common/Layout';
 import { useTranslation } from 'react-i18next';
 import { Accordion, Badge, ListGroup, Card } from "react-bootstrap";
 import { useCallback, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { apiUrl, convertMinutesToHours } from '../common/Config';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { apiUrl, convertMinutesToHours, getToken } from '../common/Config';
 import { toast } from 'react-toastify';
 import { LuMonitorPlay } from "react-icons/lu";
 import { NumericFormat } from 'react-number-format';
 import Loading from '../common/Loading';
+import FreePreview from '../common/FreePreview';
 
 const Detail = () => {
     const { t, i18n } = useTranslation();
+    const [loading, setLoading] = useState(false);
     // const [rating, setRating] = useState(4.0);
     const params = useParams();
+    const navigate = useNavigate();
     const [course, setCourse] = useState(null);
+    const [freeLesson, setFreeLesson] = useState(null);
+
+    // modal free preview
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = (lesson) => {
+        setShow(true);
+        setFreeLesson(lesson);
+    }
 
     const fetchCourse = useCallback(async () => {
         try {
@@ -28,7 +40,7 @@ const Detail = () => {
             });
             const result = await response.json();
 
-            if (response.ok && response.status === 200) {
+            if (response.status === 200) {
                 setCourse(result.data);
             } else {
                 toast.error(result.message);
@@ -38,12 +50,55 @@ const Detail = () => {
         }
     }, [i18n.language, params]);
 
+    const enrollCourse = async () => {
+        setLoading(true);
+        try {
+            const data = { course_id: course.id };
+
+            const response = await fetch(`${apiUrl}/enroll-course`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Accept-Language': i18n.language,
+                    'Authorization': `Bearer ${getToken()}`
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            console.log(data);
+
+            if (response.status === 201) {
+                toast.success(result.message);
+            } else if (response.status === 401) {
+                toast.error('Please login to enroll this course.');
+                navigate('/account/login');
+            } else {
+                toast.error(result.message);
+            }
+        } catch (error) {
+            console.error('Enroll failed:', error);
+            toast.error('Network error, please try again.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
         fetchCourse();
     }, [fetchCourse]);
 
     return (
         <Layout>
+            {
+                freeLesson &&
+                <FreePreview
+                    show={show}
+                    handleClose={handleClose}
+                    freeLesson={freeLesson}
+                />
+            }
             <div className='container pb-5 pt-3'>
                 {!course ? (
                     <div className="text-center py-5">
@@ -130,13 +185,16 @@ const Detail = () => {
                                     <div className='col-md-12 mt-4'>
                                         <div className='border bg-white rounded-3 p-4'>
                                             <h3 className="h4 mb-3">{t('courses.course_structure')}</h3>
+                                            <p>
+                                                {course.chapters_count} Chapter - {course.lessons_count} Lectures - {convertMinutesToHours(course.lessons_sum_duration)}
+                                            </p>
                                             {
                                                 course.chapters && course.chapters.map((chapter, index) => {
                                                     return (
                                                         <Accordion defaultActiveKey="0" id="courseAccordion" key={chapter.id}>
                                                             <Accordion.Item eventKey={index}>
                                                                 <Accordion.Header>
-                                                                    {chapter.title} <span className="ms-3 text-muted">{chapter.lessons_count} lectures - {convertMinutesToHours(chapter.lessons_sum_duration)}</span>
+                                                                    {chapter.title} <span className="ms-3 text-muted">{chapter.lessons_count} Lectures - {convertMinutesToHours(chapter.lessons_sum_duration)}</span>
                                                                 </Accordion.Header>
                                                                 <Accordion.Body>
                                                                     <ListGroup>
@@ -155,7 +213,7 @@ const Detail = () => {
                                                                                                     {
                                                                                                         lesson.is_free_preview === 'yes' &&
                                                                                                         <Badge bg="primary">
-                                                                                                            <Link className="text-white text-decoration-none">{t('courses.preview')}</Link>
+                                                                                                            <Link onClick={() => handleShow(lesson)} className="text-white text-decoration-none">{t('courses.preview')}</Link>
                                                                                                         </Badge>
                                                                                                     }
                                                                                                     <span className="text-muted ms-2">{convertMinutesToHours(lesson.duration)}</span>
@@ -232,13 +290,13 @@ const Detail = () => {
                                         </div>
                                         {/* Buttons */}
                                         <div className="mt-4">
-                                            <button className="btn btn-primary w-100">
-                                                <i className="bi bi-ticket"></i> {t('courses.buy_now')}
+                                            <button disabled={loading} onClick={() => enrollCourse()} className="btn btn-primary w-100">
+                                                <i className="bi bi-ticket"></i> {loading ? t('button.loading') : t('courses.enroll')}
                                             </button>
                                         </div>
                                     </Card.Body>
                                     <Card.Footer className='mt-4'>
-                                        <h6 className="fw-bold">This course includes</h6>
+                                        <h6 className="fw-bold">{t('courses.enroll_content')}</h6>
                                         <ListGroup variant="flush">
 
                                             <ListGroup.Item className='ps-0'>

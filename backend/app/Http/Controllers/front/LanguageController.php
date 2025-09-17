@@ -60,6 +60,7 @@ class LanguageController extends Controller
                 'data'      => $language
             ], 201);
         } catch (\Throwable $e) {
+            DB::rollBack();
             Log::error('Errors: ' . $e->getMessage());
 
             return response()->json([
