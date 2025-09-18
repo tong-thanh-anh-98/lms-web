@@ -42,7 +42,7 @@ const Login = () => {
                     token: result.token
                 }
 
-                localStorage.setItem('userInfoLsm', JSON.stringify(userInfo));
+                localStorage.setItem('userInfoLms', JSON.stringify(userInfo));
                 login(userInfo);
 
                 toast.success(result.message);

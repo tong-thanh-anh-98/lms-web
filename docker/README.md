@@ -32,7 +32,7 @@ APP_URL=http://localhost
 DB_CONNECTION=mysql
 DB_HOST=mysql
 DB_PORT=3306
-DB_DATABASE=db_lsm
+DB_DATABASE=db_lms
 DB_USERNAME=root
 DB_PASSWORD=root
 ```
@@ -43,8 +43,8 @@ DB_PASSWORD=root
 docker-compose up -d --build
 
 Để tránh trùng container_name, nên đặt prefix hoặc dùng --project-name:
-docker-compose -p lsm-web down
-docker-compose -p lsm-web up -d --build
+docker-compose -p lms-web down
+docker-compose -p lms-web up -d --build
 ```
 
 ### Truy cập:
@@ -54,9 +54,9 @@ docker-compose -p lsm-web up -d --build
 
 ### Khởi tạo Laravel project:
 ```bash
-docker exec -it lsm-laravel-app composer install
-docker exec -it lsm-laravel-app php artisan migrate
-docker exec -it lsm-laravel-app php artisan key:generate
+docker exec -it lms-laravel-app composer install
+docker exec -it lms-laravel-app php artisan migrate
+docker exec -it lms-laravel-app php artisan key:generate
 ```
 
 ## 🔧 Các lệnh hữu ích

@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 export const AuthProvider = ({ children }) => {
     const { t } = useTranslation();
-    const userInfo = localStorage.getItem('userInfoLsm');
+    const userInfo = localStorage.getItem('userInfoLms');
     const [user, setUser] = useState(userInfo);
 
     const login = (user) => {
@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const logout = () => {
-        localStorage.removeItem('userInfoLsm');
+        localStorage.removeItem('userInfoLms');
         setUser(null);
         toast.success(t('message.logout'));
     }
