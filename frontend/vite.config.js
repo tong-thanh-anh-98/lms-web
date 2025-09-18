@@ -10,10 +10,11 @@ export default defineConfig({
         watch: {
             usePolling: true, // Required in Docker
         },
-        hmr: {
-            host: 'localhost', // client should connect to host machine
-            port: 9173,        // host port we mapped: 9173
-        },
+        hmr: true,
+        // hmr: {
+        //     host: 'localhost', // client should connect to host machine
+        //     port: 5173,        // host port we mapped: 9173
+        // },
 
         // Proxy API Laravel
         proxy: {
@@ -27,11 +28,6 @@ export default defineConfig({
                 changeOrigin: true,
                 secure: false,
             },
-            '/save-lesson-video': {
-                target: 'http://web',
-                changeOrigin: true,
-                secure: false,
-            }
         }
     },
 })
