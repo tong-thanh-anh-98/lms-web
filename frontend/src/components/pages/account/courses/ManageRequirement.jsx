@@ -84,7 +84,7 @@ const ManageRequirement = () => {
             });
 
             const result = await response.json();
-            console.log(result.data);
+
             if (response.ok && result.status === 201) {
                 const newRequirements = [...requirements, result.data];
                 setRequirements(newRequirements);

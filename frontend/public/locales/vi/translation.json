@@ -15,8 +15,9 @@
   },
   "sidebar": {
     "dashboard": "Bảng điều khiển",
-    "my_learning": "Khóa học của tôi",
-    "my_courses": "Khóa học đã tạo",
+    "my_learning": "Các khóa học đã đăng ký",
+    "my_courses": "Các khóa học của tôi",
+    "watch_courses": "Xem các khóa học",
     "change_password": "Đổi mật khẩu",
     "logout": "Đăng xuất"
   },
@@ -100,7 +101,7 @@
     "spanish": "Tiếng Tây Ban Nha",
     "german": "Tiếng Đức",
     "italian": "Tiếng Ý",
-    "no_results": "Không có kết quả nào phù hợp."
+    "no_results": "Mục này hiện không có dữ liệu."
   },
   "button": {
     "create": "Tạo mới",

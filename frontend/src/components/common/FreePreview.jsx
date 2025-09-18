@@ -16,7 +16,6 @@ import {
 } from "media-chrome/react";
 
 const FreePreview = ({ show, handleClose, freeLesson }) => {
-    console.log(freeLesson.video_url);
 
     return (
         <>

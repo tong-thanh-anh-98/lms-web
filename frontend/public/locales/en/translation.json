@@ -17,6 +17,7 @@
     "dashboard": "Dashboard",
     "my_learning": "My Learning",
     "my_courses": "My Courses",
+    "watch_courses": "Watch Courses",
     "change_password": "Change Password",
     "logout": "Logout"
   },
@@ -100,7 +101,7 @@
     "spanish": "Spanish",
     "german": "German",
     "italian": "Italian",
-    "no_results": "No results match."
+    "no_results": "This item currently has no data."
   },
   "button": {
     "create": "Create",

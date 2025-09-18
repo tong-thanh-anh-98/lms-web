@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\front;
 
 use App\Models\Course;
+use App\Models\Enrollment;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -94,20 +95,66 @@ class AccountController extends Controller
 
     public function courses(Request $request)
     {
-        try {
-            $courses = Course::where('user_id', $request->user()->id)->with('level')->get();
+        $courses = Course::where('user_id', $request->user()->id)->with('level')->get();
 
-            return response()->json([
-                'status' => 200,
-                'data' => $courses
-            ], 200);
-        } catch (\Throwable $e) {
-            Log::error('Errors: ' . $e->getMessage());
+        return response()->json([
+            'status' => 200,
+            'data' => $courses
+        ], 200);
+    }
 
+    public function enrollments(Request $request)
+    {
+        $enrollments = Enrollment::where('user_id', $request->user()->id)
+            ->with('course', 'course.level')
+            ->get();
+
+        return response()->json([
+            'status' => 200,
+            'data' => $enrollments
+        ], 200);
+    }
+
+    public function course($id, Request $request)
+    {
+        $count = Enrollment::where([
+            'user_id' => $request->user()->id,
+            'course_id' => $id
+        ])->count();
+
+        if ($count === 0) {
             return response()->json([
-                'status'    => 500,
-                'message'   =>  __('message.error')
-            ], 500);
+                'status' => 404,
+                'message' => __('message.not_access')
+            ], 404);
         }
+
+        $course = Course::where('id', $id)
+            ->withCount('chapters')
+            ->with([
+                'category',
+                'level',
+                'language',
+                'chapters' => function ($query) {
+                    $query->withCount(['lessons' => function ($query) {
+                        $query->where('status', 1);
+                        $query->whereNotNull('video');
+                    }]);
+                    $query->withSum(['lessons' => function ($query) {
+                        $query->where('status', 1);
+                        $query->whereNotNull('video');
+                    }], 'duration');
+                },
+                'chapters.lessons' => function ($query) {
+                    $query->where('status', 1);
+                    $query->whereNotNull('video');
+                },
+            ])->first();
+
+        return response()->json([
+            'status' => 200,
+            'message' => __('message.success'),
+            'data'  => $course
+        ], 200);
     }
 }

@@ -1,11 +1,48 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Layout from '../../common/Layout';
 import CourseEnrolled from '../../common/CourseEnrolled';
 import UserSidebar from '../../common/UserSidebar';
 import { useTranslation } from 'react-i18next';
+import { apiUrl, getToken } from '../../common/Config';
+import { toast } from 'react-toastify';
+import Loading from '../../common/Loading';
+import NotFound from '../../common/NotFound';
 
 const MyLearning = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const [loading, setLoading] = useState(false);
+    const [enrollments, setEnrollments] = useState([]);
+
+    const fetchEnrollments = useCallback(async () => {
+        setLoading(true);
+        try {
+            const response = await fetch(`${apiUrl}/enrollments`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Accept-Language': i18n.language,
+                    'Authorization': `Bearer ${getToken()}`
+                }
+            });
+
+            const result = await response.json();
+
+            if (response.status === 200) {
+                setEnrollments(result.data);
+            } else {
+                toast.error(result.message);
+            }
+        } catch (error) {
+            console.error('Fetch failed:', error);
+        } finally {
+            setLoading(false);
+        }
+    }, [i18n.language]);
+
+    useEffect(() => {
+        fetchEnrollments();
+    }, [fetchEnrollments]);
 
     return (
         <Layout>
@@ -19,14 +56,19 @@ const MyLearning = () => {
                         <div className='col-lg-3 account-sidebar'>
                             <UserSidebar />
                         </div>
-                        <div className='col-lg-9'>
+                        <div className='col-lg-9 mt-2'>
                             <div className='row gy-4'>
-                                <CourseEnrolled />
-                                <CourseEnrolled />
-                                <CourseEnrolled />
-                                <CourseEnrolled />
-                                <CourseEnrolled />
-                                <CourseEnrolled />
+                                {
+                                    loading ? (
+                                        <Loading />
+                                    ) : enrollments.length === 0 ? (
+                                        <NotFound />
+                                    ) : (
+                                        enrollments.map((enrollment) => (
+                                            <CourseEnrolled key={enrollment.id} enrollment={enrollment} />
+                                        ))
+                                    )
+                                }
                             </div>
                         </div>
                     </div>

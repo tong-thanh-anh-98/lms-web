@@ -1,13 +1,71 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Layout from '../../common/Layout';
 import Accordion from 'react-bootstrap/Accordion';
 import { MdSlowMotionVideo } from "react-icons/md";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import { useTranslation } from 'react-i18next';
+import { apiUrl, getToken } from '../../common/Config';
+import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import {
+    MediaController,
+    MediaControlBar,
+    MediaTimeRange,
+    MediaTimeDisplay,
+    MediaVolumeRange,
+    MediaPlaybackRateButton,
+    MediaPlayButton,
+    MediaSeekBackwardButton,
+    MediaSeekForwardButton,
+    MediaMuteButton,
+    MediaFullscreenButton,
+} from "media-chrome/react";
+import Loading from '../../common/Loading';
+import NotFound from '../../common/NotFound';
 
 const WatchCourse = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const params = useParams();
+    const [loading, setLoading] = useState(false);
+    const [course, setCourse] = useState([]);
+    const [currentLesson, setCurrentLesson] = useState(null);
+
+    const fetchCourse = useCallback(async () => {
+        setLoading(true);
+        try {
+            const response = await fetch(`${apiUrl}/enroll/${params.id}`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Accept-Language': i18n.language,
+                    'Authorization': `Bearer ${getToken()}`
+                }
+            });
+
+            const result = await response.json();
+
+            if (response.status === 200) {
+                setCourse(result.data);
+
+                // Lấy bài học đầu tiên làm mặc định
+                const firstLesson = result.data?.chapters?.[0]?.lessons?.[0] || null;
+                setCurrentLesson(firstLesson);
+            } else {
+                toast.error(result.message);
+            }
+
+        } catch (error) {
+            console.error('Fetch failed:', error);
+        } finally {
+            setLoading(false);
+        }
+    }, [i18n.language, params]);
+
+    useEffect(() => {
+        fetchCourse();
+    }, [fetchCourse]);
 
     return (
         <Layout>
@@ -16,11 +74,33 @@ const WatchCourse = () => {
                     <div className='row'>
                         <div className='col-md-8'>
                             <div className='video'>
-                                <video width="100%" height="500" controls>
-                                    <source src="movie.mp4" type="video/mp4" />
-                                    <source src="movie.ogg" type="video/ogg" />
-                                    {t('watch.unsupported_browser')}
-                                </video>
+                                {loading ? (
+                                    <Loading />
+                                ) : !currentLesson ? (
+                                    <NotFound />
+                                ) : (
+                                    <MediaController style={{ width: "100%", aspectRatio: "16/9" }}>
+                                        <video
+                                            slot="media"
+                                            src={currentLesson.video_url}
+                                            controls={false}
+                                            style={{ width: "100%", height: "100%" }}
+                                        >
+                                            {t('watch.unsupported_browser')}
+                                        </video>
+                                        <MediaControlBar>
+                                            <MediaPlayButton />
+                                            <MediaSeekBackwardButton seekOffset={10} />
+                                            <MediaSeekForwardButton seekOffset={10} />
+                                            <MediaTimeRange />
+                                            <MediaTimeDisplay showDuration />
+                                            <MediaMuteButton />
+                                            <MediaVolumeRange />
+                                            <MediaPlaybackRateButton />
+                                            <MediaFullscreenButton />
+                                        </MediaControlBar>
+                                    </MediaController>
+                                )}
                             </div>
                             <div className='meta-content'>
                                 <div className='d-flex justify-content-between align-items-center border-bottom pb-2 mb-3 pt-1'>

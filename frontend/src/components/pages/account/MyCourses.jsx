@@ -6,12 +6,16 @@ import CourseEdit from '../../common/CourseEdit';
 import { useTranslation } from 'react-i18next';
 import { apiUrl, getToken } from '../../common/Config';
 import { toast } from 'react-toastify';
+import Loading from '../../common/Loading';
+import NotFound from '../../common/NotFound';
 
 const MyCourses = () => {
     const { t, i18n } = useTranslation();
+    const [loading, setLoading] = useState(false);
     const [courses, setCourses] = useState([]);
 
     const fetchCourses = useCallback(async () => {
+        setLoading(true);
         try {
             const response = await fetch(`${apiUrl}/my-courses`, {
                 method: 'GET',
@@ -33,6 +37,8 @@ const MyCourses = () => {
 
         } catch (error) {
             console.error('Fetch failed:', error);
+        } finally {
+            setLoading(false);
         }
     }, [i18n.language]);
 
@@ -58,18 +64,22 @@ const MyCourses = () => {
                         <div className='col-lg-3 account-sidebar'>
                             <UserSidebar />
                         </div>
-                        <div className='col-lg-9'>
+                        <div className='col-lg-9 mt-2'>
                             <div className='row gy-4'>
                                 {
-                                    courses && courses.map(course => {
-                                        return (
+                                    loading ? (
+                                        <Loading />
+                                    ) : courses.length === 0 ? (
+                                        <NotFound />
+                                    ) : (
+                                        courses && courses.map(course => (
                                             <CourseEdit
                                                 key={course.id}
                                                 course={course}
                                                 onDeleteSuccess={handleDeleteSuccess}
                                             />
-                                        )
-                                    })
+                                        ))
+                                    )
                                 }
                             </div>
                         </div>

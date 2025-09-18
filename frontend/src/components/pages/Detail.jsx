@@ -67,7 +67,6 @@ const Detail = () => {
             });
 
             const result = await response.json();
-            console.log(data);
 
             if (response.status === 201) {
                 toast.success(result.message);
@@ -268,7 +267,10 @@ const Detail = () => {
                             </div>
                             <div className='col-lg-4'>
                                 <div className='border rounded-3 bg-white p-4 shadow-sm'>
-                                    <Card.Img src={course.image_url} />
+                                    <Card.Img
+                                        src={course.image_url || `https://placehold.co/600x350?text=${course.title}`}
+                                        alt={course.title}
+                                    />
                                     <Card.Body className='mt-3'>
                                         <h3 className="fw-bold">
                                             <NumericFormat

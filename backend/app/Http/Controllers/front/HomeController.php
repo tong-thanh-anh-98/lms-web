@@ -185,8 +185,7 @@ class HomeController extends Controller
                 'outcomes',
                 'requirements'
 
-            ])
-            ->first();
+            ])->first();
 
         if ($course === null) {
             return response()->json([
