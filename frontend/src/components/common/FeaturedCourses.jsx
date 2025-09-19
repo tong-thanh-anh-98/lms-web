@@ -38,8 +38,8 @@ const FeaturedCourses = () => {
         <section className='section-3 my-5'>
             <div className="container">
                 <div className='section-title py-3  mt-4'>
-                    <h2 className='h3'>{t('home.featured_courses')}</h2>
-                    <p>{t('home.context_courses')}</p>
+                    <h2 className='h3'>{t('home.courses')}</h2>
+                    <p>{t('home.content_courses')}</p>
                 </div>
                 <div className="row gy-4">
                     {

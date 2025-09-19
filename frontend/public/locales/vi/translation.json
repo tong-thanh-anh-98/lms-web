@@ -22,25 +22,15 @@
     "logout": "Đăng xuất"
   },
   "footer": {
-    "brand": "LMS",
+    "brand": "Hệ Thống Quản Lý Học Tập",
     "description": "Tham gia hệ thống quản lý học tập của chúng tôi và khám phá nhiều khóa học để nâng cao kỹ năng và đạt được mục tiêu của bạn.",
-    "popular_categories": "Danh mục phổ biến",
-    "quick_links": "Liên kết nhanh",
-    "categories": {
-      "digital_marketing": "Tiếp thị số",
-      "web_development": "Phát triển Web",
-      "machine_learning": "Máy học",
-      "web_design": "Thiết kế Web",
-      "logo_design": "Thiết kế Logo",
-      "graphic_design": "Thiết kế Đồ họa"
-    },
-    "links": {
+    "categories": "Danh mục",
+    "links": "Liên kết",
+    "link": {
       "login": "Đăng nhập",
-      "register": "Đăng ký",
-      "my_account": "Tài khoản của tôi",
-      "courses": "Khóa học"
+      "register": "Đăng ký"
     },
-    "copyright": "Bảo lưu mọi quyền"
+    "copyright": "Copyright"
   },
   "dashboard": {
     "title": "Bảng điều khiển",
@@ -57,12 +47,8 @@
     "title": "Khóa học đã ghi danh"
   },
   "watch": {
-    "unsupported_browser": "Trình duyệt của bạn không hỗ trợ thẻ video.",
-    "lesson_title": "Giới thiệu",
-    "lesson_description": "Trong chương này, chúng ta sẽ học về các kiến thức cơ bản của HTML.",
-    "course_title": "Khóa học Web Development cơ bản",
+    "title": "Giới thiệu",
     "progress": "Hoàn thành {{percent}}%",
-    "section_1": "Kiến thức cơ bản Web",
     "section_2": "HTML",
     "intro": "Giới thiệu",
     "what_is_html": "HTML là gì",
@@ -238,9 +224,9 @@
     "confirm": "Bạn có chắc chắn muốn xóa dữ liệu này không?"
   },
   "home": {
-    "explore_categories": "Khám phá các danh mục",
-    "context": "Khám phá các danh mục được thiết kế để giúp bạn phát triển vượt bậc trong sự nghiệp và cá nhân.",
-    "featured_courses": "Các khóa học nổi bật",
-    "context_courses": "Khám phá các khóa học được thiết kế để giúp bạn phát triển vượt bậc về mặt chuyên môn và cá nhân."
+    "categories": "Khám phá danh mục",
+    "content": "Khám phá các danh mục được thiết kế để giúp bạn phát triển vượt bậc trong sự nghiệp và cá nhân.",
+    "courses": "Các khóa học nổi bật",
+    "content_courses": "Khám phá các khóa học được thiết kế để giúp bạn phát triển vượt bậc về mặt chuyên môn và cá nhân."
   }
 }

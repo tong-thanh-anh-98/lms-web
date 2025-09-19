@@ -1,9 +1,39 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { apiUrl } from './Config';
+import { toast } from 'react-toastify';
 
 const Footer = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const [categories, setCategories] = useState([]);
+
+    const fetchCategories = useCallback(async () => {
+        try {
+            const response = await fetch(`${apiUrl}/fetch-categories`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Accept-Language': i18n.language
+                }
+            });
+
+            const result = await response.json();
+
+            if (response.status === 200) {
+                setCategories(result.data);
+            } else {
+                toast.error(result.message);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }, [i18n.language]);
+
+    useEffect(() => {
+        fetchCategories();
+    }, [fetchCategories])
 
     return (
         <footer >
@@ -18,24 +48,23 @@ const Footer = () => {
                     </div>
 
                     <div className='col-lg-3 col-md-6 col-12'>
-                        <h2>{t('footer.popular_categories')}</h2>
+                        <h2>{t('footer.categories')}</h2>
                         <ul>
-                            <li><a href="#">{t('footer.categories.digital_marketing')}</a></li>
-                            <li><a href="#">{t('footer.categories.web_development')}</a></li>
-                            <li><a href="#">{t('footer.categories.machine_learning')}</a></li>
-                            <li><a href="#">{t('footer.categories.web_design')}</a></li>
-                            <li><a href="#">{t('footer.categories.logo_design')}</a></li>
-                            <li><a href="#">{t('footer.categories.graphic_design')}</a></li>
+                            {
+                                categories && categories.map(category => {
+                                    return (
+                                        <li key={category.id}><Link to={`#`}>{category.name}</Link></li>
+                                    )
+                                })
+                            }
                         </ul>
                     </div>
 
                     <div className='col-lg-3 col-md-6 col-12'>
-                        <h2>{t('footer.quick_links')}</h2>
+                        <h2>{t('footer.links')}</h2>
                         <ul>
-                            <li><Link to={`/account/login`}>{t('footer.links.login')}</Link></li>
-                            <li><Link to={`/account/register`}>{t('footer.links.register')}</Link></li>
-                            <li><a href="#">{t('footer.links.my_account')}</a></li>
-                            <li><Link to={`/account/courses/create`}>{t('footer.links.courses')}</Link></li>
+                            <li><Link to={`/account/login`}>{t('footer.link.login')}</Link></li>
+                            <li><Link to={`/account/register`}>{t('footer.link.register')}</Link></li>
                         </ul>
                     </div>
 

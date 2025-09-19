@@ -15,8 +15,10 @@ return [
     'updated'               => 'Đã cập nhật thành công.', // status 200
     'deleted'               => 'Đã xóa thành công.', // status 200
     'success_sort'          => 'Đã được sắp xếp.',
-    'published'             => 'Khóa học đã được xuất bản.',
-    'unpublished'           => 'Khóa học đã được hủy xuất bản.',
+    'publish'               => 'Khóa học đã được xuất bản.',
+    'unpublish'             => 'Khóa học đã được hủy xuất bản.',
+    'enroll'                => 'Đã đăng ký thành công.',
     'exists'                => 'Bạn đã đăng ký rồi.',
     'not_access'            => 'Bạn không thể truy cập vào khóa học này.',
+    'activity'              => 'Hoạt động của người dùng đã được lưu.',
 ];

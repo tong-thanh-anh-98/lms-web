@@ -22,25 +22,15 @@
     "logout": "Logout"
   },
   "footer": {
-    "brand": "LMS",
+    "brand": "Learning Management System",
     "description": "Join our Learning Management System and explore a wide range of courses to enhance your skills and achieve your goals.",
-    "popular_categories": "Popular Categories",
-    "quick_links": "Quick Links",
-    "categories": {
-      "digital_marketing": "Digital Marketing",
-      "web_development": "Web Development",
-      "machine_learning": "Machine Learning",
-      "web_design": "Web Design",
-      "logo_design": "Logo Design",
-      "graphic_design": "Graphic Design"
-    },
-    "links": {
+    "categories": "Popular Categories",
+    "links": "Links",
+    "link": {
       "login": "Login",
-      "register": "Register",
-      "my_account": "My Account",
-      "courses": "Courses"
+      "register": "Register"
     },
-    "copyright": "All Rights Reserved"
+    "copyright": "Copyright"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -57,12 +47,8 @@
     "title": "My Learning"
   },
   "watch": {
-    "unsupported_browser": "Your browser does not support the video tag.",
-    "lesson_title": "Introduction",
-    "lesson_description": "In this chapter we will learn about HTML basics.",
-    "course_title": "Web Development Crash Course",
+    "title": "Introduction",
     "progress": "{{percent}}% complete",
-    "section_1": "Web Development Basics",
     "section_2": "HTML",
     "intro": "Introduction",
     "what_is_html": "What is HTML",
@@ -238,9 +224,9 @@
     "confirm": "Are you sure you want to delete this data?"
   },
   "home": {
-    "explore_categories": "Explore Categories",
-    "context_categories": "Discover categories designed to help you excel in your professional and personal growth.",
-    "featured_courses": "Featured Courses",
-    "context_courses": "Discover courses designed to help you excel in your professional and personal growth."
+    "categories": "Explore Categories",
+    "content": "Discover categories designed to help you excel in your professional and personal growth.",
+    "courses": "Featured Courses",
+    "content_courses": "Discover courses designed to help you excel in your professional and personal growth."
   }
 }

@@ -322,7 +322,7 @@ class CourseController extends Controller
             $course->status = $request->status;
             $course->save();
 
-            $message = ($course->status == 1) ? __('message.published') : __('message.unpublished');
+            $message = ($course->status == 1) ? __('message.publish') : __('message.unpublish');
 
             return response()->json([
                 'status'    => 200,

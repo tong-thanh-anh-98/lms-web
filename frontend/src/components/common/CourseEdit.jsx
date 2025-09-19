@@ -53,7 +53,7 @@ const CourseEdit = ({ course, onDeleteSuccess }) => {
                 <div className='card border-0'>
                     <div className="card-img-top">
                         <span className={`fw-bold badge position-absolute top-0 end-0 m-2 ${course.status === 1 ? 'bg-success text-white' : 'bg-light text-muted'}`}>
-                            {course.status === 1 ? 'Published' : 'Draft'}
+                            {course.status === 1 ? 'Publish' : 'Draft'}
                         </span>
 
                         <img

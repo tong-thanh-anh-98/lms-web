@@ -32,7 +32,8 @@
     "react-player": "^3.3.1",
     "react-router-dom": "^7.6.3",
     "react-simple-star-rating": "^5.1.7",
-    "react-toastify": "^11.0.5"
+    "react-toastify": "^11.0.5",
+    "striptags": "^3.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",

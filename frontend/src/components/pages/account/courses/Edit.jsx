@@ -180,13 +180,6 @@ const Edit = () => {
                             <div className='d-flex justify-content-between'>
                                 <h2 className='h4 mb-0 pb-0'>{t('course.edit')}</h2>
                                 <div>
-                                    {/* {
-                                        course.status == 1 && <Link onClick={() => changeStatus(course)} className='btn btn-primary'>{t('course.publish')}</Link>
-                                    }
-                                    {
-                                        course.status == 0 && <Link onClick={() => changeStatus(course)} className='btn btn-secondary'>{t('course.unpublish')}</Link>
-                                    } */}
-
                                     <Link
                                         onClick={() => changeStatus(course)}
                                         className={`btn ${course.status === 1 ? 'btn-primary' : 'btn-secondary'}`}

@@ -15,8 +15,10 @@ return [
     'updated'               => 'Updated successfully.', // status 200
     'deleted'               => 'Deleted successfully.', // status 200
     'success_sort'          => 'Has been arranged', // status 200
-    'published'             => 'Course published.',
-    'unpublished'           => 'Course unpublished.',
+    'publish'               => 'Course published.',
+    'unpublish'             => 'Course unpublished.',
+    'enroll'                => 'Enrolled successfully.',
     'exists'                => 'You already enrolled.',
     'not_access'            => 'You can not access this course.',
+    'activity'              => 'User activity saved.',
 ];

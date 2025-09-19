@@ -38,8 +38,8 @@ const FeaturedCategories = () => {
         <section className='section-2'>
             <div className="container">
                 <div className='section-title py-3  mt-4'>
-                    <h2 className='h3'>{t('home.explore_categories')}</h2>
-                    <p>{t('home.context_categories')}</p>
+                    <h2 className='h3'>{t('home.categories')}</h2>
+                    <p>{t('home.content')}</p>
                 </div>
                 <div className='row gy-3'>
                     {
