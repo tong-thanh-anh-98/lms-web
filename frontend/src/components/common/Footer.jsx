@@ -42,7 +42,7 @@ const Footer = () => {
 
                     <div className='col-lg-3 col-12'>
                         <div className='col-lg-12 col-md-6 col-12 pe-lg-5'>
-                            <h2>{t('footer.brand')}</h2>
+                            <h2>{t('footer.content')}</h2>
                             <p>{t('footer.description')}</p>
                         </div>
                     </div>
@@ -63,8 +63,8 @@ const Footer = () => {
                     <div className='col-lg-3 col-md-6 col-12'>
                         <h2>{t('footer.links')}</h2>
                         <ul>
-                            <li><Link to={`/account/login`}>{t('footer.link.login')}</Link></li>
-                            <li><Link to={`/account/register`}>{t('footer.link.register')}</Link></li>
+                            <li><Link to={`/account/login`}>{t('footer.login')}</Link></li>
+                            <li><Link to={`/account/register`}>{t('footer.register')}</Link></li>
                         </ul>
                     </div>
 

@@ -21,4 +21,5 @@ return [
     'exists'                => 'Bạn đã đăng ký rồi.',
     'not_access'            => 'Bạn không thể truy cập vào khóa học này.',
     'activity'              => 'Hoạt động của người dùng đã được lưu.',
+    'complete'              => 'Bài học được đánh dấu là đã hoàn thành.',
 ];

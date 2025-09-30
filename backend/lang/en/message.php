@@ -21,4 +21,5 @@ return [
     'exists'                => 'You already enrolled.',
     'not_access'            => 'You can not access this course.',
     'activity'              => 'User activity saved.',
+    'complete'              => 'Lesson marked as completed.',
 ];

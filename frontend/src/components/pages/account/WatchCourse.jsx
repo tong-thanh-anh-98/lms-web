@@ -6,7 +6,7 @@ import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import { useTranslation } from 'react-i18next';
 import { apiUrl, getToken } from '../../common/Config';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import {
     MediaController,
@@ -21,18 +21,17 @@ import {
     MediaMuteButton,
     MediaFullscreenButton,
 } from "media-chrome/react";
-import Loading from '../../common/Loading';
-import NotFound from '../../common/NotFound';
+import { stripHtml } from '../../../utils/string';
 
 const WatchCourse = () => {
     const { t, i18n } = useTranslation();
     const params = useParams();
-    const [loading, setLoading] = useState(false);
-    const [course, setCourse] = useState([]);
-    const [currentLesson, setCurrentLesson] = useState(null);
+    const [course, setCourse] = useState();
+    const [activityLesson, setActivityLesson] = useState(null);
+    const [completedLessons, setCompletedLessons] = useState([]);
+    const [progress, setProgress] = useState(0);
 
     const fetchCourse = useCallback(async () => {
-        setLoading(true);
         try {
             const response = await fetch(`${apiUrl}/enroll/${params.id}`, {
                 method: 'GET',
@@ -48,20 +47,118 @@ const WatchCourse = () => {
 
             if (response.status === 200) {
                 setCourse(result.data);
-
-                // Lấy bài học đầu tiên làm mặc định
-                const firstLesson = result.data?.chapters?.[0]?.lessons?.[0] || null;
-                setCurrentLesson(firstLesson);
+                setActivityLesson(result.activityLesson);
+                setCompletedLessons(result.completedLessons);
+                setProgress(result.progress);
             } else {
                 toast.error(result.message);
             }
-
         } catch (error) {
             console.error('Fetch failed:', error);
-        } finally {
-            setLoading(false);
         }
     }, [i18n.language, params]);
+
+    const showLesson = async (lesson) => {
+        setActivityLesson(lesson);
+
+        const data = {
+            lesson: lesson.id,
+            chapter_id: lesson.chapter_id,
+            course_id: params.id
+        }
+
+        try {
+            const response = await fetch(`${apiUrl}/save-activity`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Accept-Language': i18n.language,
+                    'Authorization': `Bearer ${getToken()}`
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (response.status === 200) {
+                toast.success(result.message);
+                setProgress(result.progress);
+            } else {
+                toast.error(result.message);
+            }
+        } catch (error) {
+            console.error('Fetch failed:', error);
+        }
+    }
+
+    const markAsCompleted = async (activityLesson) => {
+        const data = {
+            lesson: activityLesson.id,
+            chapter_id: activityLesson.chapter_id,
+            course_id: params.id
+        }
+
+        try {
+            const response = await fetch(`${apiUrl}/mark-as-completed`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Accept-Language': i18n.language,
+                    'Authorization': `Bearer ${getToken()}`
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (response.status === 200) {
+                toast.success(result.message);
+
+                // update cục bộ ngay
+                setCompletedLessons((prev) => {
+                    const newCompleted = prev.includes(activityLesson.id)
+                        ? prev
+                        : [...prev, activityLesson.id];
+
+                    // Tính lại progress ngay tại đây
+                    if (course && course.chapters) {
+                        const totalLessons = course.chapters.reduce(
+                            (sum, chap) => sum + (chap.lessons ? chap.lessons.length : 0),
+                            0
+                        );
+                        const newProgress = totalLessons > 0
+                            ? Math.round((newCompleted.length / totalLessons) * 100)
+                            : 0;
+                        setProgress(newProgress);
+                    }
+
+                    return newCompleted;
+                });
+
+                // nếu backend trả completedLessons thì đồng bộ lại
+                if (result.completedLessons) {
+                    setCompletedLessons(result.completedLessons);
+
+                    if (course && course.chapters) {
+                        const totalLessons = course.chapters.reduce(
+                            (sum, chap) => sum + (chap.lessons ? chap.lessons.length : 0),
+                            0
+                        );
+                        const newProgress = totalLessons > 0
+                            ? Math.round((result.completedLessons.length / totalLessons) * 100)
+                            : 0;
+                        setProgress(newProgress);
+                    }
+                }
+            } else {
+                toast.error(result.message);
+            }
+        } catch (error) {
+            console.error('Fetch failed:', error);
+        }
+    }
 
     useEffect(() => {
         fetchCourse();
@@ -69,105 +166,107 @@ const WatchCourse = () => {
 
     return (
         <Layout>
-            <section className='section-5 my-5'>
-                <div className='container'>
-                    <div className='row'>
-                        <div className='col-md-8'>
-                            <div className='video'>
-                                {loading ? (
-                                    <Loading />
-                                ) : !currentLesson ? (
-                                    <NotFound />
-                                ) : (
-                                    <MediaController style={{ width: "100%", aspectRatio: "16/9" }}>
-                                        <video
-                                            slot="media"
-                                            src={currentLesson.video_url}
-                                            controls={false}
-                                            style={{ width: "100%", height: "100%" }}
-                                        >
-                                            {t('watch.unsupported_browser')}
-                                        </video>
-                                        <MediaControlBar>
-                                            <MediaPlayButton />
-                                            <MediaSeekBackwardButton seekOffset={10} />
-                                            <MediaSeekForwardButton seekOffset={10} />
-                                            <MediaTimeRange />
-                                            <MediaTimeDisplay showDuration />
-                                            <MediaMuteButton />
-                                            <MediaVolumeRange />
-                                            <MediaPlaybackRateButton />
-                                            <MediaFullscreenButton />
-                                        </MediaControlBar>
-                                    </MediaController>
-                                )}
-                            </div>
-                            <div className='meta-content'>
-                                <div className='d-flex justify-content-between align-items-center border-bottom pb-2 mb-3 pt-1'>
-                                    <h3 className='pt-2'>{t('watch.lesson_title')}</h3>
-                                    <div>
-                                        <a href="#" className='btn btn-primary px-3'>
-                                            {t('button.mark_complete')} <IoMdCheckmarkCircleOutline size={20} />
-                                        </a>
-                                    </div>
-                                </div>
-                                <div>
-                                    <p>{t('watch.lesson_description')}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='col-md-4'>
-                            <div className='card rounded-0'>
-                                <div className='card-body'>
-                                    <div className='h6'>
-                                        <strong>{t('watch.course_title')}</strong>
-                                    </div>
-                                    <div className='py-2'>
-                                        <ProgressBar now={50} />
-                                        <div className='pt-2'>
-                                            {t('watch.progress', { percent: 50 })}
+            {
+                course &&
+                <section className='section-5 my-5'>
+                    <div className='container'>
+                        <div className='row'>
+                            <div className='col-md-8'>
+                                {
+                                    activityLesson &&
+                                    <>
+                                        <div className='video'>
+                                            <MediaController style={{ width: "100%", aspectRatio: "16/9" }}>
+                                                <video
+                                                    slot="media"
+                                                    src={activityLesson.video_url}
+                                                    controls={false}
+                                                    style={{ width: "100%", height: "100%" }}
+                                                >
+                                                </video>
+                                                <MediaControlBar>
+                                                    <MediaPlayButton />
+                                                    <MediaSeekBackwardButton seekOffset={10} />
+                                                    <MediaSeekForwardButton seekOffset={10} />
+                                                    <MediaTimeRange />
+                                                    <MediaTimeDisplay showDuration />
+                                                    <MediaMuteButton />
+                                                    <MediaVolumeRange />
+                                                    <MediaPlaybackRateButton />
+                                                    <MediaFullscreenButton />
+                                                </MediaControlBar>
+                                            </MediaController>
                                         </div>
+
+                                        <div className='meta-content'>
+                                            <div className='d-flex justify-content-between align-items-center border-bottom pb-2 mb-3 pt-1'>
+                                                <h3 className='pt-2'>{activityLesson.title}</h3>
+                                                <div>
+                                                    <button
+                                                        onClick={() => markAsCompleted(activityLesson)}
+                                                        className={`${completedLessons && completedLessons.includes(activityLesson.id) ? 'disabled' : ''} btn btn-primary px-3`}
+                                                    >
+                                                        {t('button.complete')}<IoMdCheckmarkCircleOutline size={20} />
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <p>{stripHtml(activityLesson.description)}</p>
+                                            </div>
+                                        </div>
+                                    </>
+                                }
+                            </div>
+                            <div className='col-md-4'>
+                                <div className='card rounded-0'>
+                                    <div className='card-body'>
+                                        <div className='h6'>
+                                            <strong>{course.title}</strong>
+                                        </div>
+                                        <div className='py-2'>
+                                            <ProgressBar now={progress} />
+                                            <div className='pt-2'>
+                                                {t('title.progress')} {progress}%
+                                            </div>
+                                        </div>
+                                        <Accordion flush>
+                                            {
+                                                course.chapters && course.chapters.map(chapter => {
+                                                    return (
+                                                        <Accordion.Item eventKey={chapter.id} key={chapter.id}>
+                                                            <Accordion.Header>{chapter.title}</Accordion.Header>
+
+                                                            <Accordion.Body className='pt-2 pb-0 ps-0'>
+                                                                <ul className='lessons mb-0'>
+                                                                    {
+                                                                        chapter.lessons && chapter.lessons.map(lesson => {
+                                                                            return (
+                                                                                <li key={lesson.id} className='pb-2'>
+                                                                                    <Link
+                                                                                        onClick={() => showLesson(lesson)}
+                                                                                        className={`${completedLessons && completedLessons.includes(lesson.id) ? 'text-success' : ''}`}
+                                                                                    >
+                                                                                        <MdSlowMotionVideo size={20} />
+                                                                                        {lesson.title}
+                                                                                    </Link>
+                                                                                </li>
+                                                                            )
+                                                                        })
+                                                                    }
+                                                                </ul>
+                                                            </Accordion.Body>
+                                                        </Accordion.Item>
+                                                    )
+                                                })
+                                            }
+                                        </Accordion>
                                     </div>
-                                    <Accordion defaultActiveKey="0" flush>
-                                        <Accordion.Item eventKey="0">
-                                            <Accordion.Header>{t('watch.section_1')}</Accordion.Header>
-                                            <Accordion.Body className='pt-2 pb-0 ps-0'>
-                                                <ul className='lessons mb-0'>
-                                                    <li className='pb-2'>
-                                                        <a href="#"><MdSlowMotionVideo size={20} /> {t('watch.intro')}</a>
-                                                    </li>
-                                                    <li className='pb-2'>
-                                                        <a href="#"><MdSlowMotionVideo size={20} /> {t('watch.what_is_html')}</a>
-                                                    </li>
-                                                    <li className='pb-2'>
-                                                        <a href="#"><MdSlowMotionVideo size={20} /> {t('watch.html_elements')}</a>
-                                                    </li>
-                                                </ul>
-                                            </Accordion.Body>
-                                        </Accordion.Item>
-                                        <Accordion.Item eventKey="1">
-                                            <Accordion.Header>{t('watch.section_2')}</Accordion.Header>
-                                            <Accordion.Body className='pt-2 pb-0 ps-0'>
-                                                <ul className='lessons mb-0'>
-                                                    <li className='pb-2'>
-                                                        <a href="#"><MdSlowMotionVideo size={20} /> {t('watch.intro')}</a>
-                                                    </li>
-                                                    <li className='pb-2'>
-                                                        <a href="#"><MdSlowMotionVideo size={20} /> {t('watch.what_is_html')}</a>
-                                                    </li>
-                                                    <li className='pb-2'>
-                                                        <a href="#"><MdSlowMotionVideo size={20} /> {t('watch.html_elements')}</a>
-                                                    </li>
-                                                </ul>
-                                            </Accordion.Body>
-                                        </Accordion.Item>
-                                    </Accordion>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            }
         </Layout>
     );
 };

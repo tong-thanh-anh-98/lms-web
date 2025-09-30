@@ -335,8 +335,8 @@ const Courses = () => {
                                         value={sortOrder}
                                         onChange={(e) => setSortOrder(e.target.value)}
                                     >
-                                        <option value="desc">{t('courses.newest_first')}</option>
-                                        <option value="asc">{t('courses.oldest_first')}</option>
+                                        <option value="desc">{t('courses.new_first')}</option>
+                                        <option value="asc">{t('courses.old_first')}</option>
                                     </select>
 
                                 </div>

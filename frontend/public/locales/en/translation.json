@@ -1,6 +1,6 @@
 {
   "header": {
-    "brand": "Smart Learning",
+    "brand": "Learning Management System",
     "all_courses": "All Courses",
     "language": "Language",
     "en": "English",
@@ -22,14 +22,12 @@
     "logout": "Logout"
   },
   "footer": {
-    "brand": "Learning Management System",
+    "content": "Content",
     "description": "Join our Learning Management System and explore a wide range of courses to enhance your skills and achieve your goals.",
-    "categories": "Popular Categories",
+    "categories": "Catalog",
     "links": "Links",
-    "link": {
-      "login": "Login",
-      "register": "Register"
-    },
+    "login": "Login",
+    "register": "Register",
     "copyright": "Copyright"
   },
   "dashboard": {
@@ -40,19 +38,12 @@
     "active_courses": "Active Courses",
     "view_courses": "View Courses"
   },
-  "my_courses": {
-    "title": "My Courses"
-  },
-  "my_learning": {
-    "title": "My Learning"
-  },
-  "watch": {
-    "title": "Introduction",
-    "progress": "{{percent}}% complete",
-    "section_2": "HTML",
-    "intro": "Introduction",
-    "what_is_html": "What is HTML",
-    "html_elements": "HTML Elements"
+  "title": {
+    "login": "Login",
+    "register": "Register",
+    "my_courses": "My Courses",
+    "my_learning": "My Learning",
+    "progress": "Complete:"
   },
   "courses": {
     "home": "Home",
@@ -72,27 +63,14 @@
     "enroll": "Enroll",
     "enroll_content": "This course includes",
     "clear_filters": "Clear All Filters",
-    "beginner": "Beginner",
-    "intermediate": "Intermediate",
-    "advance": "Advance",
-    "newest_first": "Newest First",
-    "oldest_first": "Oldest First",
-    "web_development": "Web Development",
-    "mobile_development": "Mobile Development",
-    "digital_marketing": "Digital Marketing",
-    "graphic_design": "Graphic Design",
-    "software_design": "Software Design",
-    "english": "English",
-    "hindi": "Hindi",
-    "spanish": "Spanish",
-    "german": "German",
-    "italian": "Italian",
+    "new_first": "New First",
+    "old_first": "Old First",
     "no_results": "This item currently has no data."
   },
   "button": {
     "create": "Create",
     "edit": "Edit",
-    "mark_complete": "Mark as complete",
+    "complete": "Complete",
     "register": "Register",
     "login": "Login",
     "loading": "Loading...",
@@ -106,10 +84,6 @@
     "delete": "Delete",
     "back": "Back",
     "search": "Search"
-  },
-  "title": {
-    "login": "Login",
-    "register": "Register"
   },
   "label": {
     "name": "Name",

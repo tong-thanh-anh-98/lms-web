@@ -1,7 +1,7 @@
 {
   "header": {
-    "brand": "Smart Learning",
-    "all_courses": "Tất cả khóa học",
+    "brand": "Hệ Thống Quản Lý Học Tập",
+    "all_courses": "Toàn bộ khóa học",
     "language": "Ngôn ngữ",
     "en": "Tiếng Anh",
     "vi": "Tiếng Việt",
@@ -22,14 +22,12 @@
     "logout": "Đăng xuất"
   },
   "footer": {
-    "brand": "Hệ Thống Quản Lý Học Tập",
+    "content": "Nội Dung",
     "description": "Tham gia hệ thống quản lý học tập của chúng tôi và khám phá nhiều khóa học để nâng cao kỹ năng và đạt được mục tiêu của bạn.",
     "categories": "Danh mục",
     "links": "Liên kết",
-    "link": {
-      "login": "Đăng nhập",
-      "register": "Đăng ký"
-    },
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
     "copyright": "Copyright"
   },
   "dashboard": {
@@ -40,19 +38,12 @@
     "active_courses": "Khóa học đang hoạt động",
     "view_courses": "Xem khóa học"
   },
-  "my_courses": {
-    "title": "Khóa học của tôi"
-  },
-  "my_learning": {
-    "title": "Khóa học đã ghi danh"
-  },
-  "watch": {
-    "title": "Giới thiệu",
-    "progress": "Hoàn thành {{percent}}%",
-    "section_2": "HTML",
-    "intro": "Giới thiệu",
-    "what_is_html": "HTML là gì",
-    "html_elements": "Các phần tử HTML"
+  "title": {
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
+    "my_courses": "Khóa học của tôi",
+    "my_learning": "Quá trình học tập",
+    "progress": "Hoàn thành:"
   },
   "courses": {
     "home": "Trang chủ",
@@ -72,27 +63,14 @@
     "enroll": "Đăng ký",
     "enroll_content": "Trong khóa học này, bạn sẽ có",
     "clear_filters": "Xóa tất cả bộ lọc",
-    "beginner": "Người mới bắt đầu",
-    "intermediate": "Trung cấp",
-    "advance": "Nâng cao",
-    "newest_first": "Mới nhất trước",
-    "oldest_first": "Cũ nhất trước",
-    "web_development": "Lập trình Web",
-    "mobile_development": "Lập trình Di động",
-    "digital_marketing": "Tiếp thị số",
-    "graphic_design": "Thiết kế đồ họa",
-    "software_design": "Thiết kế phần mềm",
-    "english": "Tiếng Anh",
-    "hindi": "Tiếng Hindi",
-    "spanish": "Tiếng Tây Ban Nha",
-    "german": "Tiếng Đức",
-    "italian": "Tiếng Ý",
+    "new_first": "Mới nhất",
+    "old_first": "Cũ nhất",
     "no_results": "Mục này hiện không có dữ liệu."
   },
   "button": {
     "create": "Tạo mới",
     "edit": "Chỉnh sửa",
-    "mark_complete": "Đánh dấu đã hoàn thành",
+    "complete": "Hoàn thành",
     "register": "Đăng ký",
     "login": "Đăng nhập",
     "loading": "Đang xử lý...",
@@ -106,10 +84,6 @@
     "delete": "Xóa",
     "back": "Quay lại",
     "search": "Tìm kiếm"
-  },
-  "title": {
-    "login": "Đăng nhập",
-    "register": "Đăng ký"
   },
   "label": {
     "name": "Tên",

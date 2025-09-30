@@ -2,20 +2,26 @@
 
 namespace App\Http\Controllers\front;
 
-use App\Models\Course;
-use App\Models\Enrollment;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Services\CourseService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
+use App\Repositories\LessonRepository;
 use Illuminate\Support\Facades\Validator;
 
 class AccountController extends Controller
 {
+    protected $courseService;
+
+    public function __construct(CourseService $courseService)
+    {
+        $this->courseService = $courseService;
+    }
     private function extractUserData(RegisterRequest $request)
     {
         return [
@@ -95,66 +101,111 @@ class AccountController extends Controller
 
     public function courses(Request $request)
     {
-        $courses = Course::where('user_id', $request->user()->id)->with('level')->get();
+        $courses = $this->courseService->getUserCourses($request->user());
 
         return response()->json([
             'status' => 200,
-            'data' => $courses
+            'data'   => $courses
         ], 200);
     }
 
     public function enrollments(Request $request)
     {
-        $enrollments = Enrollment::where('user_id', $request->user()->id)
-            ->with('course', 'course.level')
-            ->get();
+        $enrollments = $this->courseService->getUserEnrollments($request->user());
 
         return response()->json([
             'status' => 200,
-            'data' => $enrollments
+            'data'   => $enrollments
         ], 200);
     }
 
     public function course($id, Request $request)
     {
-        $count = Enrollment::where([
-            'user_id' => $request->user()->id,
-            'course_id' => $id
-        ])->count();
+        try {
+            $courseData = $this->courseService->getCourseForUser($request->user(), $id);
 
-        if ($count === 0) {
+            if (!$courseData) {
+                return response()->json([
+                    'status'  => 404,
+                    'message' => __('message.not_access')
+                ], 404);
+            }
+
             return response()->json([
-                'status' => 404,
-                'message' => __('message.not_access')
-            ], 404);
+                'status'                    => 200,
+                'message'                   => __('message.success'),
+                'data'                      => $courseData['course'],
+                'activityLesson'            => $courseData['activityLesson'],
+                'completedLessons'          => $courseData['completedLessons'],
+                'progress'                  => $courseData['progress'],
+            ], 200);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'status'  => 500,
+                'message' => __('message.error')
+            ], 500);
         }
+    }
 
-        $course = Course::where('id', $id)
-            ->withCount('chapters')
-            ->with([
-                'category',
-                'level',
-                'language',
-                'chapters' => function ($query) {
-                    $query->withCount(['lessons' => function ($query) {
-                        $query->where('status', 1);
-                        $query->whereNotNull('video');
-                    }]);
-                    $query->withSum(['lessons' => function ($query) {
-                        $query->where('status', 1);
-                        $query->whereNotNull('video');
-                    }], 'duration');
-                },
-                'chapters.lessons' => function ($query) {
-                    $query->where('status', 1);
-                    $query->whereNotNull('video');
-                },
-            ])->first();
+    public function saveActivity(Request $request)
+    {
+        try {
+            $user = $request->user();
+            $courseId = $request->input('course_id');
+            $lessonId = $request->input('lesson');
 
-        return response()->json([
-            'status' => 200,
-            'message' => __('message.success'),
-            'data'  => $course
-        ], 200);
+            $activity = $this->courseService->saveUserActivity($user, $courseId, $lessonId);
+
+            if (!$activity) {
+                return response()->json([
+                    'status'  => 404,
+                    'message' => __('message.not_found')
+                ], 404);
+            }
+
+            return response()->json([
+                'status'  => 200,
+                'message' => __('message.activity'),
+                'data'    => $activity
+            ], 200);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'status'  => 500,
+                'message' => __('message.error')
+            ], 500);
+        }
+    }
+
+    public function markAsCompleted(Request $request)
+    {
+        try {
+            $user = $request->user();
+            $courseId = $request->input('course_id');
+            $lessonId = $request->input('lesson');
+
+            $activity = $this->courseService->markAsCompleted($user, $courseId, $lessonId);
+
+            if (!$activity) {
+                return response()->json([
+                    'status'  => 404,
+                    'message' => __('message.not_found'),
+                ], 404);
+            }
+
+            // lấy danh sách completed lessons
+            $completedLessons = $this->courseService->getCompletedLessons($user->id, $courseId);
+
+            return response()->json([
+                'status'  => 200,
+                'data'    => $activity,
+                'completedLessons' => $completedLessons,
+                'message' => __('message.complete'),
+            ], 200);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'status'  => 500,
+                'message' => __('message.error'),
+            ], 500);
+        }
     }
 }
