@@ -11,7 +11,7 @@ const RequireAuth = () => {
 
     // Nếu chưa đăng nhập thì redirect về trang login
     if (!user) {
-        return <Navigate to={`/account/login`} />
+        return <Navigate to={`/login`} />
     }
 
     // Nếu đã đăng nhập thì render các route con

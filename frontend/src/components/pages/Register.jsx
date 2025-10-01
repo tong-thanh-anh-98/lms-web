@@ -35,7 +35,7 @@ const Register = () => {
 
             if (response.ok && result.status === 201) {
                 toast.success(result.message);
-                navigate('/account/login');
+                navigate('/login');
             } else {
                 const formErrors = result.errors;
                 Object.keys(formErrors).forEach((field) => {
@@ -113,7 +113,7 @@ const Register = () => {
                                 </div>
 
                                 <div className='d-flex justify-content-center py-3'>
-                                    {t('message.have_account')} &nbsp;<Link className='text-secondary' to={`/account/login`}> {t('link.login')}</Link>
+                                    {t('message.have_account')} &nbsp;<Link className='text-secondary' to={`/login`}> {t('link.login')}</Link>
                                 </div>
                             </div>
                         </div>

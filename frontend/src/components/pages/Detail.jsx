@@ -72,7 +72,7 @@ const Detail = () => {
                 toast.success(result.message);
             } else if (response.status === 401) {
                 toast.error('Please login to enroll this course.');
-                navigate('/account/login');
+                navigate('/login');
             } else {
                 toast.error(result.message);
             }

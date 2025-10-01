@@ -23,8 +23,8 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     {/* Backend - Public */}
-                    <Route path='/account/register' element={<Register />} />
-                    <Route path='/account/login' element={<Login />} />
+                    <Route path='/register' element={<Register />} />
+                    <Route path='/login' element={<Login />} />
 
                     {/* Frontend - Public */}
                     <Route path='/' element={<Home />} />

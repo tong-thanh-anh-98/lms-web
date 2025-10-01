@@ -63,8 +63,8 @@ const Footer = () => {
                     <div className='col-lg-3 col-md-6 col-12'>
                         <h2>{t('footer.links')}</h2>
                         <ul>
-                            <li><Link to={`/account/login`}>{t('footer.login')}</Link></li>
-                            <li><Link to={`/account/register`}>{t('footer.register')}</Link></li>
+                            <li><Link to={`/login`}>{t('footer.login')}</Link></li>
+                            <li><Link to={`/register`}>{t('footer.register')}</Link></li>
                         </ul>
                     </div>
 
