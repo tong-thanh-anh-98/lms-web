@@ -12,19 +12,13 @@ class LessonRepository
      */
     public function getFirstLessonOfCourse(int $courseId): ?Lesson
     {
-        $chapter = Chapter::where('course_id', $courseId)
-            ->orderBy('sort_order', 'asc')
-            ->first();
+        $chapter = Chapter::where('course_id', $courseId)->orderBy('sort_order', 'asc')->first();
 
         if (!$chapter) {
             return null;
         }
 
-        return Lesson::where('chapter_id', $chapter->id)
-            ->where('status', 1)
-            ->whereNotNull('video')
-            ->orderBy('sort_order', 'asc')
-            ->first();
+        return Lesson::where('chapter_id', $chapter->id)->where('status', 1)->whereNotNull('video')->orderBy('sort_order', 'asc')->first();
     }
 
     /**
@@ -32,9 +26,6 @@ class LessonRepository
      */
     public function findById(int $lessonId): ?Lesson
     {
-        return Lesson::where('id', $lessonId)
-            ->where('status', 1)
-            ->whereNotNull('video')
-            ->first();
+        return Lesson::where('id', $lessonId)->where('status', 1)->whereNotNull('video')->first();
     }
 }

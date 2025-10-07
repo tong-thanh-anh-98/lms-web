@@ -37,7 +37,7 @@ const CourseEnrolled = ({ enrollment }) => {
                                 <div className="icon">
                                     <MdOutlinePeople />
                                 </div>
-                                <div className="text ps-2">0</div>
+                                <div className="text ps-2">{enrollment?.course?.enrollments_count}</div>
                             </div>
                         </div>
                         <div className="rating ps-4">
@@ -45,7 +45,7 @@ const CourseEnrolled = ({ enrollment }) => {
                                 <div className="icon">
                                     <FaStar />
                                 </div>
-                                <div className="text ps-2">5.0</div>
+                                <div className="text ps-2">{enrollment?.course?.rating}</div>
                             </div>
                         </div>
                     </div>
@@ -53,8 +53,9 @@ const CourseEnrolled = ({ enrollment }) => {
                 <div className="card-footer bg-white">
                     <div className="d-flex py-2 justify-content-between align-items-center">
                         <div className="add-to-cart">
-                            <Link to={`/account/watch-course/${enrollment.course.id}`} className="btn btn-primary" >{t('button.watch_now')}</Link>
+                            <Link to={`/account/watch-course/${enrollment.course.id}`} className="btn btn-primary">{t('button.watch_now')}</Link>
                         </div>
+                        <Link to={`/account/rating/${enrollment.course.id}`} className="btn btn-primary">Leave Rating</Link>
                     </div>
                 </div>
             </div>

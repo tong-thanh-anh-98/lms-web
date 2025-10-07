@@ -22,4 +22,6 @@ return [
     'not_access'            => 'Bạn không thể truy cập vào khóa học này.',
     'activity'              => 'Hoạt động của người dùng đã được lưu.',
     'complete'              => 'Bài học được đánh dấu là đã hoàn thành.',
+    'required_chapter'      => 'Phải có chương trước khi bạn có thể xuất bản khóa học',
+    'required_lesson'       => 'Phải có bài học trước khi bạn có thể xuất bản khóa học',
 ];

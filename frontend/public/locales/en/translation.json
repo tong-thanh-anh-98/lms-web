@@ -19,7 +19,8 @@
     "my_courses": "My Courses",
     "watch_courses": "Watch Courses",
     "change_password": "Change Password",
-    "logout": "Logout"
+    "logout": "Logout",
+    "rating": "Leave Rating"
   },
   "footer": {
     "content": "Content",
@@ -43,7 +44,8 @@
     "register": "Register",
     "my_courses": "My Courses",
     "my_learning": "My Learning",
-    "progress": "Complete:"
+    "progress": "Complete:",
+    "rating": "Leave Rating"
   },
   "courses": {
     "home": "Home",

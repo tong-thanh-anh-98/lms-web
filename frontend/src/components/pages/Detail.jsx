@@ -1,5 +1,5 @@
 import Layout from '../common/Layout';
-// import { Rating } from 'react-simple-star-rating';
+import { Rating } from 'react-simple-star-rating';
 import { useTranslation } from 'react-i18next';
 import { Accordion, Badge, ListGroup, Card } from "react-bootstrap";
 import { useCallback, useEffect, useState } from 'react';
@@ -14,7 +14,8 @@ import FreePreview from '../common/FreePreview';
 const Detail = () => {
     const { t, i18n } = useTranslation();
     const [loading, setLoading] = useState(false);
-    // const [rating, setRating] = useState(4.0);
+    // const [rating, setRating] = useState(0);
+    // const handleRating = (rate) => { setRating(rate) };
     const params = useParams();
     const navigate = useNavigate();
     const [course, setCourse] = useState(null);
@@ -41,6 +42,7 @@ const Detail = () => {
             const result = await response.json();
 
             if (response.status === 200) {
+                console.log("fetch data: ", result.data);
                 setCourse(result.data);
             } else {
                 toast.error(result.message);
@@ -120,8 +122,8 @@ const Detail = () => {
                                         <span className="badge bg-green">{course.category.name}</span>
                                     </div>
                                     <div className='d-flex ps-3'>
-                                        <div className="text pe-2 pt-1">5.0</div>
-                                        {/* <Rating initialValue={rating} size={20} /> */}
+                                        <div className="text pe-2 pt-1">{course?.rating}</div>
+                                        <Rating initialValue={course?.rating} size={20} allowFraction readonly />
                                     </div>
                                 </div>
                                 <div className="row mt-4">
@@ -131,7 +133,7 @@ const Detail = () => {
                                     </div>
                                     <div className="col">
                                         <span className="text-muted d-block">{t('courses.students')}</span>
-                                        <span className="fw-bold">0</span>
+                                        <span className="fw-bold">{course?.enrollments_count}</span>
                                     </div>
                                     <div className="col">
                                         <span className="text-muted d-block">{t('courses.language')}</span>
@@ -237,29 +239,27 @@ const Detail = () => {
                                         <div className='border bg-white rounded-3 p-4'>
                                             <h3 className='mb-3 h4'>{t('courses.reviews')}</h3>
                                             <p>{t('courses.review_title')}</p>
-
                                             <div className='mt-4'>
-                                                <div className="d-flex align-items-start mb-4 border-bottom pb-3">
-                                                    <img src="https://placehold.co/50" alt="User" className="rounded-circle me-3" />
-                                                    <div>
-                                                        <h6 className="mb-0">Mohit Singh <span className="text-muted fs-6">Jan 2, 2025</span></h6>
-                                                        <div className="text-warning mb-2">
-                                                            {/* <Rating initialValue={rating} size={20} /> */}
+                                                {course.reviews && course.reviews.map(review => {
+                                                    return (
+                                                        <div className="d-flex align-items-start mb-4 border-bottom pb-3" key={review.id}>
+                                                            <img
+                                                                src="https://placehold.co/50"
+                                                                alt={review?.user?.name}
+                                                                className="rounded-circle me-3"
+                                                            />
+                                                            <div>
+                                                                <h6 className="mb-0 me-2">{review?.user?.name}&nbsp;
+                                                                    <span className="text-muted">{review.created_at}</span>
+                                                                </h6>
+                                                                <div className="text-warning mb-2">
+                                                                    <Rating initialValue={review.rating} size={20} readonly />
+                                                                </div>
+                                                                <p className="mb-0">{review.comment}</p>
+                                                            </div>
                                                         </div>
-                                                        <p className="mb-0">Quisque et quam lacus amet. Tincidunt auctor phasellus purus faucibus lectus mattis.</p>
-                                                    </div>
-                                                </div>
-
-                                                <div className="d-flex align-items-start mb-4  pb-3">
-                                                    <img src="https://placehold.co/50" alt="User" className="rounded-circle me-3" />
-                                                    <div>
-                                                        <h6 className="mb-0">mark Doe <span className="text-muted fs-6">Jan 10, 2025</span></h6>
-                                                        <div className="text-warning mb-2">
-                                                            {/* <Rating initialValue={rating} size={20} /> */}
-                                                        </div>
-                                                        <p className="mb-0">Quisque et quam lacus amet. Tincidunt auctor phasellus purus faucibus lectus mattis.</p>
-                                                    </div>
-                                                </div>
+                                                    );
+                                                })}
                                             </div>
                                         </div>
                                     </div>

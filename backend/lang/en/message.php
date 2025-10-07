@@ -22,4 +22,6 @@ return [
     'not_access'            => 'You can not access this course.',
     'activity'              => 'User activity saved.',
     'complete'              => 'Lesson marked as completed.',
+    'required_chapter'      => 'Chapter is required before, you can publish the course',
+    'required_lesson'       => 'Lesson is required before, you can publish the course',
 ];

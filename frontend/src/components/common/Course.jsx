@@ -37,15 +37,13 @@ const Course = ({ course, customClasses }) => {
                                 <div className="icon">
                                     <MdOutlinePeople />
                                 </div>
-                                <div className="text ps-2">0</div>
+                                <div className="text ps-2">{course?.enrollments_count}</div>
                             </div>
                         </div>
                         <div className="rating ps-4">
                             <div className="d-flex align-items-center">
-                                <div className="icon">
-                                    <FaStar />
-                                </div>
-                                <div className="text ps-2">0.0</div>
+                                <div className="icon"><FaStar /></div>
+                                <div className="text ps-2">{course?.rating}</div>
                             </div>
                         </div>
                     </div>

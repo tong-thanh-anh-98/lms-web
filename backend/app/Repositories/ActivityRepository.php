@@ -11,9 +11,7 @@ class ActivityRepository
      */
     public function existsForUserCourse(int $userId, int $courseId): bool
     {
-        return Activity::where('user_id', $userId)
-            ->where('course_id', $courseId)
-            ->exists();
+        return Activity::where('user_id', $userId)->where('course_id', $courseId)->exists();
     }
 
     /**
@@ -35,19 +33,13 @@ class ActivityRepository
      */
     public function getLastWatchedLesson(int $userId, int $courseId)
     {
-        return Activity::where('user_id', $userId)
-            ->where('course_id', $courseId)
-            ->where('is_last_watched', 'yes')
-            ->with('lesson') // quan hệ lesson
-            ->first();
+        return Activity::where('user_id', $userId)->where('course_id', $courseId)->where('is_last_watched', 'yes')->with('lesson')->first();
     }
 
     public function saveUserActivity(int $userId, int $courseId, $lesson): Activity
     {
         // Reset toàn bộ activity trước đó về "no"
-        Activity::where('user_id', $userId)
-            ->where('course_id', $courseId)
-            ->update(['is_last_watched' => 'no']);
+        Activity::where('user_id', $userId)->where('course_id', $courseId)->update(['is_last_watched' => 'no']);
 
         // Cập nhật hoặc tạo mới activity cho lesson hiện tại
         return Activity::updateOrCreate(
@@ -80,19 +72,11 @@ class ActivityRepository
 
     public function getCompletedLessons(int $userId, int $courseId)
     {
-        return Activity::where([
-            'user_id' => $userId,
-            'course_id' => $courseId,
-            'is_completed' => 'yes',
-        ])->pluck('lesson_id')->toArray();
+        return Activity::where(['user_id' => $userId, 'course_id' => $courseId, 'is_completed' => 'yes'])->pluck('lesson_id')->toArray();
     }
 
     public function getCompleteLessonCount(int $userId, int $courseId)
     {
-        return Activity::where([
-            'user_id' => $userId,
-            'course_id' => $courseId,
-            'is_completed' => 'yes',
-        ])->count();
+        return Activity::where(['user_id' => $userId, 'course_id' => $courseId, 'is_completed' => 'yes'])->count();
     }
 }

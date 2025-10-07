@@ -2,16 +2,8 @@
 
 namespace App\Http\Controllers\front;
 
-use App\Models\Level;
-use App\Models\Course;
-use App\Models\Category;
-use App\Models\Language;
-use App\Models\Enrollment;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Services\CourseService;
 
 class HomeController extends Controller
@@ -60,6 +52,10 @@ class HomeController extends Controller
     {
         $courses = $this->courseService->getFeaturedCourses();
 
+        $courses->map(function ($course) {
+            $course->rating = $course->reviews_count > 0 ? number_format($course->reviews_sum_rating / $course->reviews_count, 1) : "0.0";
+        });
+
         return response()->json([
             'status'    => 200,
             'message'   => __('message.success'),
@@ -78,6 +74,10 @@ class HomeController extends Controller
         ];
 
         $courses = $this->courseService->getFilteredCourses($filters);
+
+        $courses->map(function ($course) {
+            $course->rating = $course->reviews_count > 0 ? number_format($course->reviews_sum_rating / $course->reviews_count, 1) : "0.0";
+        });
 
         return response()->json([
             'status'    => 200,

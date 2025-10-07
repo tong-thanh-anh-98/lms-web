@@ -127,6 +127,7 @@ const Edit = () => {
     }
 
     const changeStatus = useCallback(async (course) => {
+        setDisable(true);
         try {
             const status = (course.status == 1) ? 0 : 1;
 
@@ -152,6 +153,8 @@ const Edit = () => {
 
         } catch (error) {
             console.error('Fetch failed:', error);
+        } finally {
+            setDisable(false);
         }
     }, [i18n.language]);
 
@@ -184,7 +187,7 @@ const Edit = () => {
                                         onClick={() => changeStatus(course)}
                                         className={`btn ${course.status === 1 ? 'btn-primary' : 'btn-secondary'}`}
                                     >
-                                        {course.status === 1 ? t('course.publish') : t('course.unpublish')}
+                                        {course.status === 1 ? (disable ? t('button.loading') : t('course.publish')) : t('course.unpublish')}
                                     </Link>
 
                                     <Link to={`/account/my-courses`} className='btn btn-light ms-2'>{t('button.back')}</Link>

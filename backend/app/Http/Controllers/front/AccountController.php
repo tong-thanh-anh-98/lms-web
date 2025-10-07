@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\front;
 
+use App\Models\Review;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\CourseService;
@@ -11,7 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
-use App\Repositories\LessonRepository;
+use App\Models\Course;
 use Illuminate\Support\Facades\Validator;
 
 class AccountController extends Controller
@@ -103,6 +104,10 @@ class AccountController extends Controller
     {
         $courses = $this->courseService->getUserCourses($request->user());
 
+        $courses->map(function ($course) {
+            $course->rating = $course->reviews_count > 0 ? number_format($course->reviews_sum_rating / $course->reviews_count, 1) : "0.0";
+        });
+
         return response()->json([
             'status' => 200,
             'data'   => $courses
@@ -112,6 +117,10 @@ class AccountController extends Controller
     public function enrollments(Request $request)
     {
         $enrollments = $this->courseService->getUserEnrollments($request->user());
+
+        $enrollments->map(function ($enrollments) {
+            $enrollments->course->rating = $enrollments->course->reviews_count > 0 ? number_format($enrollments->course->reviews_sum_rating / $enrollments->course->reviews_count, 1) : "0.0";
+        });
 
         return response()->json([
             'status' => 200,
@@ -205,6 +214,53 @@ class AccountController extends Controller
             return response()->json([
                 'status'  => 500,
                 'message' => __('message.error'),
+            ], 500);
+        }
+    }
+
+    public function saveRating(Request $request)
+    {
+        $course = Course::find($request->course_id);
+        if ($course === null) {
+            return response()->json([
+                'status'  => 404,
+                'message' => __('message.not_found'),
+            ], 404);
+        }
+
+        $count = Review::where('course_id', $request->course_id)->where('user_id', $request->user()->id)->count();
+
+        if ($count > 0) {
+            return response()->json([
+                'status'  => 200,
+                'message' => 'You already rated this course.',
+            ], 200);
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $review = new Review();
+            $review->user_id = $request->user()->id;
+            $review->course_id = $request->course_id;
+            $review->rating = $request->rating;
+            $review->comment = $request->comment;
+            $review->status = 1;
+            $review->save();
+            DB::commit();
+
+            return response()->json([
+                'status'    => 201,
+                'message'   => 'Thanks for your feedback.',
+                'data'      => $review
+            ], 201);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            Log::error('Errors: ' . $e->getMessage());
+
+            return response()->json([
+                'status'    => 500,
+                'message'   =>  __('message.error')
             ], 500);
         }
     }

@@ -86,7 +86,7 @@ const CourseEdit = ({ course, onDeleteSuccess }) => {
                                     <div className="icon">
                                         <MdOutlinePeople />
                                     </div>
-                                    <div className="text ps-2">0</div>
+                                    <div className="text ps-2">{course?.enrollments_count}</div>
                                 </div>
                             </div>
 
@@ -95,7 +95,7 @@ const CourseEdit = ({ course, onDeleteSuccess }) => {
                                     <div className="icon">
                                         <FaStar />
                                     </div>
-                                    <div className="text ps-2">0.0</div>
+                                    <div className="text ps-2">{course?.rating}</div>
                                 </div>
                             </div>
                         </div>

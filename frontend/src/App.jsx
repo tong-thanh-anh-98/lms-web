@@ -15,6 +15,7 @@ import RequireAuth from './components/common/RequireAuth';
 import Create from './components/pages/account/courses/Create';
 import Edit from './components/pages/account/courses/Edit';
 import EditLesson from './components/pages/account/courses/EditLesson';
+import LeaveRating from './components/pages/account/courses/LeaveRating';
 
 function App() {
 
@@ -37,6 +38,7 @@ function App() {
                         <Route path='/account/my-courses' element={<MyCourses />} />
                         <Route path='/account/courses-enrolled' element={<MyLearning />} />
                         <Route path='/account/watch-course/:id' element={<WatchCourse />} />
+                        <Route path='/account/rating/:id' element={<LeaveRating />} />
                         <Route path='/account/change-password' element={<ChangePassword />} />
 
                         {/* Courses */}

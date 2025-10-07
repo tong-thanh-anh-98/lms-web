@@ -66,4 +66,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/enroll/{id}', [AccountController::class, 'course'])->name('course');
     Route::post('/save-activity', [AccountController::class, 'saveActivity'])->name('saveActivity');
     Route::post('/mark-as-completed', [AccountController::class, 'markAsCompleted'])->name('markAsCompleted');
+    Route::post('/leave-rating', [AccountController::class, 'saveRating'])->name('saveRating');
 });

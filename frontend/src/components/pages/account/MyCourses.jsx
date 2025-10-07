@@ -67,19 +67,16 @@ const MyCourses = () => {
                         <div className='col-lg-9 mt-2'>
                             <div className='row gy-4'>
                                 {
-                                    loading ? (
-                                        <Loading />
-                                    ) : courses.length === 0 ? (
-                                        <NotFound />
-                                    ) : (
-                                        courses && courses.map(course => (
-                                            <CourseEdit
-                                                key={course.id}
-                                                course={course}
-                                                onDeleteSuccess={handleDeleteSuccess}
-                                            />
-                                        ))
-                                    )
+                                    loading ? (<Loading />) : courses.length === 0 ? (<NotFound />) :
+                                        (
+                                            courses && courses.map(course => (
+                                                <CourseEdit
+                                                    key={course.id}
+                                                    course={course}
+                                                    onDeleteSuccess={handleDeleteSuccess}
+                                                />
+                                            ))
+                                        )
                                 }
                             </div>
                         </div>

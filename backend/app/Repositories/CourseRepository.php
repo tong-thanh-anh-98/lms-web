@@ -29,16 +29,12 @@ class CourseRepository
 
     public function getFeaturedCourses()
     {
-        return Course::orderBy('title', 'ASC')
-            ->where('is_featured', 'yes')
-            ->where('status', 1)
-            ->with('level')
-            ->get();
+        return Course::orderBy('title', 'ASC')->with('level')->withCount('enrollments')->withCount('reviews')->withSum('reviews', 'rating')->where('is_featured', 'yes')->where('status', 1)->get();
     }
 
     public function filterCourses(array $filters)
     {
-        $course = Course::where('status', 1)->with('level');
+        $course = Course::where('status', 1)->with('level')->withCount('enrollments')->withCount('reviews')->withSum('reviews', 'rating');
 
         // filer course by keyword
         if (!empty($filters['keyword'])) {
@@ -73,11 +69,18 @@ class CourseRepository
     public function getCourseDetail(int $courseId)
     {
         return Course::where('id', $courseId)
+            ->withCount('enrollments')
             ->withCount('chapters')
+            ->withCount('reviews')
+            ->withSum('reviews', 'rating')
             ->with([
+                'reviews',
+                'reviews.user',
                 'category',
                 'level',
                 'language',
+                'outcomes',
+                'requirements',
                 'chapters' => function ($query) {
                     $query->withCount(['lessons' => function ($query) {
                         $query->where('status', 1)->whereNotNull('video');
@@ -88,9 +91,7 @@ class CourseRepository
                 },
                 'chapters.lessons' => function ($query) {
                     $query->where('status', 1)->whereNotNull('video');
-                },
-                'outcomes',
-                'requirements'
+                }
             ])->first();
     }
 
@@ -101,40 +102,34 @@ class CourseRepository
 
     public function isEnrolled(int $userId, int $courseId)
     {
-        return Enrollment::where([
-            'user_id' => $userId,
-            'course_id' => $courseId
-        ])->exists();
+        return Enrollment::where(['user_id' => $userId, 'course_id' => $courseId])->exists();
     }
 
     public function createEnrollment(int $userId, int $courseId)
     {
-        return Enrollment::create([
-            'user_id'   => $userId,
-            'course_id' => $courseId,
-        ]);
+        return Enrollment::create(['user_id'   => $userId, 'course_id' => $courseId]);
     }
 
     public function getCoursesByUser($userId)
     {
-        return Course::where('user_id', $userId)
-            ->with('level')
-            ->get();
+        return Course::where('user_id', $userId)->withCount('enrollments')->withCount('reviews')->withSum('reviews', 'rating')->with('level')->get();
     }
 
     public function findEnrollment($userId, $courseId)
     {
-        return Enrollment::where([
-            'user_id'   => $userId,
-            'course_id' => $courseId
-        ])->first();
+        return Enrollment::where(['user_id'   => $userId, 'course_id' => $courseId])->first();
     }
 
     public function getEnrollmentsByUser($userId)
     {
-        return Enrollment::where('user_id', $userId)
-            ->with('course', 'course.level')
-            ->get();
+        return Enrollment::where('user_id', $userId)->with([
+            'course' => function ($query) {
+                $query->withCount('reviews');
+                $query->withSum('reviews', 'rating');
+                $query->withCount('enrollments');
+            },
+            'course.level'
+        ])->get();
     }
 
     /**
@@ -142,10 +137,7 @@ class CourseRepository
      */
     public function isUserEnrolled(int $userId, int $courseId): bool
     {
-        return Enrollment::where([
-            'user_id'   => $userId,
-            'course_id' => $courseId
-        ])->exists();
+        return Enrollment::where(['user_id'   => $userId, 'course_id' => $courseId])->exists();
     }
 
     /**
@@ -156,6 +148,8 @@ class CourseRepository
         return Course::where('id', $courseId)
             ->withCount('chapters')
             ->with([
+                'reviews',
+                'reviews.user',
                 'category',
                 'level',
                 'language',
@@ -178,18 +172,12 @@ class CourseRepository
      */
     public function getFirstLesson(int $courseId): ?Lesson
     {
-        $chapter = Chapter::where('course_id', $courseId)
-            ->orderBy('sort_order', 'asc')
-            ->first();
+        $chapter = Chapter::where('course_id', $courseId)->orderBy('sort_order', 'asc')->first();
 
         if (!$chapter) {
             return null;
         }
 
-        return Lesson::where('chapter_id', $chapter->id)
-            ->where('status', 1)
-            ->whereNotNull('video')
-            ->orderBy('sort_order', 'asc')
-            ->first();
+        return Lesson::where('chapter_id', $chapter->id)->where('status', 1)->whereNotNull('video')->orderBy('sort_order', 'asc')->first();
     }
 }

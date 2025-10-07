@@ -63,6 +63,7 @@ class CourseService
 
         $course->lessons_sum_duration = $totalDuration;
         $course->lessons_count = $totalLesson;
+        $course->rating = $course->reviews_count > 0 ? number_format($course->reviews_sum_rating / $course->reviews_count, 1) : "0.0";
 
         return $course;
     }

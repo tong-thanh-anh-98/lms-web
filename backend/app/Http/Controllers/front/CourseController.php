@@ -181,36 +181,6 @@ class CourseController extends Controller
                 ], 404);
             }
 
-            // // Lấy chapters
-            // $chapters = Chapter::where('course_id', $course->id)->get();
-
-            // if ($chapters->isNotEmpty()) {
-            //     foreach ($chapters as $chapter) {
-            //         // Lấy lessons
-            //         $lessons = Lesson::where('chapter_id', $chapter->id)->get();
-
-            //         if ($lessons->isNotEmpty()) {
-            //             foreach ($lessons as $lesson) {
-            //                 // Xóa video file nếu có
-            //                 if (!empty($lesson->video)) {
-            //                     $this->videoService->deleteVideo('courses/videos', $lesson->video);
-            //                 }
-
-            //                 // Xóa lesson record
-            //                 $lesson->delete();
-            //             }
-            //         }
-
-            //         // Xóa chapter record
-            //         $chapter->delete();
-            //     }
-            // }
-
-            // // Xóa ảnh course nếu có
-            // if (!empty($course->image)) {
-            //     $this->imageService->deleteImage('courses', $course->image);
-            // }
-
             $course->delete();
 
             return response()->json([
@@ -317,6 +287,24 @@ class CourseController extends Controller
                     'status' => 404,
                     'message' => __('message.not_found')
                 ], 404);
+            }
+
+            // at least one chapter is required.
+            $chapters = Chapter::where('course_id', $id)->pluck('id')->toArray();
+            if (count($chapters) === 0) {
+                return response()->json([
+                    'status' => 200,
+                    'message' => __('message.required_chapter')
+                ]);
+            }
+
+            // at least one lesson with video is required.
+            $Lessons = Lesson::where('chapter_id', $chapters)->where('status', 1)->whereNotNull('video')->count();
+            if ($Lessons === 0) {
+                return response()->json([
+                    'status' => 200,
+                    'message' => __('message.required_lesson')
+                ]);
             }
 
             $course->status = $request->status;

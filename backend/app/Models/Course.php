@@ -66,6 +66,16 @@ class Course extends Model
         return $this->belongsTo(Language::class);
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class);
+    }
+
     protected static function boot()
     {
         parent::boot();

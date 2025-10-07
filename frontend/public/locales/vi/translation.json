@@ -19,7 +19,8 @@
     "my_courses": "Các khóa học của tôi",
     "watch_courses": "Xem các khóa học",
     "change_password": "Đổi mật khẩu",
-    "logout": "Đăng xuất"
+    "logout": "Đăng xuất",
+    "rating": "Đánh Giá"
   },
   "footer": {
     "content": "Nội Dung",
@@ -43,7 +44,8 @@
     "register": "Đăng ký",
     "my_courses": "Khóa học của tôi",
     "my_learning": "Quá trình học tập",
-    "progress": "Hoàn thành:"
+    "progress": "Hoàn thành:",
+    "rating": "Đánh Giá"
   },
   "courses": {
     "home": "Trang chủ",
