@@ -20,7 +20,7 @@
     "watch_courses": "Xem các khóa học",
     "change_password": "Đổi mật khẩu",
     "logout": "Đăng xuất",
-    "rating": "Đánh Giá"
+    "profile": "Hồ Sơ"
   },
   "footer": {
     "content": "Nội Dung",
@@ -29,7 +29,7 @@
     "links": "Liên kết",
     "login": "Đăng nhập",
     "register": "Đăng ký",
-    "copyright": "Copyright"
+    "copyright": "Hệ thống quản lý học tập — Mọi quyền được bảo lưu."
   },
   "dashboard": {
     "title": "Bảng điều khiển",
@@ -41,11 +41,12 @@
   },
   "title": {
     "login": "Đăng nhập",
+    "forgotPassword": "Quên Mật Khẩu",
+    "resetPassword": "Đặt Lại Mật Khẩu",
     "register": "Đăng ký",
     "my_courses": "Khóa học của tôi",
     "my_learning": "Quá trình học tập",
-    "progress": "Hoàn thành:",
-    "rating": "Đánh Giá"
+    "progress": "Hoàn thành:"
   },
   "courses": {
     "home": "Trang chủ",
@@ -56,7 +57,7 @@
     "language": "Ngôn ngữ",
     "students": "Học viên",
     "overview": "Giới thiệu",
-    "what_you_will_learn": "Bạn sẽ học được",
+    "what_you_will_learn": "Bạn sẽ nhận được",
     "requirements": "Cần chuẩn bị gì",
     "course_structure": "Nội dung khóa học",
     "preview": "Xem thử",
@@ -85,7 +86,12 @@
     "cancel": "Hủy",
     "delete": "Xóa",
     "back": "Quay lại",
-    "search": "Tìm kiếm"
+    "search": "Tìm kiếm",
+    "submit": "Gửi",
+    "rating": "Đánh Giá",
+    "send_link": "Gửi Liên Kết",
+    "resetPassword": "Đặt Lại Mật Khẩu",
+    "change": "Thay Đổi"
   },
   "label": {
     "name": "Tên",
@@ -105,7 +111,11 @@
     "lesson": "Bài giảng",
     "status": "Trạng thái",
     "duration": "Khoảng thời gian (phút)",
-    "preview": "Xem trước"
+    "preview": "Xem trước",
+    "comment": "Bình Luận",
+    "current_password": "Mật Khẩu",
+    "new_password": "Mật Khẩu Mới",
+    "password_confirmation": "Xác Nhận"
   },
   "select": {
     "category": "Chọn một danh mục",
@@ -131,7 +141,11 @@
     "requirement": "Nhập yêu cầu",
     "lesson": "Nhập tên bài giảng",
     "chapter": "Nhập tên chương",
-    "duration": "Nhập khoảng thời gian"
+    "duration": "Nhập khoảng thời gian",
+    "comment": "Phản hồi cá nhân của bạn là gì?",
+    "current_password": "Nhập mật khẩu hiện tại.",
+    "new_password": "Nhập mật khẩu mới.",
+    "password_confirmation": "Xác nhận mật khẩu."
   },
   "required": {
     "name": "Trường tên là bắt buộc.",
@@ -148,7 +162,10 @@
     "chapter": "Trường chương là bắt buộc.",
     "lesson": "Trường bài giảng là bắt buộc.",
     "status": "Trường trạng thái là bắt buộc.",
-    "duration": "Trường khoảng thời gian là bắt buộc"
+    "duration": "Trường khoảng thời gian là bắt buộc.",
+    "comment": "Trường bình luận là bắt buộc.",
+    "new_confirmation": "Trường mật khẩu mới là bắt buộc.",
+    "password_confirmation": "Trường xác nhận mật khẩu là bắt buộc."
   },
   "message": {
     "email_invalid": "Địa chỉ email không hợp lệ",
@@ -157,7 +174,8 @@
   },
   "link": {
     "register": "Đăng ký tại đây",
-    "login": "Đăng nhập"
+    "login": "Đăng nhập",
+    "forgotPassword":"Quên Mật Khẩu"
   },
   "course": {
     "course": "Khóa học",
@@ -204,5 +222,18 @@
     "content": "Khám phá các danh mục được thiết kế để giúp bạn phát triển vượt bậc trong sự nghiệp và cá nhân.",
     "courses": "Các khóa học nổi bật",
     "content_courses": "Khám phá các khóa học được thiết kế để giúp bạn phát triển vượt bậc về mặt chuyên môn và cá nhân."
+  },
+  "rating": {
+    "account": "Tài Khoản",
+    "rating": "Xếp Hạng"
+  },
+  "profile": {
+    "title": "Ảnh Đại Diện",
+    "account": "Tài Khoản",
+    "profile": "Hồ Sơ"
+  },
+  "change_password": {
+    "account": "Tài Khoản",
+    "change_password": "Đổi Mật Khẩu"
   }
 }

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { FaChartBar, FaChalkboardTeacher, FaDesktop, FaUserLock, FaStar } from "react-icons/fa";
+import { FaChartBar, FaChalkboardTeacher, FaUserLock, FaUserCircle } from "react-icons/fa";
 import { BsMortarboardFill } from "react-icons/bs";
 import { MdLogout } from "react-icons/md";
 import { Link } from 'react-router-dom';
@@ -15,25 +15,22 @@ const UserSidebar = () => {
             <div className='card-body p-4'>
                 <ul className='list-unstyled'>
                     <li className='d-flex align-items-center mb-3'>
-                        <Link to="/account/dashboard"><FaChartBar size={20} className='me-2' /> {t('sidebar.dashboard')}</Link>
+                        <Link to="/account/dashboard"><FaChartBar size={20} className='me-2' />{t('sidebar.dashboard')}</Link>
                     </li>
                     <li className='d-flex align-items-center mb-3'>
-                        <Link to="/account/my-courses"><FaChalkboardTeacher size={20} className='me-2' /> {t('sidebar.my_courses')}</Link>
+                        <Link to="/account/my-courses"><FaChalkboardTeacher size={20} className='me-2' />{t('sidebar.my_courses')}</Link>
                     </li>
                     <li className='d-flex align-items-center mb-3'>
-                        <Link to="/account/courses-enrolled"><BsMortarboardFill size={20} className='me-2' /> {t('sidebar.my_learning')}</Link>
-                    </li>
-                    {/* <li className='d-flex align-items-center mb-3'>
-                        <Link to="/account/watch-courses"><FaDesktop size={20} className='me-2' /> {t('sidebar.watch_courses')}</Link>
+                        <Link to="/account/courses-enrolled"><BsMortarboardFill size={20} className='me-2' />{t('sidebar.my_learning')}</Link>
                     </li>
                     <li className='d-flex align-items-center mb-3'>
-                        <Link to="/account/rating"><FaStar size={20} className='me-2' /> {t('sidebar.rating')}</Link>
-                    </li> */}
+                        <Link to="/account/profile"><FaUserCircle size={20} className='me-2' />{t('sidebar.profile')}</Link>
+                    </li>
                     <li className='d-flex align-items-center mb-3'>
-                        <Link to="/account/change-password"><FaUserLock size={20} className='me-2' /> {t('sidebar.change_password')}</Link>
+                        <Link to="/account/change-password"><FaUserLock size={20} className='me-2' />{t('sidebar.change_password')}</Link>
                     </li>
                     <li className='d-flex align-items-center'>
-                        <Link onClick={logout} className='text-danger' role="button"><MdLogout size={20} className='me-2' /> {t('sidebar.logout')}</Link>
+                        <Link onClick={logout} className='text-danger' role="button"><MdLogout size={20} className='me-2' />{t('sidebar.logout')}</Link>
                     </li>
                 </ul>
             </div>

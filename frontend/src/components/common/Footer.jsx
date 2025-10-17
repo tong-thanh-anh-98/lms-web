@@ -71,7 +71,7 @@ const Footer = () => {
                 </div>
                 <div className='row copyright'>
                     <div className='col-md-12 text-center py-4'>
-                        &copy; 2025 {t('footer.copyright')}
+                        &copy; {new Date().getFullYear()} {t('footer.copyright')}
                     </div>
                 </div>
             </div>

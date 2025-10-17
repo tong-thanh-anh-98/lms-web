@@ -14,8 +14,6 @@ import FreePreview from '../common/FreePreview';
 const Detail = () => {
     const { t, i18n } = useTranslation();
     const [loading, setLoading] = useState(false);
-    // const [rating, setRating] = useState(0);
-    // const handleRating = (rate) => { setRating(rate) };
     const params = useParams();
     const navigate = useNavigate();
     const [course, setCourse] = useState(null);
@@ -42,7 +40,6 @@ const Detail = () => {
             const result = await response.json();
 
             if (response.status === 200) {
-                console.log("fetch data: ", result.data);
                 setCourse(result.data);
             } else {
                 toast.error(result.message);
@@ -244,9 +241,9 @@ const Detail = () => {
                                                     return (
                                                         <div className="d-flex align-items-start mb-4 border-bottom pb-3" key={review.id}>
                                                             <img
-                                                                src="https://placehold.co/50"
-                                                                alt={review?.user?.name}
+                                                                src={review?.user?.image_url || `https://placehold.co/50x50?text=${review?.user?.name}`}
                                                                 className="rounded-circle me-3"
+                                                                alt={review?.user?.name}
                                                             />
                                                             <div>
                                                                 <h6 className="mb-0 me-2">{review?.user?.name}&nbsp;
@@ -300,19 +297,16 @@ const Detail = () => {
                                     <Card.Footer className='mt-4'>
                                         <h6 className="fw-bold">{t('courses.enroll_content')}</h6>
                                         <ListGroup variant="flush">
-
-                                            <ListGroup.Item className='ps-0'>
-                                                <i className="bi bi-infinity text-primary me-2"></i>
-                                                Full lifetime access
-                                            </ListGroup.Item>
-                                            <ListGroup.Item className='ps-0'>
-                                                <i className="bi bi-tv text-primary me-2"></i>
-                                                Access on mobile and TV
-                                            </ListGroup.Item>
-                                            <ListGroup.Item className='ps-0'>
-                                                <i className="bi bi-award-fill text-primary me-2"></i>
-                                                Certificate of completion
-                                            </ListGroup.Item>
+                                            {
+                                                course.outcomes && course.outcomes.map(outcome => {
+                                                    return (
+                                                        <ListGroup.Item className='ps-0' key={outcome.id}>
+                                                            <i className="bi bi-infinity text-primary me-2"></i>
+                                                            {outcome.outcome}
+                                                        </ListGroup.Item>
+                                                    )
+                                                })
+                                            }
                                         </ListGroup>
                                     </Card.Footer>
                                 </div>

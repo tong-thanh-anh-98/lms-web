@@ -103,12 +103,14 @@ const Login = () => {
                                     }
                                 </div>
 
-                                <div className='d-flex justify-content-between align-items-center'>
-                                    <button disabled={disable} type="submit" className='btn btn-primary'>
+                                <div>
+                                    <button disabled={disable} type="submit" className="btn btn-primary w-100">
                                         {disable ? t('button.loading') : t('button.login')}
                                     </button>
-
-                                    <Link to={`/account/register`} className='text-secondary'>{t('link.register')}</Link>
+                                </div>
+                                <div className='d-flex justify-content-center py-3'>
+                                    <Link to={`/register`} className='text-secondary'>{t('link.register')}</Link> &nbsp;
+                                    <Link to={`/forgot-password`} className='text-secondary'>{t('link.forgotPassword')}</Link>
                                 </div>
                             </div>
                         </div>

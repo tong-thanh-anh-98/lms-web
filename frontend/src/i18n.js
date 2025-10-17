@@ -4,13 +4,11 @@ import HttpApi from 'i18next-http-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
 i18n
-    // Cấu hình cho ngôn ngữ.
     .use(HttpApi)
     .use(LanguageDetector)
     .use(initReactI18next)
     .init({
-        // supportedLngs: ['vi', 'en'],
-        supportedLngs: ['en'],
+        supportedLngs: ['vi', 'en'],
         fallbackLng: 'en',
         detection: {
             order: ['localStorage', 'navigator', 'htmlTag'],

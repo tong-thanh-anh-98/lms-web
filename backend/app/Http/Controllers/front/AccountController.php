@@ -2,18 +2,23 @@
 
 namespace App\Http\Controllers\front;
 
-use App\Models\Review;
 use App\Models\User;
+use App\Models\Course;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use App\Services\CourseService;
+use App\Services\UploadService;
+use App\Mail\ResetPasswordEmail;
+use App\Mail\ChangePasswordEmail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\RegisterRequest;
-use App\Models\Course;
 use Illuminate\Support\Facades\Validator;
+use DragonCode\Support\Facades\Helpers\Str;
 
 class AccountController extends Controller
 {
@@ -28,7 +33,7 @@ class AccountController extends Controller
         return [
             'name' => $request->input('name'),
             'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
+            'password' => $request->input('password'),
         ];
     }
 
@@ -263,5 +268,213 @@ class AccountController extends Controller
                 'message'   =>  __('message.error')
             ], 500);
         }
+    }
+
+    public function fetchUser(Request $request)
+    {
+        $user = User::find($request->user()->id);
+        if ($user === null) {
+            return response()->json([
+                'status'  => 404,
+                'message' => __('message.not_found'),
+            ], 404);
+        }
+
+        return response()->json([
+            'status'    => 200,
+            'message'   => __('message.success'),
+            'data'      => $user
+        ], 200);
+    }
+
+    public function updateUser(Request $request)
+    {
+        $user = User::find($request->user()->id);
+
+        if ($user === null) {
+            return response()->json([
+                'status'  => 404,
+                'message' => __('message.not_found'),
+            ], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'name'  => 'required',
+            'email' => 'required|email|unique:users,email,' . $request->user()->id
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(data: [
+                'status'  => 400,
+                'error' => $validator->errors(),
+            ]);
+        }
+
+        try {
+            DB::beginTransaction();
+            $user->update($validator->validated());
+            DB::commit();
+
+            return response()->json([
+                'status'  => 201,
+                'message' => __('message.updated'),
+                'data'    => $user,
+            ], 201);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            Log::error('User update failed: ' . $e->getMessage());
+
+            return response()->json([
+                'status'  => 500,
+                'message' => __('message.error'),
+            ], 500);
+        }
+    }
+
+    public function saveProfileImage(Request $request, $id, UploadService $uploadService)
+    {
+        DB::beginTransaction();
+        try {
+            $user = User::find($id);
+            if (!$user) {
+                return response()->json([
+                    'status' => 404,
+                    'message'   => __('message.not_found')
+                ], 404);
+            }
+
+            $validator = Validator::make($request->all(), [
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 400,
+                    'errors' => $validator->errors(),
+                ], 400);
+            }
+
+            // Xóa ảnh cũ nếu có
+            if (!empty($user->image)) {
+                $uploadService->deleteImage('users', $user->image);
+            }
+
+            // Upload ảnh mới
+            $imageName = $uploadService->uploadImage($request->image, 'profiles', [50, 50]);
+            $user->image = $imageName;
+            $user->save();
+            DB::commit();
+
+            return response()->json([
+                'status'    => 200,
+                'message'   => __('message.uploaded'),
+                'data'      => $user,
+            ], 200);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            Log::error('Errors: ' . $e->getMessage());
+
+            return response()->json([
+                'status'    => 500,
+                'message'   => __('message.error'),
+            ], 500);
+        }
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email'
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        // Tạo token reset
+        $token = Str::random(64);
+
+        // Lưu token vào bảng password_reset_tokens
+        DB::table('password_reset_tokens')->updateOrInsert(
+            ['email' => $user->email],
+            [
+                'token' => Hash::make($token),
+                'created_at' => now()
+            ]
+        );
+
+        // Gửi email với Mailable tùy chỉnh
+        Mail::to($user->email)->send(new ResetPasswordEmail($user, $token));
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Reset password link has been sent to your email.'
+        ], 200);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'password' => 'required|confirmed|min:8',
+        ]);
+
+        $record = DB::table('password_reset_tokens')->where('email', $request->email)->first();
+
+        if (!$record || !Hash::check($request->token, $record->token)) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Invalid or expired token.',
+            ], 400);
+        }
+
+        $user = User::where('email', $request->email)->first();
+        $user->update(['password' => $request->password]);
+
+        // Xoá token sau khi đổi
+        DB::table('password_reset_tokens')->where('email', $request->email)->delete();
+
+        // Hủy tất cả token đăng nhập cũ
+        if (method_exists($user, 'tokens')) {
+            $user->tokens()->delete();
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Password has been reset successfully.',
+        ], 200);
+    }
+
+    public function changePassword(Request $request)
+    {
+        $user = $request->user();
+
+        $request->validate([
+            'current_password' => 'required',
+            'password' => 'required|confirmed|min:8',
+        ]);
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Current password is incorrect.'
+            ], 400);
+        }
+
+        $user->password = $request->password;
+        $user->save();
+
+        // Xóa các token cũ (đăng xuất các thiết bị khác)
+        if (method_exists($user, 'tokens')) {
+            $user->tokens()->delete();
+        }
+
+        try {
+            Mail::to($user->email)->send(new ChangePasswordEmail($user));
+        } catch (\Exception $e) {
+            Log::error('Failed to send password changed email: ' . $e->getMessage());
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Password changed successfully.'
+        ], 200);
     }
 }

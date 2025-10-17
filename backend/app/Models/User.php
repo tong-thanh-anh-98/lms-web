@@ -23,7 +23,19 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'image'
     ];
+
+    protected $appends = ['image_url'];
+
+    public function getImageUrlAttribute()
+    {
+        if (empty($this->image)) {
+            return "";
+        }
+
+        return url('/uploads/profiles/small/' . $this->image);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -43,8 +55,11 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'email_verified_at' => 'datetime:Y-m-d',
+            'password'          => 'hashed',
+            'created_at'        => 'datetime:Y-m-d',
+            'updated_at'        => 'datetime:Y-m-d',
+            'deleted_at'        => 'datetime:Y-m-d',
         ];
     }
 }

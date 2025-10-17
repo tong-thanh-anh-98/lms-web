@@ -16,6 +16,9 @@ import Create from './components/pages/account/courses/Create';
 import Edit from './components/pages/account/courses/Edit';
 import EditLesson from './components/pages/account/courses/EditLesson';
 import LeaveRating from './components/pages/account/courses/LeaveRating';
+import Profile from './components/pages/account/Profile';
+import ForgotPassword from './components/pages/account/ForgotPassword';
+import ResetPassword from './components/pages/account/ResetPassword';
 
 function App() {
 
@@ -26,6 +29,8 @@ function App() {
                     {/* Backend - Public */}
                     <Route path='/register' element={<Register />} />
                     <Route path='/login' element={<Login />} />
+                    <Route path="/forgot-password" element={<ForgotPassword />} />
+                    <Route path="/reset-password" element={<ResetPassword />} />
 
                     {/* Frontend - Public */}
                     <Route path='/' element={<Home />} />
@@ -39,6 +44,7 @@ function App() {
                         <Route path='/account/courses-enrolled' element={<MyLearning />} />
                         <Route path='/account/watch-course/:id' element={<WatchCourse />} />
                         <Route path='/account/rating/:id' element={<LeaveRating />} />
+                        <Route path="/account/profile" element={<Profile />} />
                         <Route path='/account/change-password' element={<ChangePassword />} />
 
                         {/* Courses */}

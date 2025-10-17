@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [AccountController::class, 'register'])->name('register');
 Route::post('/login', [AccountController::class, 'authenticate'])->name('authenticate');
+Route::post('/forgot-password', [AccountController::class, 'forgotPassword'])->name('forgotPassword');
+Route::post('/reset-password', [AccountController::class, 'resetPassword'])->name('resetPassword');
 
 // Show Featured Courses on Home
 Route::get('/fetch-categories', [HomeController::class, 'fetchCategories'])->name('fetchCategories');
@@ -67,4 +69,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/save-activity', [AccountController::class, 'saveActivity'])->name('saveActivity');
     Route::post('/mark-as-completed', [AccountController::class, 'markAsCompleted'])->name('markAsCompleted');
     Route::post('/leave-rating', [AccountController::class, 'saveRating'])->name('saveRating');
+    Route::get('/fetch-user', [AccountController::class, 'fetchUser'])->name('fetchUser');
+    Route::post('/update-user', [AccountController::class, 'updateUser'])->name('updateUser');
+    Route::post('/save-profile-image/{id}', [AccountController::class, 'saveProfileImage'])->name('saveProfileImage');
+    Route::post('/change-password', [AccountController::class, 'changePassword'])->name('changePassword');
 });

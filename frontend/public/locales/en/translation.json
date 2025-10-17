@@ -20,7 +20,7 @@
     "watch_courses": "Watch Courses",
     "change_password": "Change Password",
     "logout": "Logout",
-    "rating": "Leave Rating"
+    "profile": "Profile"
   },
   "footer": {
     "content": "Content",
@@ -29,7 +29,7 @@
     "links": "Links",
     "login": "Login",
     "register": "Register",
-    "copyright": "Copyright"
+    "copyright": "Learning Management System — All rights reserved."
   },
   "dashboard": {
     "title": "Dashboard",
@@ -41,11 +41,12 @@
   },
   "title": {
     "login": "Login",
+    "forgotPassword": "Forgot Password",
+    "resetPassword": "Reset Password",
     "register": "Register",
     "my_courses": "My Courses",
     "my_learning": "My Learning",
-    "progress": "Complete:",
-    "rating": "Leave Rating"
+    "progress": "Complete:"
   },
   "courses": {
     "home": "Home",
@@ -85,7 +86,12 @@
     "cancel": "Cancel",
     "delete": "Delete",
     "back": "Back",
-    "search": "Search"
+    "search": "Search",
+    "submit": "Submit",
+    "rating": "Rating",
+    "send_link": "Send Link",
+    "resetPassword": "Reset Password",
+    "change": "Change"
   },
   "label": {
     "name": "Name",
@@ -105,7 +111,13 @@
     "lesson": "Lesson",
     "status": "Status",
     "duration": "Duration (mins)",
-    "preview": "Preview"
+    "preview": "Preview",
+    "comment": "Comment",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "current_password": "Current Password",
+    "new_password": "New Password",
+    "password_confirmation": "Password Confirmation"
   },
   "select": {
     "category": "Select a category",
@@ -131,7 +143,11 @@
     "requirement": "Enter your requirement",
     "lesson": "Enter your lesson",
     "chapter": "Enter your chapter",
-    "duration": "Enter your duration"
+    "duration": "Enter your duration",
+    "comment": "What is your personal feedback?",
+    "current_password": "Enter current password",
+    "new_password": "Enter new password",
+    "password_confirmation": "Enter password confirmation"
   },
   "required": {
     "name": "The name field is required.",
@@ -148,7 +164,10 @@
     "chapter": "The chapter field is required.",
     "lesson": "The lesson field is required.",
     "status": "The status field is required.",
-    "duration": "The duration field is required"
+    "duration": "The duration field is required",
+    "comment": "The comment field is required",
+    "new_confirmation": "The new password field is required.",
+    "password_confirmation": "The password confirmation field is required."
   },
   "message": {
     "email_invalid": "Invalid email address",
@@ -157,7 +176,8 @@
   },
   "link": {
     "register": "Register Here",
-    "login": "Login"
+    "login": "Login",
+    "forgotPassword": "Forgot Password"
   },
   "course": {
     "course": "Course",
@@ -204,5 +224,18 @@
     "content": "Discover categories designed to help you excel in your professional and personal growth.",
     "courses": "Featured Courses",
     "content_courses": "Discover courses designed to help you excel in your professional and personal growth."
+  },
+  "rating": {
+    "account": "Account",
+    "rating": "Rating"
+  },
+  "profile": {
+    "title": "Profile Image",
+    "account": "Account",
+    "profile": "Profile"
+  },
+  "change_password": {
+    "account": "Account",
+    "change_password": "Change Password"
   }
 }

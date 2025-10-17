@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 import Layout from '../../../common/Layout';
 import UserSidebar from '../../../common/UserSidebar';
@@ -9,6 +10,7 @@ import { useForm } from 'react-hook-form';
 
 const LeaveRating = () => {
     const [loading, setLoading] = useState(false);
+    const { t, i18n } = useTranslation();
     const [rating, setRating] = useState(0);
     const handleRating = (rate) => { setRating(rate) };
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
@@ -24,8 +26,9 @@ const LeaveRating = () => {
             const response = await fetch(`${apiUrl}/leave-rating`, {
                 method: 'POST',
                 headers: {
-                    'accept': 'application/json',
+                    'Accept': 'application/json',
                     'Content-Type': 'application/json',
+                    'Accept-Language': i18n.language,
                     'Authorization': `Bearer ${getToken()}`
                 },
                 body: JSON.stringify(data)
@@ -53,8 +56,9 @@ const LeaveRating = () => {
             const response = await fetch(`${apiUrl}/courses/${params.id}`, {
                 method: 'GET',
                 headers: {
-                    'accept': 'application/json',
-                    'content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Accept-Language': i18n.language,
                     'Authorization': `Bearer ${getToken()}`
                 }
             });
@@ -68,7 +72,7 @@ const LeaveRating = () => {
         } catch (error) {
             console.error('Fetch failed:', error);
         }
-    }, [params.id]);
+    }, [i18n.language, params.id]);
 
     useEffect(() => {
         fetchCourse();
@@ -82,10 +86,10 @@ const LeaveRating = () => {
                         <nav aria-label="breadcrumb">
                             <ol className="breadcrumb">
                                 <li className="breadcrumb-item">
-                                    <Link to="/account/dashboard">Account</Link>
+                                    <Link to="/account/dashboard">{t('rating.account')}</Link>
                                 </li>
                                 <li className="breadcrumb-item active" aria-current="page">
-                                    Rating
+                                    {t('rating.rating')}
                                 </li>
                             </ol>
                         </nav>
@@ -93,7 +97,7 @@ const LeaveRating = () => {
                         <div className='row'>
                             <div className='col-md-12 mt-5 mb-3'>
                                 <div className='d-flex justify-content-between'>
-                                    <h2 className='h4 mb-0 pb-0'>Rating / {course.title}</h2>
+                                    <h2 className='h4 mb-0 pb-0'>{t('rating.rating')} / {course.title}</h2>
                                 </div>
                             </div>
 
@@ -107,13 +111,13 @@ const LeaveRating = () => {
                                         <div className="card-boy">
                                             <form onSubmit={handleSubmit(onSubmit)}>
                                                 <div className="mb-3">
-                                                    <label htmlFor="comment" className="form-label">Comment</label>
+                                                    <label htmlFor="comment" className="form-label">{t('label.comment')}</label>
                                                     <textarea
-                                                        {...register('comment', { required: 'Comment is required' })}
+                                                        {...register('comment', { required: t('required.comment') })}
                                                         id='comment'
                                                         className={`form-control ${errors.comment && 'is-invalid'}`}
                                                         rows={5}
-                                                        placeholder='What is your personal feedback?'
+                                                        placeholder={t('placeholder.comment')}
                                                     >
                                                     </textarea>
                                                     {
@@ -124,7 +128,7 @@ const LeaveRating = () => {
                                                     <Rating onClick={handleRating} ratingValue={rating} />
                                                 </div>
                                                 <button disabled={loading} type="submit" className='btn btn-primary'>
-                                                    {loading ? 'Loading...' : 'Submit'}
+                                                    {loading ? t('button.loading') : t('button.submit')}
                                                 </button>
                                             </form>
                                         </div>
